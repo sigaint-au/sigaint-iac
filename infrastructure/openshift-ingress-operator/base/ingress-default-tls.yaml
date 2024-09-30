@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ingress-default
+  namespace: openshift-ingres
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  secretName: ingress-default-tls
+  commonName: __PATCH__
+  dnsNames: []
+  issuerRef:
+    name: __PATCH__
+    kind: ClusterIssuer
