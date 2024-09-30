@@ -1,4 +1,4 @@
-kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
-- github.com/redhat-cop/gitops-catalog/openshift-cert-manager-operator/instance/overlays/default?ref=main
+  - https://github.com/redhat-cop/gitops-catalog/openshift-cert-manager-operator/operator/overlays/stable-v1?ref=main
