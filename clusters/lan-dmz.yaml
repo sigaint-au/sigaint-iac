@@ -21,6 +21,8 @@ spec:
         path: infrastructure/nmstate/overlays/dmz
       - name: virtualization-operator
         path: infrastructure/virtualization-operator/overlays/dmz
+      - name: openshift-ingress-operator
+        path: infrastructure/openshift-ingress-operator/overlays/dmz
   template:
     metadata:
       name: '{{.name}}'

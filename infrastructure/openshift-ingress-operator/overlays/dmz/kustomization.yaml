@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - ../../base
+patches:
+- target:
+    kind: Certificate
+    name: ingress-default
+  patch: |-
+    - op: replace
+      path: /spec/commonName
+      value: "*.apps.ocp.sigaint.au"
+    - op: replace
+      path: /spec/dnsNames
+      value:
+        - "*.apps.ocp.sigaint.au"
+    - op: replace
+      path: /spec/issuerRef/name
+      value: le-production
