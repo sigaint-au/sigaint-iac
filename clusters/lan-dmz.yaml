@@ -17,6 +17,8 @@ spec:
         path: infrastructure/local-storage/overlays/dmz
       - name: openshift-data-foundation-operator
         path: infrastructure/openshift-data-foundation-operator/overlays/dmz
+      - name: nmstate
+        path: infrastructure/nmstate/overlays/dmz
   template:
     metadata:
       name: '{{.name}}'
