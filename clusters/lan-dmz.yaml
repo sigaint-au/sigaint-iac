@@ -11,6 +11,8 @@ spec:
       elements:
       - name: openshift-cert-manager-operator
         path: infrastructure/openshift-cert-manager-operator/overlays/dmz
+      - name: external-secrets-operator
+        path: infrastructure/external-secrets-operator/overlays/dmz
   template:
     metadata:
       name: '{{.name}}'
