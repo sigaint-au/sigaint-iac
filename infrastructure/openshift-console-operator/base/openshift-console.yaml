@@ -4,10 +4,10 @@ kind: Console
 metadata:
   name: cluster
 spec:
-  customization:
-    customLogoFile:
-      key: console-custom-logo.png
-      name: console-custom-logo
+#  customization:
+#    customLogoFile:
+#      key: console-custom-logo.png
+#      name: console-custom-logo
   route:
     hostname: __PATCH__
     secret:
