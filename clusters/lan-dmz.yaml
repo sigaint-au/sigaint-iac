@@ -29,6 +29,8 @@ spec:
         path: infrastructure/openshift-console-operator/overlays/dmz
       - name: metallb-operator
         path: infrastructure/openshift-metallb-operator/overlays/dmz
+      - name: crunchy-postgres-operator
+        path: infrastructure/crunchy-postgres-operator/overlays/dmz
   template:
     metadata:
       name: '{{.name}}'
