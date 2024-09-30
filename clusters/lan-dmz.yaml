@@ -13,6 +13,8 @@ spec:
         path: infrastructure/openshift-cert-manager-operator/overlays/dmz
       - name: external-secrets-operator
         path: infrastructure/external-secrets-operator/overlays/dmz
+      - name: local-storage
+        path: infrastructure/local-storage/overlays/dmz
   template:
     metadata:
       name: '{{.name}}'
