@@ -1,0 +1,40 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  namespace: cert-manager
+  name: le-staging
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: le-staging-issuer-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            email: a8c74b30-a06a-41c2-a82f-8ec7b2b74eac@sigaint.net
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  namespace: cert-manager
+  name: le-production
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: le-production-issuer-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            email: 5a906234-c5b2-4c1b-affd-8eb33903210d@sigaint.net
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
