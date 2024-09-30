@@ -4,24 +4,24 @@ metadata:
   name: dmz-infrastructure
   namespace: openshift-gitops
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: https://github.com/sigaint-au/sigaint-iac
-      revision: HEAD
-      directories:
-      - path: infrastructure/openshift-cert-manager-operator/overlays/dmz/
+  - list:
+      elements:
+      - name: openshift-cert-manager-operator
+        path: infrastructure/openshift-cert-manager-operator/overlays/dmz
   template:
     metadata:
-      name: '{{index .path.segments 2}}'
+      name: '{{.name}}'
     spec:
       project: "default"
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
         targetRevision: HEAD
-        path: '{{path}}'
+        path: 'infrastructure/{{.name}}/overlays/dmz/'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{index .path.segments 2}}'
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
