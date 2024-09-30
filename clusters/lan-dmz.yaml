@@ -27,6 +27,8 @@ spec:
         path: infrastructure/openshift-apiserver-operator/overlays/dmz
       - name: openshift-console-operator
         path: infrastructure/openshift-console-operator/overlays/dmz
+      - name: metallb-operator
+        path: infrastructure/openshift-metallb-operator/overlays/dmz
   template:
     metadata:
       name: '{{.name}}'
