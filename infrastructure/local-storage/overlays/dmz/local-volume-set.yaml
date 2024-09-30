@@ -1,10 +1,9 @@
 apiVersion: local.storage.openshift.io/v1alpha1
-kind: LocalVolumeDiscovery
+kind: LocalVolumeSet
 metadata:
-  name: auto-discover-devices
-  namespace: openshift-local-storage
+  name: local-block
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   nodeSelector:
     nodeSelectorTerms:
@@ -18,3 +17,11 @@ spec:
               - lan-node-04
               - lan-node-05
               - lan-node-06
+  storageClassName: local-block
+  volumeMode: Block
+  deviceInclusionSpec:
+    deviceTypes:
+      - disk
+    models:
+      - 'RAID 930-8i-2GB'
+      - 'PERC H730 Mini'
