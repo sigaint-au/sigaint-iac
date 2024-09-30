@@ -4,3 +4,4 @@ components:
     - ../../../components/operator-sync-wave
 resources:
     - operator
+    - instance
