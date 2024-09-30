@@ -7,12 +7,12 @@ spec:
   nodeSelector:
     nodeSelectorTerms:
       - matchExpressions:
-          - key: cluster.ocs.openshift.io/openshift-storage
+          - key: kubernetes.io/hostname
             operator: In
             values:
-              - ''
-  tolerations:
-    - effect: NoSchedule
-      key: node.ocs.openshift.io/storage
-      operator: Equal
-      value: 'true'
+              - lan-node-01
+              - lan-node-02
+              - lan-node-03
+              - lan-node-04
+              - lan-node-05
+              - lan-node-06
