@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dmz-infrastructure
+  namespace: openshift-gitops
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - list:
+      elements:
+      - name: freeipa-server
+        path: virtualization/freeipa-server/overlays/ocp
+  template:
+    metadata:
+      name: '{{.name}}'
+    spec:
+      project: "virtualization"
+      source:
+        repoURL: https://github.com/sigaint-au/sigaint-iac
+        targetRevision: HEAD
+        path: 'infrastructure/{{.name}}/overlays/dmz/'
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true

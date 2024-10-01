@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dmz-infrastructure
+  namespace: openshift-gitops
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - list:
+      elements:
+      - name: openshift-cert-manager-operator
+        path: infrastructure/openshift-cert-manager-operator/overlays/ocp
+      - name: external-secrets-operator
+        path: infrastructure/external-secrets-operator/overlays/ocp
+      - name: local-storage
+        path: infrastructure/local-storage/overlays/ocp
+      - name: openshift-data-foundation-operator
+        path: infrastructure/openshift-data-foundation-operator/overlays/ocp
+      - name: nmstate
+        path: infrastructure/nmstate/overlays/ocp
+      - name: virtualization-operator
+        path: infrastructure/virtualization-operator/overlays/ocp
+      - name: openshift-ingress-operator
+        path: infrastructure/openshift-ingress-operator/overlays/ocp
+      - name: openshift-apiserver-operator
+        path: infrastructure/openshift-apiserver-operator/overlays/ocp
+      - name: openshift-console-operator
+        path: infrastructure/openshift-console-operator/overlays/ocp
+      - name: metallb-operator
+        path: infrastructure/openshift-metallb-operator/overlays/ocp
+      - name: crunchy-postgres-operator
+        path: infrastructure/crunchy-postgres-operator/overlays/ocp
+  template:
+    metadata:
+      name: '{{.name}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/sigaint-au/sigaint-iac
+        targetRevision: HEAD
+        path: 'infrastructure/{{.name}}/overlays/ocp/'
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
