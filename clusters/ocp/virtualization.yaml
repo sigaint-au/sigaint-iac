@@ -10,7 +10,7 @@ spec:
   - list:
       elements:
       - name: freeipa-server
-        path: virtualization/freeipa-server/overlays/ocp
+      - name: network-attachment-definitions
   template:
     metadata:
       name: '{{.name}}'
@@ -19,7 +19,7 @@ spec:
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
         targetRevision: HEAD
-        path: 'infrastructure/{{.name}}/overlays/dmz/'
+        path: '/virtualization/{{.name}}/overlays/ocp/'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
