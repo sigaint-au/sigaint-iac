@@ -17,5 +17,14 @@ spec:
         name: br1
         state: up
         type: linux-bridge
+      - ipv4:
+          dhcp: false
+          enabled: false
+        name: br1.20
+        state: up
+        type: vlan
+        vlan:
+          base-iface: br1
+          id: 22
   nodeSelector:
     sigaint.au/physnet: eno4
