@@ -25,6 +25,6 @@ spec:
         type: vlan
         vlan:
           base-iface: br1
-          id: 22
+          id: 20
   nodeSelector:
     sigaint.au/physnet: eno2
