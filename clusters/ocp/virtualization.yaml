@@ -9,7 +9,7 @@ spec:
   generators:
   - list:
       elements:
-      - name: common
+      - name: namespaces
       - name: tailscale-router
       - name: freeipa-server
       - name: network-attachment-definitions
