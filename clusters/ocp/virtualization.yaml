@@ -10,6 +10,7 @@ spec:
   - list:
       elements:
       - name: namespaces
+      - name: access-credentials
       - name: tailscale-router
       - name: freeipa-server
       - name: network-attachment-definitions

@@ -1,0 +1,18 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: ext-sk-yk-main
+  namespace: sigaint-dmz
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: doppler-auth-api
+  target:
+    name: sk-yk-main
+  data:
+    - secretKey: key
+      remoteRef:
+        key: SSH_PUBKEY_YK_MAIN
