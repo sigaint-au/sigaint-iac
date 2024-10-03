@@ -8,7 +8,7 @@ metadata:
     vm.kubevirt.io/template.namespace: openshift
     vm.kubevirt.io/template.revision: '1'
     vm.kubevirt.io/template.version: v0.29.2
-  name: lan-ipa-03.vm.sigaint.au
+  name: lan-ipa-03.sigaint.au
   namespace: sigaint-vmnet
 spec:
   dataVolumeTemplates:

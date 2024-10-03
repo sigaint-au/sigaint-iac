@@ -2,25 +2,25 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   labels:
-    app: lan-ipa-01.sigaint.au
+    app: lan-ts-rou.dmz.sigaint.au
     kubevirt.io/dynamic-credentials-support: 'true'
-    vm.kubevirt.io/template: centos-stream9-server-small
+    vm.kubevirt.io/template: fedora-server-small
     vm.kubevirt.io/template.namespace: openshift
     vm.kubevirt.io/template.revision: '1'
     vm.kubevirt.io/template.version: v0.29.2
-  name: lan-ipa-01.sigaint.au
-  namespace: sigaint-vmnet
+  name: lan-ts-rou.dmz.sigaint.au
+  namespace: sigaint-dmz
 spec:
   dataVolumeTemplates:
     - apiVersion: cdi.kubevirt.io/v1beta1
       kind: DataVolume
       metadata:
         creationTimestamp: null
-        name: lan-ipa-01.sigaint.au
+        name: lan-ts-rou.dmz.sigaint.au
       spec:
         sourceRef:
           kind: DataSource
-          name: centos-stream9
+          name: fedora
           namespace: openshift-virtualization-os-images
         storage:
           resources:
@@ -31,11 +31,11 @@ spec:
     metadata:
       annotations:
         vm.kubevirt.io/flavor: small
-        vm.kubevirt.io/os: centos-stream9
+        vm.kubevirt.io/os: fedora
         vm.kubevirt.io/workload: server
       creationTimestamp: null
       labels:
-        kubevirt.io/domain: lan-ipa-01.sigaint.au
+        kubevirt.io/domain: lan-ts-rou.dmz.sigaint.au
         kubevirt.io/size: small
     spec:
       accessCredentials:
@@ -61,28 +61,26 @@ spec:
               name: cloudinitdisk
           interfaces:
             - bridge: {}
-              macAddress: 'ae:9d:22:e3:a2:e5'
+              macAddress: 'ea:0c:30:94:aa:7f'
               model: virtio
-              name: nic-sigaint-vmnet
+              name: nic-sigaint-dmz
           rng: {}
         machine:
           type: pc-q35-rhel9.4.0
         memory:
-          guest: 16Gi
+          guest: 4Gi
         resources: {}
       networks:
         - multus:
-            networkName: default/net-sigaint-vmnet
-          name: nic-sigaint-vmnet
+            networkName: default/net-sigaint-dmz
+          name: nic-sigaint-dmz
       terminationGracePeriodSeconds: 180
       volumes:
         - dataVolume:
-            name: lan-ipa-01.sigaint.au
+            name: lan-ts-rou.dmz.sigaint.au
           name: rootdisk
         - cloudInitNoCloud:
             userData: |-
               #cloud-config
-              user: centos
-              password: gl35-vp63-850a
-              chpasswd: { expire: False }
+              package_update: true
           name: cloudinitdisk

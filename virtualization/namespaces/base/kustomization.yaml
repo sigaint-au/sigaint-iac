@@ -1,6 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - lan-ipa-01.yaml
-  - lan-ipa-02.yaml
-  - lan-ipa-03.yaml
+  - namespace.yaml
