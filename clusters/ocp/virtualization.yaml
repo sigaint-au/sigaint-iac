@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: dmz-infrastructure
+  name: ocp-virtualization
   namespace: openshift-gitops
 spec:
   goTemplate: true
@@ -19,7 +19,7 @@ spec:
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
         targetRevision: HEAD
-        path: '/virtualization/{{.name}}/overlays/ocp/'
+        path: 'virtualization/{{.name}}/overlays/ocp/'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
