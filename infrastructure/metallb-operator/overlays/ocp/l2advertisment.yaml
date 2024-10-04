@@ -7,4 +7,4 @@ spec:
   ipAddressPools:
     - net-sigaint-dmz
   interfaces:
-    - br1.22
+    - br1.20
