@@ -13,6 +13,7 @@ spec:
       - name: access-credentials
       - name: tailscale-router
       - name: freeipa-server
+      - name: load-balancer
       - name: network-attachment-definitions
   template:
     metadata:
