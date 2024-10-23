@@ -12,7 +12,9 @@ spec:
         "name": "net-sigaint-wifi",
         "type": "bridge",
         "bridge": "br1",
-        "ipam": {},
+        "ipam": {
+          type: "dhcp"
+        },
         "macspoofchk": true,
         "preserveDefaultVlan": false,
         "vlan": 13
