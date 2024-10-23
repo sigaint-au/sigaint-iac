@@ -2,8 +2,17 @@
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
+  name: net-sigaint-dmz
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.120.1.100-10.120.1.200
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
   name: net-sigaint-hosting
   namespace: metallb-system
 spec:
   addresses:
-    - 10.120.0.240 - 10.120.0.255
+    - 10.120.0.240-10.120.0.255
