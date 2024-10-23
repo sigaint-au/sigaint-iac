@@ -13,7 +13,6 @@ spec:
         "type": "bridge",
         "bridge": "br1",
         "ipam": {
-          "type": "dhcp"
         },
         "macspoofchk": true,
         "preserveDefaultVlan": false,
