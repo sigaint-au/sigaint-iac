@@ -20,8 +20,8 @@ spec:
       spec:
         sourceRef:
           kind: DataSource
-          name: centos-stream9
-          namespace: openshift-virtualization-os-images
+          name: freebsd-14.1
+          namespace: sigaint-dmz
         storage:
           resources:
             requests:
