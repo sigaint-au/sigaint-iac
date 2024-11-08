@@ -5,15 +5,26 @@ metadata:
 spec:
   desiredState:
     interfaces:
+      - ipv4:
+          dhcp: true
+          enabled: true
+        name: br1.20
+        state: up
+        type: vlan
+        vlan:
+          base-iface: br1
+          id: 20
       - bridge:
           options:
+            multicast-snooping: true
             stp:
               enabled: false
           port:
             - name: eno2
         description: External Networks
         ipv4:
-          enabled: false
+          dhcp: true
+          enabled: true
         name: br1
         state: up
         type: linux-bridge
