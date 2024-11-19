@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: dhcp-shim
+  namespace: default
+spec:
+  config: |-
+    {
+      "name": "dhcp-shim",
+      "cniVersion": "0.3.1",
+      "type": "bridge",
+      "ipam": {
+        "type": "dhcp"
+      }
+    }

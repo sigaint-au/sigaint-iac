@@ -14,7 +14,7 @@ spec:
         "bridge": "br1",
         "ipam": {
         },
-        "macspoofchk": true,
+        "macspoofchk": false,
         "preserveDefaultVlan": false,
         "vlan": 20
     }
