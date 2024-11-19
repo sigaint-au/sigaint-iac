@@ -14,6 +14,7 @@ spec:
       - name: tailscale-router
       - name: load-balancer
       - name: network-attachment-definitions
+      - name: guacamole
   template:
     metadata:
       name: '{{.name}}'
