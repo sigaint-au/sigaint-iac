@@ -80,5 +80,9 @@ spec:
             name: lan-gws-01.dmz.sigaint.au
           name: rootdisk
         - cloudInitNoCloud:
-            userData: ""
+            userData: |-
+              #cloud-config
+              user: centos
+              password: TEL3HokWipEK7yNOciHaDAL-AHAR
+              chpasswd: { expire: False }
           name: cloudinitdisk
