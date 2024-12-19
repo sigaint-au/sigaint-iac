@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: victoria-logs
+  name: victoria-logs-release
   namespace: openshift-gitops
 spec:
-  project: dapplications
+  project: applications
   source:
-    chart: sealed-secrets
+    chart: victoria-logs-single
     repoURL: https://victoriametrics.github.io/helm-charts/
     targetRevision: v1.3.2
     helm:
