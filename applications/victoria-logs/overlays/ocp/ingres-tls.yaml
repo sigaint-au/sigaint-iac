@@ -9,6 +9,7 @@ spec:
   secretName: victoria-logs-tls
   commonName: victoria.ocp.sigaint.au
   dnsNames:
+    - victoria.ocp.sigaint.au
     - victoria.logs.sigaint.au
     - victoria.ts.sigaint.au
   issuerRef:
