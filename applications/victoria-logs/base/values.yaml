@@ -224,29 +224,29 @@ server:
     # -- Ingress annotations
     annotations:
        kubernetes.io/ingress.class: openshift-default
-       kubernetes.io/tls-acme: 'true'
+       #kubernetes.io/tls-acme: 'true'
 
     # -- Ingress extra labels
     extraLabels: {}
 
     # -- Array of host objects
     hosts:
-      - name: victoria.apps.ocp.sigaint.au
+      - name: victoria.ocp.sigaint.au
         path:
           - /
         port: http
 
-      - name: vls-logs-ingest.ocp.sigaint.au
+      - name: victoria.logs.sigaint.au
         path:
           - /
         port: http
 
     # -- Array of TLS objects
-    tls: []
-      #- secretName: vmselect-ingress-tls
-      #  hosts:
-      #    - victoria.apps.ocp.sigaint.au
-      #    - vls-logs-ingest.ocp.sigaint.au
+    tls:
+      - secretName: victoria-logs-tls
+        hosts:
+          - victoria.ocp.sigaint.au
+          - victoria.logs.sigaint.au
 
     # -- Ingress controller class name
     ingressClassName: ""
