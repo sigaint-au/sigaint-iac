@@ -12,7 +12,7 @@ spec:
     helm:
       releaseName: victoria-logs-single
       valueFiles:
-      - victoria-logs.yaml
+      - values.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: sigaint-monitoring
