@@ -25,7 +25,7 @@ spec:
             - name: TS_ROUTES
               value: "172.30.0.0/16"
             - name: TS_EXTRA_ARGS
-              value: "--login-server=https://tailscale.sigaint.au --accept-routes"
+              value: "--login-server=https://tailscale.sigaint.au --accept-routes --advertise-tags=tag:prod-lan-ocp-rou,tag:prod-lan-ocp-lb"
             - name: TS_USERSPACE
               value: "false"
             - name: TS_KUBE_SECRET
