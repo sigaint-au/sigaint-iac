@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ocp-applications
+  namespace: openshift-gitops
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - list:
+      elements:
+      - name: victoria-logs
+  template:
+    metadata:
+      name: '{{.name}}'
+    spec:
+      project: "applications"
+      source:
+        repoURL: https://github.com/sigaint-au/sigaint-iac
+        targetRevision: HEAD
+        path: 'applications/{{.name}}/overlays/ocp/'
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true

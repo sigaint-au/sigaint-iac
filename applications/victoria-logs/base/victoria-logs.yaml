@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-logs
+  namespace: openshift-gitops
+spec:
+  project: dapplications
+  source:
+    chart: sealed-secrets
+    repoURL: https://victoriametrics.github.io/helm-charts/
+    targetRevision: v1.3.2
+    helm:
+      releaseName: victoria-logs-single
+      valueFiles:
+      - victoria-logs.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: sigaint-monitoring
