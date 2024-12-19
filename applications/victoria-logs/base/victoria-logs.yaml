@@ -8,7 +8,7 @@ spec:
   source:
     chart: victoria-logs-single
     repoURL: https://victoriametrics.github.io/helm-charts/
-    targetRevision: v1.3.2
+    targetRevision: 0.8.11
     helm:
       releaseName: victoria-logs-single
       valueFiles:
