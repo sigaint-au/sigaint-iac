@@ -3,19 +3,3 @@ kind: Kustomization
 resources:
   - ingres-tls.yaml
   - ../../base
-patches:
-- target:
-    kind: Service
-    name: victoria-logs-single-server
-  patch: |-
-    - op: add
-      path: /spec/ports
-      value:
-      - name: syslog-udp
-        port: 2514
-        protocol: UDP
-        targetPort: 2154
-      - name: syslog-tcp
-        port: 2514
-        protocol: TCP
-        targetPort: 2514

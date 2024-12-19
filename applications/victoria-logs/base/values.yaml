@@ -260,7 +260,7 @@ server:
     # -- Service labels
     labels: {}
     # -- Service ClusterIP
-    clusterIP: "172.30.255.15"
+    clusterIP: ""
     # -- Service external IPs. Details are [here]( https://kubernetes.io/docs/user-guide/services/#external-ips)
     externalIPs: []
     # -- Service load balancer IP
