@@ -20,6 +20,7 @@ spec:
       - name: openshift-console-operator
       - name: metallb-operator
       - name: crunchy-postgres-operator
+      - name: tailscale
   template:
     metadata:
       name: '{{.name}}'

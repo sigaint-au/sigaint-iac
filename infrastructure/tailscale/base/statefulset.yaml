@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tailscale
+  labels:
+    app: tailscale
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tailscale
+  template:
+    metadata:
+      labels:
+        app: tailscale
+    spec:
+      serviceAccountName: tailscale
+      containers:
+        - name: tailscale
+          securityContext:
+            privileged: true
+          imagePullPolicy: Always
+          image: "ghcr.io/tailscale/tailscale:latest"
+          env:
+            - name: TS_ROUTES
+              value: "172.30.0.0/16"
+            - name: TS_EXTRA_ARGS
+              value: "--login-server=https://tailscale.sigaint.au --accept-routes"
+            - name: TS_USERSPACE
+              value: "false"
+            - name: TS_KUBE_SECRET
+              value: "ts-kube-secret"
+            - name: TS_USERSPACE
+              value: "false"
+            - name: TS_DEBUG_FIREWALL_MODE
+              value: auto
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: TS_AUTHKEY
+                  optional: true
+            - name: TS_AUTH_ONCE
+              value: "true"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
