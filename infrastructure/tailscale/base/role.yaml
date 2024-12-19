@@ -10,7 +10,10 @@ rules:
     # Create can not be restricted to a resource name.
     verbs: ["create"]
   - apiGroups: [""] # "" indicates the core API group
-    resourceNames: ["ts-kube-secret"]
+    resourceNames:
+      - "tailscale-0"
+      - "tailscale-1"
+      - "tailscale-3"
     resources: ["secrets"]
     verbs: ["get", "update", "patch"]
   - apiGroups: [""] # "" indicates the core API group

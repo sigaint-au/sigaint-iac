@@ -5,7 +5,7 @@ metadata:
   labels:
     app: tailscale
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: tailscale
@@ -29,7 +29,10 @@ spec:
             - name: TS_USERSPACE
               value: "false"
             - name: TS_KUBE_SECRET
-              value: "ts-kube-secret"
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
             - name: TS_USERSPACE
               value: "false"
             - name: TS_DEBUG_FIREWALL_MODE
