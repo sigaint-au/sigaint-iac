@@ -8,5 +8,4 @@ helmCharts:
   includeCRDs: true
   valuesFile: values.yaml
   releaseName: victoria-logs-single
-  version: 0.8.11
   repo: https://victoriametrics.github.io/helm-charts/
