@@ -12,10 +12,11 @@ patches:
       - op: replace
         path: /spec/clusterIP
         value: 172.30.255.15
+        
       - op: replace
         path: /spec/clusterIPs
         value:
-        -172.30.255.15
+          - 172.30.255.15
 
   # Patch certificate names and issuerR`
   - target:

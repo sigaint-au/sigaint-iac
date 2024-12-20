@@ -23,7 +23,8 @@ spec:
       port: 2514
       targetPort: 2514
   internalTrafficPolicy: Cluster
-  clusterIPs: []
+  clusterIPs:
+    - __PATCH__
   type: ClusterIP
   ipFamilyPolicy: SingleStack
   sessionAffinity: None
