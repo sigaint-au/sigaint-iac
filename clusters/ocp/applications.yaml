@@ -10,6 +10,7 @@ spec:
   - list:
       elements:
       - name: victoria-logs
+      - name: dashy
   template:
     metadata:
       name: '{{.name}}'
