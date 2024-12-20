@@ -8,7 +8,7 @@ patches:
   # So we can inject logs though tailscale
   - target:
       kind: Service
-      name: victoria-logs-ingrest
+      name: victoria-logs-ingest
     patch: |-
       - op: replace
         path: /spec/clusterIP
