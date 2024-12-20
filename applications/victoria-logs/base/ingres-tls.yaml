@@ -7,11 +7,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   secretName: victoria-logs-tls
-  commonName: victoria.ocp.sigaint.au
+  commonName: __PATCH__
   dnsNames:
-    - victoria.ocp.sigaint.au
-    - victoria.logs.sigaint.au
-    - victoria.ts.sigaint.au
+    - __PATCH__
   issuerRef:
-    name: le-production
+    name: __PATCH__
     kind: ClusterIssuer

@@ -1,5 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ingres-tls.yaml
   - ../../base
+patches:
+  - target:
+      kind: Certificate
+      name: victoria-logs-tls
+    patch: |-
+      - op: replace
+        path: /spec/commonName
+        value: "victoria.ocp.sigaint.au"
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - victoria.ocp.sigaint.au
+          - victoria.logs.sigaint.au
+          - victoria.ts.sigaint.au
+      - op: replace
+        path: /spec/issuerRef/name
+        value: le-production
