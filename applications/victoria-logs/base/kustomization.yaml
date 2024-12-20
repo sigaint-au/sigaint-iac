@@ -4,8 +4,8 @@ resources:
   - service.yaml
   - ingres-tls.yaml
 helmCharts:
-- name: victoria-logs
+- name: victoria-logs-single
   includeCRDs: true
   valuesFile: values.yaml
-  releaseName: victoria-logs-single
+  releaseName: victoria-logs
   repo: https://victoriametrics.github.io/helm-charts/
