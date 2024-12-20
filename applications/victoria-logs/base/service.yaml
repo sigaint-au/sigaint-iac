@@ -4,7 +4,7 @@ metadata:
   name: victoria-logs-ingest
   namespace: sigaint-monitoring
 spec:
-  clusterIP: 172.30.255.15
+  clusterIP: __PATCH__
   ipFamilies:
     - IPv4
   ports:
@@ -23,8 +23,7 @@ spec:
       port: 2514
       targetPort: 2514
   internalTrafficPolicy: Cluster
-  clusterIPs:
-    - 172.30.255.15
+  clusterIPs: []
   type: ClusterIP
   ipFamilyPolicy: SingleStack
   sessionAffinity: None

@@ -3,6 +3,21 @@ kind: Kustomization
 resources:
   - ../../base
 patches:
+
+  # So we can inject logs though tailscale
+  - target:
+      kind: Service
+      name: victoria-logs-ingrest
+    patch: |-
+      - op: replace
+        path: /spec/clusterIP
+        value: 172.30.255.15
+      - op: replace
+        path: /spec/clusterIPs
+        value:
+        -172.30.255.15
+
+  # Patch certificate names and issuerR`
   - target:
       kind: Certificate
       name: victoria-logs-tls
