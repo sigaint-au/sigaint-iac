@@ -18,3 +18,6 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/securityContext
         value: {}
+      - op: replace
+        path: /spec/template/securityContext
+        value: {}
