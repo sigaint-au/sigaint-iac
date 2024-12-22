@@ -15,9 +15,6 @@ patches:
       name: homepage
     patch: |-
       - op: replace
-        path: /spec/template/securityContext
-        value: {}
-      - op: replace
         path: /spec/template/spec/iniContainers/0/securityContext
         value: {}
       - op: replace
