@@ -200,28 +200,6 @@ podOptions:
 
 securityContext: {}
 
-ingress:
-  main:
-    enabled: true
-    primary: true
-    required: false
-    expandObjectName: false
-    labels:
-      key: value
-    annotations:
-      key: value
-    ingressClassName: ""
-    targetSelector:
-      main: main
-    hosts:
-      - host: homepage.apps.ocp.sigaint.au
-        paths:
-          - path: /
-            pathType: Prefix
-            overrideService:
-              name: main
-              port: 80
-
 configmap:
   config:
     enabled: true
