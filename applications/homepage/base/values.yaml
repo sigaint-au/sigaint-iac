@@ -200,15 +200,6 @@ podOptions:
 
 securityContext: {}
 
-ingress:
-  main:
-    enabled: true
-    hosts:
-      - host: chart-example.local
-    tls:
-      - hosts:
-          - chart-example.local
-
 configmap:
   config:
     enabled: true
