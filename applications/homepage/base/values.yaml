@@ -198,6 +198,8 @@ podOptions:
       - name: ndots
         value: "3"
 
+securityContext: {}
+
 configmap:
   config:
     enabled: true
