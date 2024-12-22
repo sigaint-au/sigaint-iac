@@ -8,7 +8,7 @@ helmCharts:
   repo: oci://tccr.io/truecharts/
 resources:
   - ingress-tls.yaml
-  - ingress.yaml
+  #- ingress.yaml
 patches:
   - target:
       kind: Deployment
