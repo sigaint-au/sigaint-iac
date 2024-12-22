@@ -200,6 +200,13 @@ podOptions:
 
 securityContext: {}
 
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: homepage.apps.ocp.sigaint.au
+    tls: []
+
 configmap:
   config:
     enabled: true
