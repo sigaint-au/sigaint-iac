@@ -5,4 +5,4 @@ helmCharts:
   includeCRDs: true
   valuesFile: values.yaml
   releaseName: homepage
-  repo: oci://tccr.io/truecharts/homepage
+  repo: oci://tccr.io/truecharts/
