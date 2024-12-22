@@ -204,8 +204,10 @@ ingress:
   main:
     enabled: true
     hosts:
-      - host: homepage.apps.ocp.sigaint.au
-    tls: []
+      - host: chart-example.local
+    tls:
+      - hosts:
+          - chart-example.local
 
 configmap:
   config:
