@@ -110,7 +110,7 @@ env:
 
 static:
   # If set to true, configuration will be overwritten on every new releases.
-  enabled: true
+  enabled: false
 
   # -- Set this to the name of a secret to load configuration from. If defined, values in the secret will override values in configs
   existingSecret: ""
