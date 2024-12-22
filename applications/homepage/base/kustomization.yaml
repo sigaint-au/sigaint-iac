@@ -7,3 +7,14 @@ helmCharts:
   releaseName: homepage
   repo: oci://tccr.io/truecharts/
 
+patches:
+  - target:
+      kind: Deployment
+      name: homepage
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/initContainers/0/securityContext
+        value: {}
+      - op: replace
+        path: /spec/template/spec/containers/0/securityContext
+        value: {}
