@@ -6,7 +6,9 @@ helmCharts:
   valuesFile: values.yaml
   releaseName: homepage
   repo: oci://tccr.io/truecharts/
-
+resources:
+  - ingress-tls.yaml
+  - ingress.yaml
 patches:
   - target:
       kind: Deployment
