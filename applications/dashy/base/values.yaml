@@ -87,10 +87,15 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
+  - name: app-volume
+    emptyDir:
+      sizeLimit: 500Mi
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - mountPath: /app/dist
+    name: app-volume
 
 nodeSelector: {}
 
