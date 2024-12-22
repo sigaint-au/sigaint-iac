@@ -207,7 +207,7 @@ configmap:
       custom.js: ""
       custom.css: ""
       kubernetes.yaml: |
-        mode: cluster
+        mode: disabled
       settings.yaml: |
         ---
         # For configuration options and examples, please see:
@@ -235,15 +235,15 @@ configmap:
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/services
 
-        - Arr:
-            - My First Service:
-                href: http://localhost/
-                description: Homepage is awesome
+        - OpenShift:
+            - OpenShift:
+                href: https://console.apps.ocp.sigaint.au/
+                description: Production OpenShift
 
-        - Media:
-            - My Second Service:
-                href: http://localhost/
-                description: Homepage is the best
+        - Keycloak:
+            - Account:
+                href: https://auth.sigaint.au/realms/SIGAINT/account
+                description: Manage your account, passwords, security.
 
         - Infra:
             - My Third Service:
