@@ -5,4 +5,4 @@ helmCharts:
   includeCRDs: true
   valuesFile: values.yaml
   releaseName: homepage
-  repo: https://jameswynn.github.io/helm-charts
+  repo: oci://tccr.io/truecharts/homepage
