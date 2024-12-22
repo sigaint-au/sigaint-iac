@@ -3,3 +3,29 @@ kind: Kustomization
 namespace: sigaint-applications
 resources:
   - ../../base
+patches:
+  - target:
+      kind: Ingress
+      name: homepage
+    patch: |-
+      - op: replace
+        path: /spec/tls/0/hosts
+        value:
+          -  homepage.ocp.sigaint.au
+      - op: replace
+        path: /spec/rules/0/host
+        value: homepage.ocp.sigaint.au
+  - target:
+      kind: Certificate
+      name: homepage-tls
+    patch: |-
+      - op: replace
+        path: /spec/commonName
+        value: "homepage.ocp.sigaint.au"
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - homepage.ocp.sigaint.au
+      - op: replace
+        path: /spec/issuerRef/name
+        value: le-production
