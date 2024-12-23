@@ -3,6 +3,8 @@ image:
   tag: v0.9.12@sha256:31820dab8e3f830f8a88c3ef1b3a1d103b899f2b8f2f51879d960d0db164a573
   pullPolicy: IfNotPresent
 
+forceConfigFromValues: true
+
 workload:
   main:
     podSpec:
@@ -54,14 +56,16 @@ service:
         port: 10352
         protocol: http
         targetPort: 3000
+
 persistence:
   config:
-    enabled: true
+    enabled: false
     mountPath: /app/config
     targetSelector:
       main:
         main: {}
         init-config: {}
+
   kubernetes-config:
     enabled: true
     mountPath: /app/config/kubernetes.yaml
