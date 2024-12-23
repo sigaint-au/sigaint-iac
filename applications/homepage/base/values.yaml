@@ -321,7 +321,7 @@ configmap:
                 description: "TrueCharts Open Collective"
             - DevSpaces:
               - abbr: DS
-                icon: https://devspaces.apps.ocp.sigaint.au/dashboard/assets/branding/favicon.ico
+                icon: https://devspaces.apps.ocp.sigaint.au/dashboard/assets/branding/favicon.ico
                 href: https://devspaces.apps.ocp.sigaint.au
                 description: "OpenShift DevSpaces"
 
