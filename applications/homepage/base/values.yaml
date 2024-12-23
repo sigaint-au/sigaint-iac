@@ -216,22 +216,18 @@ configmap:
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/settings
 
-        providers:
+       providers:
           openweathermap: openweathermapapikey
           weatherapi: weatherapiapikey
       widgets.yaml: |
         ---
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/widgets
-
-        - resources:
-            cpu: true
-            memory: true
-            disk: /
-
+        - openmeteo:
+            units: metric
+            cache: 30
         - search:
-            provider: duckduckgo
-            target: _blank
+            provider: [brave, google, duckduckgo]
 
       services.yaml: |
         ---
@@ -247,12 +243,9 @@ configmap:
         - Keycloak:
             - Account:
                 href: https://auth.sigaint.au/realms/SIGAINT/account
+                icon: https://auth.sigaint.au/resources/c1nh1/account/keycloak.v3/favicon.svg
                 description: Manage your account, passwords, security.
 
-        - Infra:
-            - My Third Service:
-                href: http://localhost/
-                description: Homepage is 😎
       bookmarks.yaml: |
         ---
         # For configuration options and examples, please see:
