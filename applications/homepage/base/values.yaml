@@ -3,8 +3,6 @@ image:
   tag: v0.9.12@sha256:31820dab8e3f830f8a88c3ef1b3a1d103b899f2b8f2f51879d960d0db164a573
   pullPolicy: IfNotPresent
 
-forceConfigFromValues: true
-
 workload:
   main:
     podSpec:
@@ -297,7 +295,7 @@ configmap:
                 href: https://truecharts.org/s/discord
                 description: "TrueCharts Discord"
 
-forceConfigFromValues: false
+forceConfigFromValues: true
 
 rbac:
   main:
