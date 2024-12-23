@@ -251,10 +251,25 @@ configmap:
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/bookmarks
 
-        - Developer:
-            - Github:
-                - abbr: GH
-                  href: https://github.com/
+        - Lanham:
+            - Frigate:
+                - abbr: FG
+                  href: https://frigate.ts.sigaint.au
+            - Transmission:
+                - abbr: TM
+                  href: https://plex.sigaint.au/transmission
+            - Plex:
+                - abbr: PX
+                  href: https://plex.sigaint.au/
+            - Sonarr:
+                - abbr: SR
+                  href: https://plex.sigaint.au/sonarr
+            - Radarr:
+                - abbr: SR
+                  href: https://plex.sigaint.au/radarr
+            - Papperless:
+                - abbr: PL
+                  href: https://paperless.sigaint.au/
 
         - Social:
             - Reddit:
