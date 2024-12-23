@@ -253,12 +253,12 @@ configmap:
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/bookmarks
 
-        - Services:
+        - Lanham Services:
             - Frigate:
                 - abbr: FG
                   href: https://frigate.ts.sigaint.au
                   icon: https://frigate.ts.sigaint.au/assets/favicon-32x32-XdU6wNGH.png
-                  description: Security Cameras.
+                  description: Security Cameras for Lanham.
             - Github:
                 - abbr: GH
                   href: https://github.com/sigaint-au
@@ -279,7 +279,24 @@ configmap:
                   href: https://victoria.logs.sigaint.au/
                   icon: https://victoria.ocp.sigaint.au/select/vmui/favicon.svg
                   description: System logs.
+            - Doppler:
+                - abbr: DP
+                  href: https://dashboard.doppler.com/login
+                  icon: https://dashboard.doppler.com/imgs/logo_color.png
+                  description: External Secrets
         
+        - Newcastle Services:
+            - Plex:
+                - abbr: PXN
+                  href: https://plex.ts.sombernet.au/
+                  icon: https://www.plex.com/sites/default/files/favicon.ico
+                  description: Watch all the Linux ISOs.
+            - Blue Iris:
+                - abbr: BI
+                  href: https://blueiris.ts.sombernet.au/
+                  icon: https://blueirissoftware.com/wp-content/uploads/2019/06/android-icon.png
+                  description: Security cameras for Newcastle.
+              
         - Proton:
             - Proton Mail:
                 - abbr: PM
@@ -294,26 +311,12 @@ configmap:
                   href: https://calendar.proton.me/
                   icon: https://calendar.proton.me/assets/apple-touch-icon-60x60.png
         
-
-        - Entertainment:
-            - YouTube:
-                - abbr: YT
-                  href: https://youtube.com/
-            - YouTube Music:
-                - abbr: YM
-                  href: https://music.youtube.com/
-
         - OpenShift:
             - Console:
               - abbr: OC
                 icon: https://console.apps.ocp.sigaint.au/static/assets/public/imgs/openshift-favicon.png
                 href: https://conosle.apps.ocp.sigaint.au
                 description: "OpenShift Console"
-            - ArgoCD:
-              - abbr: AD
-                icon: https://openshift-gitops-server-openshift-gitops.apps.ocp.sigaint.au/assets/favicon/favicon-32x32.png
-                href: https://github.com/truecharts
-                description: "Cluster configuration and GitOps"
             - Virtualization:
               - abbr: VZ
                 icon:  https://console.apps.ocp.sigaint.au/static/assets/public/imgs/openshift-favicon.png
@@ -324,6 +327,11 @@ configmap:
                 icon: https://devspaces.apps.ocp.sigaint.au/dashboard/assets/branding/favicon.ico
                 href: https://devspaces.apps.ocp.sigaint.au
                 description: "OpenShift DevSpaces"
+            - ArgoCD:
+              - abbr: AD
+                icon: https://openshift-gitops-server-openshift-gitops.apps.ocp.sigaint.au/assets/favicon/favicon-32x32.png
+                href: https://github.com/truecharts
+                description: "Cluster configuration and GitOps"
 
 forceConfigFromValues: true
 
