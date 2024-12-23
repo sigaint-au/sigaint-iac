@@ -258,14 +258,28 @@ configmap:
                 - abbr: FG
                   href: https://frigate.ts.sigaint.au
                   icon: https://frigate.ts.sigaint.au/assets/favicon-32x32-XdU6wNGH.png
+                  description: Security Cameras.
             - Github:
                 - abbr: GH
                   href: https://github.com/sigaint-au
                   icon: https://github.com/favicon.ico
+                  description: Sigaint Organization.
             - Plex:
                 - abbr: PX
                   href: https://plex.sigaint.au/
                   icon: https://www.plex.com/sites/default/files/favicon.ico
+                  description: Watch all the Linux ISOs.
+            - Moonlight:
+                - abbr: ML
+                  href: https://moonlight.ts.sigaint.au/machines
+                  icon: https://moonlight.ts.sigaint.au/icon.png
+                  description: System baseline status.
+            - Victoria Logs:
+                - abbr: VLS
+                  href: https://victoria.logs.sigaint.au/
+                  icon: https://victoria.ocp.sigaint.au/select/vmui/favicon.svg
+                  description: System logs.
+        
         - Proton:
             - Proton Mail:
                 - abbr: PM
@@ -285,6 +299,9 @@ configmap:
             - YouTube:
                 - abbr: YT
                   href: https://youtube.com/
+            - YouTube Music:
+                - abbr: YM
+                  href: https://music.youtube.com/
 
         - TrueCharts:
             - TrueCharts:
