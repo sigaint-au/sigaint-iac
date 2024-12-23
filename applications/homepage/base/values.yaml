@@ -59,7 +59,8 @@ service:
 
 persistence:
   config:
-    enabled: false
+    enabled: true
+    size: 5Gib
     mountPath: /app/config
     targetSelector:
       main:
