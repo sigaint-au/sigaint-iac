@@ -2,7 +2,6 @@ image:
   repository: ghcr.io/gethomepage/homepage
   tag: v0.9.12@sha256:31820dab8e3f830f8a88c3ef1b3a1d103b899f2b8f2f51879d960d0db164a573
   pullPolicy: IfNotPresent
-
 workload:
   main:
     podSpec:
@@ -54,7 +53,6 @@ service:
         port: 10352
         protocol: http
         targetPort: 3000
-
 persistence:
   config:
     enabled: true
@@ -64,7 +62,6 @@ persistence:
       main:
         main: {}
         init-config: {}
-
   kubernetes-config:
     enabled: true
     mountPath: /app/config/kubernetes.yaml
@@ -186,7 +183,6 @@ persistence:
     readOnly: true
     type: "configmap"
     objectName: config
-
 portal:
   open:
     enabled: true
@@ -194,15 +190,12 @@ serviceAccount:
   main:
     enabled: true
     primary: true
-
 podOptions:
   dnsConfig:
     options:
       - name: ndots
         value: "3"
-
 securityContext: {}
-
 configmap:
   config:
     enabled: true
@@ -219,27 +212,8 @@ configmap:
         providers:
           openweathermap: openweathermapapikey
           weatherapi: weatherapiapikey
-      widgets.yaml: |
-        ---
-        # For configuration options and examples, please see:
-        # https://gethomepage.dev/latest/configs/widgets
-        - openmeteo:
-            label: Googong # optional
-            latitude: 35.4222
-            longitude: 149.2359
-            timezone: Australia/Sydney
-            units: metric
-            cache: 30
-        - search:
-            provider: [brave, google, duckduckgo]
-        - quicklaunch:
-            searchDescriptions: true
-            hideInternetSearch: true
-            showSearchSuggestions: true
-            hideVisitURL: true
-            provider: google
-
-    services.yaml: |
+      widgets.yaml: "---\n# For configuration options and examples, please see:\n# https://gethomepage.dev/latest/configs/widgets\n- openmeteo:\n    label: Googong \n    latitude: 35.4222\n    longitude: 149.2359\n    timezone: \"Australia/Sydney\"\n    units: metric\n    cache: 30\n- search:\n    provider: [brave, google, duckduckgo]\n- quicklaunch:\n    searchDescriptions: true\n    hideInternetSearch: true\n    showSearchSuggestions: true\n    hideVisitURL: true\n    provider: google\n"
+      services.yaml: |
         ---
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/services
@@ -249,13 +223,11 @@ configmap:
                 href: https://console.apps.ocp.sigaint.au/
                 icon: https://console.apps.ocp.sigaint.au/static/assets/public/imgs/openshift-favicon.png
                 description: Production OpenShift 4.17
-
         - Keycloak:
             - Account:
                 href: https://auth.sigaint.au/realms/SIGAINT/account
                 icon: https://auth.sigaint.au/resources/c1nh1/account/keycloak.v3/favicon.svg
-                description: Manage your account, passwords, security.
-
+                description: Manage your account, passwords, security
       bookmarks.yaml: |
         ---
         # For configuration options and examples, please see:
@@ -312,9 +284,7 @@ configmap:
                 icon: https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://discord.com&size=32
                 href: https://truecharts.org/s/discord
                 description: "TrueCharts Discord"
-
 forceConfigFromValues: true
-
 rbac:
   main:
     enabled: false
