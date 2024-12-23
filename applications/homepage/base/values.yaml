@@ -215,7 +215,7 @@ configmap:
         ---
         # For configuration options and examples, please see:
         # https://gethomepage.dev/latest/configs/settings
-
+        theme: light
         providers:
           openweathermap: openweathermapapikey
           weatherapi: weatherapiapikey
@@ -258,22 +258,24 @@ configmap:
                 - abbr: FG
                   href: https://frigate.ts.sigaint.au
                   icon: https://frigate.ts.sigaint.au/assets/favicon-32x32-XdU6wNGH.png
-            - Plex:
-                - abbr: PX
-                  href: https://plex.sigaint.au/
-                  icon: https://www.plex.com/sites/default/files/favicon.ico
             - Github:
                 - abbr: GH
                   href: https://github.com/sigaint-au
                   icon: https://github.com/favicon.ico
+            - Plex:
+                - abbr: PX
+                  href: https://plex.sigaint.au/
+                  icon: https://www.plex.com/sites/default/files/favicon.ico
         - Proton:
             - Proton Mail:
                 - abbr: PM
                   href: https://mail.proton.me/
                   icon: https://mail.proton.me/assets/apple-touch-icon-60x60.png
+            - Proton Drive:
                 - abbr: PD
                   href: https://drive.proton.me/
                   icon: https://drive.proton.me/assets/apple-touch-icon-60x60.png
+            - Proton Calendar:
                 - abbr: PC
                   href: https://calendar.proton.me/
                   icon: https://calendar.proton.me/assets/apple-touch-icon-60x60.png
