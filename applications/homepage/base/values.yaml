@@ -303,27 +303,27 @@ configmap:
                 - abbr: YM
                   href: https://music.youtube.com/
 
-        - TrueCharts:
-            - TrueCharts:
-              - abbr: TC
-                icon: https://truecharts.org/svg/favicon.svg
-                href: https://truecharts.org
-                description: "TrueCharts Website"
-            - Github:
-              - abbr: GH
-                icon: https://github.com/fluidicon.png
+        - OpenShift:
+            - Console:
+              - abbr: OC
+                icon: https://console.apps.ocp.sigaint.au/static/assets/public/imgs/openshift-favicon.png
+                href: https://conosle.apps.ocp.sigaint.au
+                description: "OpenShift Console"
+            - ArgoCD:
+              - abbr: AD
+                icon: https://openshift-gitops-server-openshift-gitops.apps.ocp.sigaint.au/assets/favicon/favicon-32x32.png
                 href: https://github.com/truecharts
-                description: "TrueCharts GitHub"
-            - Open Collective:
-              - abbr: TC
-                icon: https://opencollective.com/favicon.ico
-                href: https://opencollective.com/truecharts
+                description: "Cluster configuration and GitOps"
+            - Virtualization:
+              - abbr: VZ
+                icon:  https://console.apps.ocp.sigaint.au/static/assets/public/imgs/openshift-favicon.png
+                href: https://console.apps.ocp.sigaint.au/k8s/all-namespaces/virtualization-overview
                 description: "TrueCharts Open Collective"
-            - Discord:
-              - abbr: DC
-                icon: https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://discord.com&size=32
-                href: https://truecharts.org/s/discord
-                description: "TrueCharts Discord"
+            - DevSpaces:
+              - abbr: DS
+                icon: https://devspaces.apps.ocp.sigaint.au/dashboard/assets/branding/favicon.ico
+                href: https://devspaces.apps.ocp.sigaint.au
+                description: "OpenShift DevSpaces"
 
 forceConfigFromValues: true
 
