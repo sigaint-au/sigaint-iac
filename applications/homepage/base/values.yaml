@@ -243,6 +243,7 @@ configmap:
         - OpenShift:
             - OpenShift:
                 href: https://console.apps.ocp.sigaint.au/
+                icon: https://console.apps.ocp.sigaint.au/static/assets/public/imgs/openshift-favicon.png
                 description: Production OpenShift
 
         - Keycloak:
