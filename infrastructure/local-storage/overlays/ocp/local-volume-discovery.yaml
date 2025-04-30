@@ -12,9 +12,9 @@ spec:
           - key: kubernetes.io/hostname
             operator: In
             values:
-              - lan-node-01
-              - lan-node-02
-              - lan-node-03
-              - lan-node-04
-              - lan-node-05
-              - lan-node-06
+              - node-1.osp.sigaint.au
+              - node-2.osp.sigaint.au
+              - node-3.osp.sigaint.au
+              - node-4.osp.sigaint.au
+              - node-5.osp.sigaint.au
+              - node-6.osp.sigaint.au
