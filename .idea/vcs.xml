@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="/var/home/mhahl/Developer/sigaint-iac" vcs="Git" />
   </component>
 </project>

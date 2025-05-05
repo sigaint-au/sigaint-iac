@@ -13,6 +13,10 @@ spec:
         "type": "bridge",
         "bridge": "br1",
         "ipam": {
+          "type": "whereabouts",
+          "range": "10.120.20.0/24",
+          "range_start": "10.120.20.10",
+          "range_end": "10.120.20.50"
         },
         "macspoofchk": false,
         "preserveDefaultVlan": false,

@@ -6,13 +6,28 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 10.120.1.100-10.120.1.200
+    - 10.120.20.100-10.120.20.150
+  autoAssign: true
+  avoidBuggyIPs: false
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: net-sigaint-hosting
+  name: net-sigaint-vmnet
   namespace: metallb-system
 spec:
   addresses:
-    - 10.120.0.240-10.120.0.255
+    - 10.120.21.100-10.120.21.150
+  autoAssign: true
+  avoidBuggyIPs: false
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: net-sigaint-wifi
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.120.13.60-10.120.13.100
+  autoAssign: true
+  avoidBuggyIPs: false
