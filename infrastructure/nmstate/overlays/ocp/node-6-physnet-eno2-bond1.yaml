@@ -36,7 +36,7 @@ spec:
         name: bond1.20
         state: up
         type: vlan
-        vlan:c
+        vlan:
           base-iface: bond1
           id: 20
       - description: vmnet vlan interface
