@@ -58,10 +58,9 @@ spec:
           id: 21
       - description: bond for external vlans
         ipv4:
-          dhcp: false
-          enabled: true
+          enabled: false
         ipv6:
-          enabled: true
+          enabled: false
         link-aggregation:
           mode: balance-rr
           options:
