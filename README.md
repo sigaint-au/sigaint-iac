@@ -21,13 +21,19 @@ roleRef:
 ## Add Node Labels
 
 ### Network
-```aiignore
+```
 # Dell
 oc label nodes node-{1..4}.osp.sigaint.au sigaint.au/physnet="eno4"
 
 # Lenovo
 oc label nodes node-{5..6}.osp.sigaint.au sigaint.au/physnet="eno2"
 ```
+
+Make Metallb work
+```
+oc patch network.operator cluster -p '{"spec":{"defaultNetwork":{"ovnKubernetesConfig":{"gatewayConfig":{"ipForwarding": "Global"}}}}}' --type=merge
+```
+
 
 # Disk
 ``` 

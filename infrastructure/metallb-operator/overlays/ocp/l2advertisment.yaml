@@ -8,7 +8,7 @@ spec:
   ipAddressPools:
     - net-sigaint-dmz
   interfaces:
-    - br1.20
+    - bond1.20
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -19,7 +19,7 @@ spec:
   ipAddressPools:
     - net-sigaint-vmnet
   interfaces:
-    - br1.21
+    - bond1.21
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -30,4 +30,4 @@ spec:
   ipAddressPools:
     - net-sigaint-wifi
   interfaces:
-    - br1.13
+    - bond1.13
