@@ -1,24 +1,22 @@
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
 metadata:
-  annotations:
-    k8s.v1.cni.cncf.io/resourceName: bridge.network.kubevirt.io/br1
   name: net-sigaint-vmnet
   namespace: default
 spec:
   config: |-
     {
-        "cniVersion": "0.3.1",
-        "name": "net-sigaint-dmz",
-        "type": "bridge",
-        "bridge": "br1",
+      "cniVersion": "0.3.1",
+      "name": "net-sigaint-vmnet",
+      "type": "macvlan",
+      "master": "bond1.21",
         "ipam": {
           "type": "whereabouts",
           "range": "10.120.21.0/24",
           "range_start": "10.120.21.10",
           "range_end": "10.120.21.50"
         },
-        "macspoofchk": true,
+        "macspoofchk": false,
         "preserveDefaultVlan": false,
         "vlan": 21
     }

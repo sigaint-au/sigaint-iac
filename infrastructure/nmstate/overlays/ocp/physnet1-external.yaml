@@ -2,21 +2,16 @@
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: node-6-physnet-eno2-bond1
+  name: physnet1-external
 spec:
   desiredState:
     interfaces:
       - description: wifi vlan interface
         ipv4:
-          address:
-            - ip: 10.120.13.246
-              prefix-length: 24
-          dhcp: false
+          dhcp: true
           enabled: true
         ipv6:
-          enabled: true
-          autoconf: true
-          dhcp: true
+          enabled: false
         name: bond1.13
         state: up
         type: vlan
@@ -25,38 +20,16 @@ spec:
           id: 13
       - description: dmz vlan interface
         ipv4:
-          address:
-            - ip: 10.120.20.246
-              prefix-length: 24
-          dhcp: false
+          dhcp: true
           enabled: true
         ipv6:
-          enabled: true
-          autoconf: true
-          dhcp: true
+          enabled: false
         name: bond1.20
         state: up
         type: vlan
         vlan:
           base-iface: bond1
           id: 20
-      - description: vmnet vlan interface
-        ipv4:
-          address:
-            - ip: 10.120.21.246
-              prefix-length: 24
-          dhcp: false
-          enabled: true
-        ipv6:
-          enabled: true
-          autoconf: true
-          dhcp: true
-        name: bond1.21
-        state: up
-        type: vlan
-        vlan:
-          base-iface: bond1
-          id: 21
       - description: bond for external vlans
         ipv4:
           enabled: false
@@ -72,5 +45,4 @@ spec:
         state: up
         type: bond
   nodeSelector:
-    kubernetes.io/hostname: node-6.osp.sigaint.au
-    node-role.kubernetes.io/worker: ''
+    sigaint.au/physnet: eno2
