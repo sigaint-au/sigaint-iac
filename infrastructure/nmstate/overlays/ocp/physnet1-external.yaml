@@ -11,7 +11,9 @@ spec:
           dhcp: true
           enabled: true
         ipv6:
-          enabled: false
+          enabled: true
+          autoconf: true
+          dhcp: true
         name: bond1.13
         state: up
         type: vlan
@@ -23,7 +25,9 @@ spec:
           dhcp: true
           enabled: true
         ipv6:
-          enabled: false
+          enabled: true
+          autoconf: true
+          dhcp: true
         name: bond1.20
         state: up
         type: vlan
