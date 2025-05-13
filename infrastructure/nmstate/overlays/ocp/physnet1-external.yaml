@@ -6,6 +6,20 @@ metadata:
 spec:
   desiredState:
     interfaces:
+      - description: vmnet vlan interface
+        ipv4:
+          dhcp: true
+          enabled: true
+        ipv6:
+          enabled: true
+          autoconf: true
+          dhcp: true
+        name: bond1.21
+        state: up
+        type: vlan
+        vlan:
+          base-iface: bond1
+          id: 21
       - description: wifi vlan interface
         ipv4:
           dhcp: true

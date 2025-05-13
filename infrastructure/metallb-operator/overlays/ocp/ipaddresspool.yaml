@@ -6,7 +6,8 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 10.120.20.100-10.120.20.150
+    - '10.120.20.100-10.120.20.150'
+    - '2404:e80:4b6f:1:1337::1-2404:e80:4b6f:1:1337::100'
   autoAssign: true
   avoidBuggyIPs: false
 ---
@@ -17,7 +18,9 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 10.120.21.100-10.120.21.150
+    - '10.120.21.100-10.120.21.150'
+    - '2404:e80:4b6f:6:1337::1-2404:e80:4b6f:6:1337::100'
+
   autoAssign: true
   avoidBuggyIPs: false
 ---
@@ -28,6 +31,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 10.120.13.60-10.120.13.100
+    - '10.120.13.60-10.120.13.100'
+    - '2404:e80:4b6f:0:1337::1-2404:e80:4b6f:0:1337::100'
   autoAssign: true
   avoidBuggyIPs: false
