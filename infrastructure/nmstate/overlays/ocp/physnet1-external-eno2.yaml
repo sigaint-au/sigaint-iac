@@ -1,0 +1,66 @@
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: physnet1-external-eno2
+spec:
+  desiredState:
+    interfaces:
+      - description: vmnet vlan interface
+        ipv4:
+          dhcp: true
+          enabled: true
+        ipv6:
+          enabled: true
+          autoconf: true
+          dhcp: true
+        name: bond1.21
+        state: up
+        type: vlan
+        vlan:
+          base-iface: bond1
+          id: 21
+      - description: wifi vlan interface
+        ipv4:
+          dhcp: true
+          enabled: true
+        ipv6:
+          enabled: true
+          autoconf: true
+          dhcp: true
+        name: bond1.13
+        state: up
+        type: vlan
+        vlan:
+          base-iface: bond1
+          id: 13
+      - description: dmz vlan interface
+        ipv4:
+          dhcp: true
+          enabled: true
+        ipv6:
+          enabled: true
+          autoconf: true
+          dhcp: true
+        name: bond1.20
+        state: up
+        type: vlan
+        vlan:
+          base-iface: bond1
+          id: 20
+      - description: bond for external vlans
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+        link-aggregation:
+          mode: balance-rr
+          options:
+            miimon: '100'
+          port:
+            - eno2
+        name: bond1
+        state: up
+        type: bond
+  nodeSelector:
+    sigaint.au/physnet: eno2
