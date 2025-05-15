@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - net-sigaint-dmz.yaml
   - net-sigaint-vmnet.yaml
-  - net-sigaint-wifi.yaml
+  - net-sigaint-corp.yaml

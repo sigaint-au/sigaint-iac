@@ -11,10 +11,7 @@ spec:
       "type": "macvlan",
       "master": "bond1.20",
         "ipam": {
-          "type": "whereabouts",
-          "range": "10.120.20.0/24",
-          "range_start": "10.120.20.10",
-          "range_end": "10.120.20.50"
+          "type": "dhcp"
         },
         "macspoofchk": false,
         "preserveDefaultVlan": false,
