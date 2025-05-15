@@ -4,21 +4,21 @@ kind: NodeNetworkConfigurationPolicy
 metadata:
   name: physnet1-external-eno2
 spec:
-desiredState:
-  interfaces:
-    - bridge:
-        options:
-          multicast-snooping: true
-          stp:
-            enabled: false
-        port:
-          - name: eno2
-      description: External Networks
-      ipv4:
-        dhcp: true
-        enabled: true
-      name: br1
-      state: up
-      type: linux-bridge
+  desiredState:
+    interfaces:
+      - bridge:
+          options:
+            multicast-snooping: true
+            stp:
+              enabled: false
+          port:
+            - name: eno2
+        description: External Networks
+        ipv4:
+          dhcp: true
+          enabled: true
+        name: br1
+        state: up
+        type: linux-bridge
   nodeSelector:
     sigaint.au/physnet: eno2
