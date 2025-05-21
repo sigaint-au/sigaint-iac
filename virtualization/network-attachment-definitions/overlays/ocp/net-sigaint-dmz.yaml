@@ -17,4 +17,3 @@ spec:
         "preserveDefaultVlan": false,
         "vlan": 20
     }
-}
