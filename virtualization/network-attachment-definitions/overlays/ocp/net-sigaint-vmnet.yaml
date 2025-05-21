@@ -8,8 +8,8 @@ spec:
     {
       "cniVersion": "0.3.1",
       "name": "net-sigaint-vmnet",
-      "type": "macvlan",
-      "master": "bond1.21",
+      "type": "bridge",
+      "bridge": "br1",
         "ipam": {
           "type": "dhcp"
         },
