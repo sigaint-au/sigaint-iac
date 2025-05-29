@@ -6,7 +6,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - '10.120.20.100-10.120.20.150'
+    - '10.120.20.200-10.120.20.250'
     - '2404:e80:4b6f:1:1337::1-2404:e80:4b6f:1:1337::100'
   autoAssign: true
   avoidBuggyIPs: false
@@ -18,7 +18,7 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - '10.120.21.100-10.120.21.150'
+    - '10.120.21.200-10.120.21.250'
     - '2404:e80:4b6f:6:1337::1-2404:e80:4b6f:6:1337::100'
 
   autoAssign: true
@@ -27,11 +27,11 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: net-sigaint-wifi
+  name: net-sigaint-corp
   namespace: metallb-system
 spec:
   addresses:
-    - '10.120.13.60-10.120.13.100'
+    - '10.120.13.200-10.120.13.250'
     - '2404:e80:4b6f:0:1337::1-2404:e80:4b6f:0:1337::100'
   autoAssign: true
   avoidBuggyIPs: false
