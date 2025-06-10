@@ -21,7 +21,7 @@ spec:
               storage: 100Gi
   instancetype:
     kind: virtualmachineclusterinstancetype
-    name: u1.medium
+    name: u1.2xlarge
   preference:
     kind: virtualmachineclusterpreference
     name: rhel.9
