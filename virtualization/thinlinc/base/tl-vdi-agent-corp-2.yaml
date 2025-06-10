@@ -1,7 +1,7 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: tl-vdi-agent-corp-1
+  name: tl-vdi-agent-corp-2
   namespace: sigaint-vdi
   labels:
     vm.openshift.io/folder: Agent
@@ -9,7 +9,7 @@ spec:
   dataVolumeTemplates:
     - metadata:
         creationTimestamp: null
-        name: tl-vdi-agent-corp-1-volume
+        name: tl-vdi-agent-corp-2-volume
       spec:
         sourceRef:
           kind: DataSource
@@ -46,7 +46,7 @@ spec:
           autoattachPodInterface: false
           interfaces:
             - bridge: {}
-              macAddress: '02:a8:d6:00:00:cc'
+              macAddress: '02:a8:d6:00:00:bb'
               model: virtio
               name: nic-corp
         machine:
@@ -59,7 +59,7 @@ spec:
       subdomain: headless
       volumes:
         - dataVolume:
-            name: tl-vdi-agent-corp-1-volume
+            name: tl-vdi-agent-corp-2-volume
           name: rootdisk
         - cloudInitNoCloud:
             userData: |
