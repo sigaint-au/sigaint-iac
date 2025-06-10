@@ -4,7 +4,7 @@ metadata:
   name: tl-vdi-agent-corp-1
   namespace: sigaint-vdi
   labels:
-    vm.openshift.io/folder: Master
+    vm.openshift.io/folder: Agent
 spec:
   dataVolumeTemplates:
     - metadata:
