@@ -46,7 +46,7 @@ spec:
           autoattachPodInterface: false
           interfaces:
             - bridge: {}
-              macAddress: '02:a8:d6:00:00:bb'
+              macAddress: '02:a8:d6:00:00:cc'
               model: virtio
               name: nic-corp
         machine:
