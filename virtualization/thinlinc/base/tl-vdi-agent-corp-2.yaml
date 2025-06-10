@@ -1,0 +1,74 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: tl-vdi-agent-corp-1
+  namespace: sigaint-vdi
+  labels:
+    vm.openshift.io/folder: Master
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: tl-vdi-agent-corp-1-volume
+      spec:
+        sourceRef:
+          kind: DataSource
+          name: rhel9
+          namespace: openshift-virtualization-os-images
+        storage:
+          resources:
+            requests:
+              storage: 100Gi
+  instancetype:
+    kind: virtualmachineclusterinstancetype
+    name: u1.medium
+  preference:
+    kind: virtualmachineclusterpreference
+    name: rhel.9
+  runStrategy: Halted
+  template:
+    metadata:
+      labels:
+        network.kubevirt.io/headlessService: headless
+    spec:
+      accessCredentials:
+        - sshPublicKey:
+            propagationMethod:
+              qemuGuestAgent:
+                users:
+                  - rhel
+            source:
+              secret:
+                secretName: sk-lan-local
+      architecture: amd64
+      domain:
+        devices:
+          autoattachPodInterface: false
+          interfaces:
+            - bridge: {}
+              macAddress: '02:a8:d6:00:00:cc'
+              model: virtio
+              name: nic-corp
+        machine:
+          type: pc-q35-rhel9.4.0
+        resources: {}
+      networks:
+        - multus:
+            networkName: default/net-sigaint-corp
+          name: nic-corp
+      subdomain: headless
+      volumes:
+        - dataVolume:
+            name: tl-vdi-agent-corp-1-volume
+          name: rootdisk
+        - cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              user: rhel
+              runcmd:
+                - >-
+                - systemctl enable --now dnf-automatic-install.timer
+                - setsebool -P virt_qemu_ga_manage_ssh on
+              packages:
+                - dnf-automatic
+          name: cloudinitdisk
