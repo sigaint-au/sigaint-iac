@@ -10,10 +10,8 @@ spec:
       "name": "net-sigaint-vmnet",
       "type": "bridge",
       "bridge": "br1",
-        "ipam": {
-          "type": "dhcp"
-        },
-        "macspoofchk": false,
-        "preserveDefaultVlan": false,
-        "vlan": 21
+      "disableContainerInterface": true,
+      "macspoofchk": false,
+      "preserveDefaultVlan": false,
+      "vlan": 21
     }
