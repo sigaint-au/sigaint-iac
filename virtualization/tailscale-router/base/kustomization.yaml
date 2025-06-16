@@ -1,4 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - lan-ts-rou.yaml
+  - ts-rou-1.yaml
+  - ts-rou-2.yaml

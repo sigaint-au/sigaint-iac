@@ -1,0 +1,77 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ts-rou-1
+  namespace: sigaint-vdi
+  labels:
+    vm.openshift.io/folder: Tailscale
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        creationTimestamp: null
+        name: ts-rou-1-volume
+      spec:
+        sourceRef:
+          kind: DataSource
+          name: rhel9
+          namespace: openshift-virtualization-os-images
+        storage:
+          resources:
+            requests:
+              storage: 25Gi
+  instancetype:
+    kind: virtualmachineclusterinstancetype
+    name: u1.small
+  preference:
+    kind: virtualmachineclusterpreference
+    name: rhel.9
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        network.kubevirt.io/headlessService: headless
+    spec:
+      accessCredentials:
+        - sshPublicKey:
+            propagationMethod:
+              qemuGuestAgent:
+                users:
+                  - rhel
+            source:
+              secret:
+                secretName: sk-lan-local
+      architecture: amd64
+      domain:
+        devices:
+          autoattachPodInterface: false
+          interfaces:
+            - bridge: {}
+              macAddress: '02:a8:d6:00:11:aa'
+              model: virtio
+              name: nic-corp
+        machine:
+          type: pc-q35-rhel9.4.0
+        resources: {}
+      networks:
+        - multus:
+            networkName: default/net-sigaint-corp
+          name: nic-corp
+      subdomain: headless
+      volumes:
+        - dataVolume:
+            name: ts-rou-1-volume
+          name: rootdisk
+        - cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              user: rhel
+              runcmd:
+                - >-
+                - hostnamectl set-hostname ts-rou-1.corp.sigaint.au
+                - subscription-manager register --org=7271256 --activationkey=mhahl-rhel
+                - systemctl enable --now dnf-automatic-install.timer
+                - setsebool -P virt_qemu_ga_manage_ssh on
+                - dnf install -y ipa-client
+              packages:
+                - dnf-automatic
+          name: cloudinitdisk
