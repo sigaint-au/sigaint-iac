@@ -8,10 +8,9 @@ spec:
     {
       "cniVersion": "0.3.1",
       "name": "net-sigaint-corp",
-      "type": "bridge",
-      "bridge": "br1",
-      "disableContainerInterface": true,
-      "macspoofchk": false,
-      "preserveDefaultVlan": false,
-      "vlan": 13
+      "type": "ovn-k8s-cni-overlay",
+      "topology": "localnet",
+      "vlanID": 13,
+      "mtu": 1500,
+      "netAttachDefName": "default/net-sigaint-corp"
     }

@@ -7,18 +7,25 @@ spec:
   desiredState:
     interfaces:
       - bridge:
+          allow-extra-patch-ports: true
           options:
-            multicast-snooping: true
-            stp:
-              enabled: false
+            mcast-snooping-enable: true
+            stp: false
           port:
             - name: eno2
-        description: External Networks
-        ipv4:
-          dhcp: true
-          enabled: true
-        name: br1
+        name: ovs-br1
         state: up
-        type: linux-bridge
+        type: ovs-bridge
+    ovn:
+      bridge-mappings:
+        - bridge: ovs-br1
+          localnet: net-sigaint-corp
+          state: present
+        - bridge: ovs-br1
+          localnet: net-sigaint-dmz
+          state: present
+        - bridge: ovs-br1
+          localnet: net-sigaint-vmnet
+          state: present
   nodeSelector:
     sigaint.au/physnet: eno2
