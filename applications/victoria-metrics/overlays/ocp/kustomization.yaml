@@ -7,7 +7,7 @@ patches:
     # Patch certificate names and issuerR`
   - target:
       kind: Certificate
-      name: victoria-logs-tls
+      name: victoria-metrics-tls
     patch: |-
       - op: replace
         path: /spec/commonName
