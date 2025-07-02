@@ -61,6 +61,7 @@ server:
     httpListenAddr: :9428
     syslog.listenAddr.tcp: ":2514"
     syslog.listenAddr.udp: ":2514"
+    syslog.timezone: "Australia/Sydney"
 
   # -- Additional hostPath mounts
   extraHostPathMounts:
