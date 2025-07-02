@@ -450,7 +450,12 @@ server:
         - job_name: victoria-logs
           static_configs:
             - targets: [ "https://observe.sigaint.au/metrics" ]
-
+        - job_name: node_exporter
+          static_configs:
+            - targets:
+                - "http://100.69.205.166/metrics"
+                - "http://100.110.229.31/metrics"
+                - "http://100.89.234.57/metrics"
           # COPY from Prometheus helm chart https://github.com/helm/charts/blob/master/stable/prometheus/values.yaml
 
 
