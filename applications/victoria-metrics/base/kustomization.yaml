@@ -2,10 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ingress-tls.yaml
+  - ingress-tls.yaml
   - service.yaml
 helmCharts:
-- name: victoria-logs-single
+- name: victoria-metrics-single
   includeCRDs: true
   valuesFile: values.yaml
-  releaseName: victoria-logs
+  releaseName: victoria-metrics
   repo: https://victoriametrics.github.io/helm-charts/

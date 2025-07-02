@@ -9,7 +9,9 @@ spec:
   generators:
   - list:
       elements:
+      - name: namespace
       - name: victoria-logs
+      - name: victoria-metrics
       - name: homepage
   template:
     metadata:
