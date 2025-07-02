@@ -281,7 +281,7 @@ server:
 
   statefulSet:
     # -- Creates statefulset instead of deployment, useful when you want to keep the cache
-    enabled: false
+    enabled: true
     # -- Deploy order policy for StatefulSet pods
     podManagementPolicy: OrderedReady
   # -- Pod's termination grace period in seconds

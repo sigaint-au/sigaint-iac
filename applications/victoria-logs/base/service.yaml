@@ -10,13 +10,9 @@ spec:
     - IPv4
     - IPv6
   ports:
-    - name: syslog-udp
-      protocol: UDP
-      port: 2514
-      targetPort: 2514
     - name: syslog-tcp
       protocol: TCP
-      port: 2514
+      port: 514
       targetPort: 2514
   internalTrafficPolicy: Cluster
   type: LoadBalancer
