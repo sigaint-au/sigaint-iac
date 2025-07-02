@@ -14,7 +14,6 @@ spec:
       protocol: UDP
       port: 2514
       targetPort: 2514
-
     - name: syslog-tcp
       protocol: TCP
       port: 2514
