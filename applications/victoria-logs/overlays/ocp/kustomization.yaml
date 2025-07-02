@@ -6,18 +6,18 @@ resources:
 patches:
 
   # So we can inject logs though tailscale
-  - target:
-      kind: Service
-      name: victoria-logs-ingest
-    patch: |-
-      - op: replace
-        path: /spec/clusterIP
-        value: 172.30.255.15
-        
-      - op: replace
-        path: /spec/clusterIPs
-        value:
-          - 172.30.255.15
+#  - target:
+#      kind: Service
+#      name: victoria-logs-ingest
+#    patch: |-
+#      - op: replace
+#        path: /spec/clusterIP
+#        value: 172.30.255.15
+#
+#      - op: replace
+#        path: /spec/clusterIPs
+#        value:
+#          - 172.30.255.15
 
   # Patch certificate names and issuerR`
   - target:
@@ -26,13 +26,12 @@ patches:
     patch: |-
       - op: replace
         path: /spec/commonName
-        value: "victoria.ocp.sigaint.au"
+        value: "observe.sigaint.au"
       - op: replace
         path: /spec/dnsNames
         value:
-          - victoria.ocp.sigaint.au
-          - victoria.logs.sigaint.au
-          - victoria.ts.sigaint.au
+          - observe.sigaint.au
+          - observe.ts.sigaint.au
       - op: replace
         path: /spec/issuerRef/name
         value: le-production

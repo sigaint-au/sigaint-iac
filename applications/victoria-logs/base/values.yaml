@@ -231,12 +231,7 @@ server:
 
     # -- Array of host objects
     hosts:
-      - name: victoria.ocp.sigaint.au
-        path:
-          - /
-        port: http
-
-      - name: victoria.logs.sigaint.au
+      - name: observe.sigaint.au
         path:
           - /
         port: http
@@ -245,8 +240,7 @@ server:
     tls:
       - secretName: victoria-logs-tls
         hosts:
-          - victoria.ocp.sigaint.au
-          - victoria.logs.sigaint.au
+          - observe.sigaint.au
 
     # -- Ingress controller class name
     ingressClassName: ""

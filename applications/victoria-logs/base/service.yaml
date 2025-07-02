@@ -2,17 +2,14 @@ kind: Service
 apiVersion: v1
 metadata:
   name: victoria-logs-ingest
-  namespace: sigaint-monitoring
+  annotations:
+    metallb.io/ip-allocated-from-pool: net-sigaint-dmz
+    metallb.universe.tf/address-pool: net-sigaint-dmz
 spec:
-  clusterIP: __PATCH__
   ipFamilies:
     - IPv4
+    - IPv6
   ports:
-    - name: http
-      protocol: TCP
-      port: 9428
-      targetPort: http
-
     - name: syslog-udp
       protocol: UDP
       port: 2514
@@ -23,10 +20,8 @@ spec:
       port: 2514
       targetPort: 2514
   internalTrafficPolicy: Cluster
-  clusterIPs:
-    - __PATCH__
-  type: ClusterIP
-  ipFamilyPolicy: SingleStack
+  type: LoadBalancer
+  ipFamilyPolicy: PreferDualStack
   sessionAffinity: None
   selector:
     app: server
