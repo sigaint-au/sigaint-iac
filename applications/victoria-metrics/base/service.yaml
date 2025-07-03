@@ -1,23 +1,29 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: victoria-logs-ingest
+  name: victoria-metrics-ingest
+  namespace: sigaint-monitoring
+  labels:
+    app: server
   annotations:
     metallb.io/ip-allocated-from-pool: net-sigaint-dmz
     metallb.universe.tf/address-pool: net-sigaint-dmz
 spec:
+  externalTrafficPolicy: Cluster
   ipFamilies:
     - IPv4
     - IPv6
   ports:
-    - name: syslog-tcp
+    - name: http
       protocol: TCP
-      port: 514
-      targetPort: 2514
+      port: 8428
+      targetPort: http
+      nodePort: 30199
   internalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: true
   type: LoadBalancer
   ipFamilyPolicy: PreferDualStack
   sessionAffinity: None
   selector:
     app: server
-    app.kubernetes.io/name: victoria-logs-single
+    app.kubernetes.io/name: victoria-metrics-single
