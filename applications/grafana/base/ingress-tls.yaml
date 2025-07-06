@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-tls
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  secretName: grafana-tls
+  commonName: __PATCH__
+  dnsNames:
+    - __PATCH__
+  issuerRef:
+    name: __PATCH__
+    kind: ClusterIssuer

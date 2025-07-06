@@ -12,6 +12,7 @@ spec:
       - name: victoria-logs
       - name: victoria-metrics
       - name: homepage
+      - name: grafana
   template:
     metadata:
       name: '{{.name}}'
