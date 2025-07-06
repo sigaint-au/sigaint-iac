@@ -4,4 +4,4 @@ resources:
     - ../../base
     - ipaddresspool.yaml
     - bgppeer.yaml
-    #- l2advertisment.yaml
+    - bgpadvertisment.yaml
