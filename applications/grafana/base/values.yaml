@@ -145,7 +145,7 @@ smtp:
 ## Example:
 ## plugins: grafana-kubernetes-app,grafana-example-app
 ##
-plugins: ""
+plugins: "victoriametrics-logs-datasource"
 ## Ldap configuration for Grafana
 ##
 ldap:
