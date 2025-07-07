@@ -110,7 +110,7 @@ admin:
 smtp:
   ## @param smtp.enabled Enable SMTP configuration
   ##
-  enabled: false
+  enabled: true
   ## @param smtp.user SMTP user
   ##
   user: user
@@ -121,19 +121,19 @@ smtp:
   ## e.g:
   ##   host: mysmtphost.com
   ##
-  host: ""
+  host: "smtp.protonmail.ch:587"
   ## @param smtp.fromAddress From address
   ##
-  fromAddress: ""
+  fromAddress: "no-reply@sigaint.au"
   ## @param smtp.fromName From name
   ##
-  fromName: ""
+  fromName: "AlertManager"
   ## @param smtp.skipVerify Enable skip verify
   ##
   skipVerify: "false"
   ## @param smtp.existingSecret Name of existing secret containing SMTP credentials (user and password)
   ##
-  existingSecret: ""
+  existingSecret: "grafana-smtp"
   ## @param smtp.existingSecretUserKey User key on the existing secret
   ##
   existingSecretUserKey: user
