@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: sigaint-monitoring
 resources:
   - ../../base
+  - external-secret.yaml
 patches:
     # Patch certificate names and issuerR`
   - target:

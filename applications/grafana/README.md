@@ -10,7 +10,7 @@ use_ssl = true
 start_tls = false
 
 ssl_skip_verify = false
-root_ca_cert = " /opt/bitnami/grafana/conf/ldap/ca.crt"
+root_ca_cert = "/opt/bitnami/grafana/conf/ldap/ca.crt"
 
 bind_dn = "uid=svc-ldap-bind,cn=users,cn=accounts,dc=sigaint,dc=au"
 bind_password = "password"

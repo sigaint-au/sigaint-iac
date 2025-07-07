@@ -4,7 +4,7 @@ resources:
   - ingress-tls.yaml
 helmCharts:
 - name: grafana
-  includeCRDs: true
+  includeCRDs: false
   valuesFile: values.yaml
   releaseName: grafana
   repo: https://charts.bitnami.com/bitnami
