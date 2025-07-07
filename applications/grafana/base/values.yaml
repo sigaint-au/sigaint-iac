@@ -98,7 +98,7 @@ admin:
   user: "admin"
   ## @param admin.password Admin password. If a password is not provided a random password will be generated
   ##
-  password: "password"
+  password: ""
   ## @param admin.existingSecret Name of the existing secret containing admin password
   ##
   existingSecret: ""
@@ -113,10 +113,10 @@ smtp:
   enabled: true
   ## @param smtp.user SMTP user
   ##
-  user: user
+  user: ""
   ## @param smtp.password SMTP password
   ##
-  password: password
+  password: ""
   ## @param smtp.host Custom host for the smtp server
   ## e.g:
   ##   host: mysmtphost.com
@@ -127,7 +127,7 @@ smtp:
   fromAddress: "no-reply@sigaint.au"
   ## @param smtp.fromName From name
   ##
-  fromName: "AlertManager"
+  fromName: ""
   ## @param smtp.skipVerify Enable skip verify
   ##
   skipVerify: "false"
@@ -445,7 +445,7 @@ grafana:
   ## @param grafana.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if grafana.resources is set (grafana.resources is recommended for production).
   ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
-  resourcesPreset: "nano"
+  resourcesPreset: "large"
   ## @param grafana.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
   ## resources:
