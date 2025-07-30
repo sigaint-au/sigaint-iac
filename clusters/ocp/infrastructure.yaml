@@ -9,6 +9,7 @@ spec:
   generators:
   - list:
       elements:
+      - name: openshift-machine-config-operator
       - name: openshift-cert-manager-operator
       - name: external-secrets-operator
       - name: local-storage
