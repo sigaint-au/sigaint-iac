@@ -12,12 +12,16 @@ spec:
     privateKeySecretRef:
       name: le-staging-issuer-account-key
     solvers:
+      # idm-46c2.syd.sigaint.au
       - dns01:
-          cloudflare:
-            email: a8c74b30-a06a-41c2-a82f-8ec7b2b74eac@sigaint.net
-            apiTokenSecretRef:
-              name: cloudflare-api-token
-              key: api-token
+          rfc2136:
+            nameserver: 139.180.163.149:53
+            tsigKeyName: cert-manager
+            tsigAlgorithm: HMACSHA256
+            tsigSecretSecretRef:
+              name: tsig-secret
+              key: tsig-secret
+
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -32,9 +36,12 @@ spec:
     privateKeySecretRef:
       name: le-production-issuer-account-key
     solvers:
+      # idm-46c2.syd.sigaint.au
       - dns01:
-          cloudflare:
-            email: 5a906234-c5b2-4c1b-affd-8eb33903210d@sigaint.net
-            apiTokenSecretRef:
-              name: cloudflare-api-token
-              key: api-token
+          rfc2136:
+            nameserver: 139.180.163.149:53
+            tsigKeyName: cert-manager
+            tsigAlgorithm: HMACSHA256
+            tsigSecretSecretRef:
+              name: tsig-secret
+              key: tsig-secret
