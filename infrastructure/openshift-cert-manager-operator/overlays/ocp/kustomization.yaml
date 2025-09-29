@@ -4,3 +4,4 @@ resources:
     - ../../base
     - cloudflare-secret.yaml
     - cloudflare-issuer.yaml
+    - tsig-secret.yaml
