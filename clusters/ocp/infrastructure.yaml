@@ -21,6 +21,7 @@ spec:
       - name: openshift-console-operator
       - name: metallb-operator
       - name: crunchy-postgres-operator
+      - name: cloudnative-pg-operator
       - name: tailscale
   template:
     metadata:
