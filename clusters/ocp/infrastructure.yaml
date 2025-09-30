@@ -22,6 +22,7 @@ spec:
       - name: metallb-operator
       - name: crunchy-postgres-operator
       - name: cloudnative-pg-operator
+      - name: quay-operator
       - name: tailscale
   template:
     metadata:
