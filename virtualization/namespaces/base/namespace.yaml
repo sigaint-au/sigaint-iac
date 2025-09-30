@@ -11,9 +11,14 @@ metadata:
   name: sigaint-dmz
 spec: {}
 ---
----
 kind: Namespace
 apiVersion: v1
 metadata:
   name: sigaint-monitoring
+spec: {}
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: sigaint-quay
 spec: {}
