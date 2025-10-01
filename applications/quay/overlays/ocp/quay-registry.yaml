@@ -9,11 +9,11 @@ spec:
   configBundleSecret: quay-config-bundle
   components:
     - kind: clair
-      managed: true
+      managed: false
     - kind: postgres
       managed: false
     - kind: objectstorage
-      managed: false
+      managed: true
     - kind: redis
       managed: true
     - kind: horizontalpodautoscaler
@@ -29,4 +29,4 @@ spec:
     - kind: quay
       managed: true
     - kind: clairpostgres
-      managed: true
+      managed: false
