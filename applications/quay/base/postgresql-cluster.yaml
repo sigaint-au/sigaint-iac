@@ -3,6 +3,9 @@ kind: Cluster
 metadata:
   name: quay-db
 spec:
+  extensions:
+  - name: pg_trgm
+    ensure: present
   instances: 3
   storage:
     size: 1Gi
