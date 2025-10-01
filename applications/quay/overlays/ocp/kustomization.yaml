@@ -3,20 +3,4 @@ kind: Kustomization
 namespace: sigaint-quay
 resources:
   - ../../base
-patches:
-    # Patch certificate names and issuerr`
-  - target:
-      kind: Certificate
-      name: victoria-metrics-tls
-    patch: |-
-      - op: replace
-        path: /spec/commonName
-        value: "metrics.sigaint.au"
-      - op: replace
-        path: /spec/dnsNames
-        value:
-          - metrics.sigaint.au
-          - metrics.ts.sigaint.au
-      - op: replace
-        path: /spec/issuerRef/name
-        value: le-production
+  - external-secret.yaml
