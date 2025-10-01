@@ -8,14 +8,16 @@ metadata:
 spec:
   configBundleSecret: quay-config-bundle
   components:
-    - kind: quay
-      managed: true
     - kind: clair
       managed: true
+    - kind: postgres
+      managed: false
+    - kind: objectstorage
+      managed: false
     - kind: redis
       managed: true
-    - kind: database
-      managed: false
+    - kind: horizontalpodautoscaler
+      managed: true
     - kind: route
       managed: true
     - kind: mirror
@@ -23,4 +25,8 @@ spec:
     - kind: monitoring
       managed: true
     - kind: tls
+      managed: true
+    - kind: quay
+      managed: true
+    - kind: clairpostgres
       managed: true
