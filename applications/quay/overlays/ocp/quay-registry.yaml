@@ -17,7 +17,7 @@ spec:
     - kind: database
       managed: false
     - kind: route
-      managed: false
+      managed: true
     - kind: mirror
       managed: true
     - kind: monitoring

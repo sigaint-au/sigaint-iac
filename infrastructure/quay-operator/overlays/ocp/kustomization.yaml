@@ -11,3 +11,13 @@ patches:
   patch: |-
     - op: remove
       path: /spec/targetNamespaces
+
+# Install into openshift-operators instead of
+# quay-operator.
+- target:
+    kind: Subscription
+    name: quay-operator
+  patch: |-
+    - op: replace
+      path: /metadata/namespace
+      value: openshift-operators
