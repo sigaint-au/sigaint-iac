@@ -3,10 +3,10 @@ kind: Cluster
 metadata:
   name: quay-db
 spec:
- bootstrap:
-  initdb:
-    database: quay
-    owner: quay
   instances: 3
   storage:
     size: 1Gi
+  bootstrap:
+    initdb:
+      database: quay
+      owner: quay
