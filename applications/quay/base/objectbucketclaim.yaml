@@ -1,0 +1,15 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: quay-s3
+  labels:
+    app: noobaa
+    bucket-provisioner: openshift-storage.noobaa.io-obc
+    noobaa-domain: openshift-storage.noobaa.io
+spec:
+  additionalConfig:
+    bucketclass: noobaa-default-bucket-class
+  bucketName: quay-s3
+  generateBucketName: quay-s3
+  objectBucketName: obc-sigaint-quay-quay-s3
+  storageClassName: openshift-storage.noobaa.io
