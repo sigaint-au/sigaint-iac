@@ -1,16 +1,22 @@
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
+  name: quay-db-cluster
+spec:
+  instances: 1
+  storage:
+    size: 5Gi
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
   name: quay-db
 spec:
-  postgresql:
-    extensions:
-    - name: pg_trgm
-      ensure: present
-  instances: 3
-  storage:
-    size: 1Gi
-  bootstrap:
-    initdb:
-      database: quay
-      owner: quay
+  name: quay
+  owner: quay
+  cluster:
+    name: quay-db-cluster
+  extensions:
+  - name: pg_trgm
+    ensure: present
