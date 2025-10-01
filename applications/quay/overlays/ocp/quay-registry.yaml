@@ -1,0 +1,26 @@
+# quay-registry.yaml
+apiVersion: quay.redhat.com/v1
+kind: QuayRegistry
+metadata:
+  name: quay
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  configBundleSecret: quay-config-bundle
+  components:
+    - kind: quay
+      managed: true
+    - kind: clair
+      managed: true
+    - kind: redis
+      managed: true
+    - kind: database
+      managed: false
+    - kind: route
+      managed: false
+    - kind: mirror
+      managed: true
+    - kind: monitoring
+      managed: true
+    - kind: tls
+      managed: true

@@ -5,3 +5,4 @@ resources:
   - ../../base
   - external-secret-db.yaml
   - external-secret-config.yaml
+  - quay-registry.yaml
