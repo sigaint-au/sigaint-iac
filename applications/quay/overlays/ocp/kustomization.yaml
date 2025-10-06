@@ -6,3 +6,29 @@ resources:
   - external-secret-db.yaml
   - external-secret-config.yaml
   - quay-registry.yaml
+patches:
+    # Patch certificate names and issuerR`
+  - target:
+      kind: Certificate
+      name: quay-tls
+    patch: |-
+      - op: replace
+        path: /spec/commonName
+        value: "quay.sigaint.au"
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - quay.sigaint.au
+      - op: replace
+        path: /spec/issuerRef/name
+        value: le-production
+  - target:
+      kind: Ingress
+      name: quay
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: "quay.sigaint.au"
+      - op: replace
+        path: /spec/tls/0/hosts/0/
+        value: "quay.sigaint.au"
