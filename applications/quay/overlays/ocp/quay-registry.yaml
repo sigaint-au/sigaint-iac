@@ -9,7 +9,7 @@ spec:
   configBundleSecret: quay-config-bundle
   components:
     - kind: clair
-      managed: false
+      managed: true
     - kind: postgres
       managed: false
     - kind: objectstorage

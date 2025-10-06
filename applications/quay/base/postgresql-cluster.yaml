@@ -13,3 +13,14 @@ spec:
       owner: quay
       postInitApplicationSQL:
         - "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
+        - "CREATE EXTENSION IF NOT EXISTS uuid-ossp;"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: quay-clair-db
+spec:
+  cluster:
+    name: quay-db
+  name: clair
+  owner: quay
