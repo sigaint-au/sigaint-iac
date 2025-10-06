@@ -30,6 +30,6 @@ patches:
         path: /spec/rules/0/host
         value: "quay.sigaint.au"
       - op: replace
-        path: /spec/tls/0/hosts/0/
+        path: /spec/tls/0/hosts/0
         value:
           - "quay.sigaint.au"
