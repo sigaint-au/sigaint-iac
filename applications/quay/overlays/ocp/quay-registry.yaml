@@ -25,7 +25,7 @@ spec:
     - kind: mirror
       managed: true
     - kind: monitoring
-      managed: true
+      managed: false
     - kind: quay
       managed: true
     - kind: clairpostgres
