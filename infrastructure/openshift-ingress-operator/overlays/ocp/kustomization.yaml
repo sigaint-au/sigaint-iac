@@ -14,6 +14,7 @@ patches:
       path: /spec/dnsNames
       value:
         - "*.apps.ocp.sigaint.au"
+        - "*.sigaint.au"
     - op: replace
       path: /spec/issuerRef/name
       value: le-production
