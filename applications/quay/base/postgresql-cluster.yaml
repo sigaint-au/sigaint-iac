@@ -12,8 +12,7 @@ spec:
       database: quay
       owner: quay
       postInitApplicationSQL:
-        - "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
-        - "CREATE EXTENSION IF NOT EXISTS uuid-ossp;"
+        - "CREATE EXTENSION IF NOT EXISTS pg_trgm; CREATE EXTENSION IF NOT EXISTS uuid-ossp;"
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
