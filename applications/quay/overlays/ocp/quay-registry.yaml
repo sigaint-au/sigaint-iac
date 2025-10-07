@@ -19,9 +19,9 @@ spec:
     - kind: horizontalpodautoscaler
       managed: false
     - kind: route
-      managed: true
+      managed: false
     - kind: tls
-      managed: true
+      managed: false
     - kind: mirror
       managed: true
     - kind: monitoring
