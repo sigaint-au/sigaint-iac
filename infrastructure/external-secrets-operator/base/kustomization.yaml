@@ -4,4 +4,11 @@ components:
     - ../../../components/operator-sync-wave
 resources:
     - operator
-    - instance
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/channel
+        value: 'tech-preview-v0.1'
+    target:
+      kind: Subscription
+      name: external-secrets-operator
