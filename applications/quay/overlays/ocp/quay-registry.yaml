@@ -19,11 +19,11 @@ spec:
     - kind: horizontalpodautoscaler
       managed: false
     - kind: route
-      managed: false
-    - kind: tls
-      managed: false
-    - kind: mirror
       managed: true
+    - kind: tls
+      managed: true
+    - kind: mirror
+      managed: false
     - kind: monitoring
       managed: false
     - kind: quay
