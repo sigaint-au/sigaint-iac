@@ -20,12 +20,12 @@ spec:
       managed: true
     - kind: route
       managed: false
+    - kind: tls
+      managed: false
     - kind: mirror
       managed: true
     - kind: monitoring
       managed: true
-    - kind: tls
-      managed: false
     - kind: quay
       managed: true
     - kind: clairpostgres
