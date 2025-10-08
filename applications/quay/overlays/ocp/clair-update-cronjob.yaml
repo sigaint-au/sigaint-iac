@@ -1,0 +1,102 @@
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: quay-clair-config-airgap-secret
+data:
+  99_airgap_config.yaml: bWF0Y2hlcjoKICBkaXNhYmxlX3VwZGF0ZXJzOiB0cnVlCmluZGV4ZXI6CiAgYWlyZ2FwOiB0cnVl
+type: Opaque
+
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: clair-updater
+  namespace: sigaint-quay
+spec:
+  schedule: '@daily'
+  concurrencyPolicy: Forbid
+  suspend: true
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      backoffLimit: 3
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: quay-clair-app
+          schedulerName: default-scheduler
+          terminationGracePeriodSeconds: 30
+          securityContext: {}
+          containers:
+            - name: clair
+              image: 'registry.redhat.io/quay/clair-rhel8@sha256:3746677ef1cb0ddd4f237ab598b14cf0bc76dcce080ffde127b5bba87ffe6693'
+              env:
+                - name: CLAIR_CONF
+                  value: /clair/config.yaml
+                - name: CLAIR_MODE
+                  value: combo
+                - name: UPDATES_URL
+                  value: "https://sigaint-public.s3.us-west-000.backblazeb2.com/updates.json.gz"
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -e
+                  echo "Updating"
+                  clairctl -D import-updaters "$UPDATES_URL"
+                  echo "Updater import process finished."
+
+              resources: {}
+              volumeMounts:
+                - name: cluster-trusted-ca
+                  readOnly: true
+                  mountPath: /etc/pki/ca-trust/extracted/pem
+                - name: config
+                  mountPath: /clair/config.yaml
+                  subPath: config.yaml
+                - name: config
+                  mountPath: /clair/config.yaml.d/01_user_config.yaml
+                  subPath: 01_user_config.yaml
+                - name: config-airgap
+                  mountPath: /clair/config.yaml.d/99_airgap_config.yaml
+                  subPath: 99_airgap_config.yaml
+                - name: certificates
+                  mountPath: /var/run/certs
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: IfNotPresent
+          serviceAccount: quay-clair-app
+          volumes:
+            - name: cluster-trusted-ca
+              configMap:
+                name: quay-cluster-trusted-ca
+                items:
+                  - key: ca-bundle.crt
+                    path: tls-ca-bundle.pem
+                defaultMode: 420
+            - name: config
+              secret:
+                secretName: quay-clair-config-secret-57mh246cd9
+                defaultMode: 420
+            - name: config-airgap
+              secret:
+                secretName: quay-clair-config-airgap-secret
+                defaultMode: 420
+            - name: certificates
+              projected:
+                sources:
+                  - secret:
+                      name: quay-extra-ca-certs-hkhtggc2f4
+                  - secret:
+                      name: quay-quay-config-tls-m49gh6gk6b
+                  - configMap:
+                      name: quay-cluster-service-ca
+                  - configMap:
+                      name: quay-cluster-trusted-ca
+                defaultMode: 420
+          dnsPolicy: ClusterFirst
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1

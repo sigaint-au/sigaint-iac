@@ -6,3 +6,5 @@ resources:
   - external-secret-db.yaml
   - external-secret-config.yaml
   - quay-registry.yaml
+  # Not used when internet connected.
+  #- clair-update-cronjob.yaml
