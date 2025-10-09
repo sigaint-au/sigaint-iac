@@ -5,6 +5,7 @@ metadata:
   name: quay-db
 spec:
   instances: 1
+  enablePDB: false
   storage:
     size: 50Gi
   postgresql:
