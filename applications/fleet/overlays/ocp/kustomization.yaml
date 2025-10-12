@@ -3,21 +3,3 @@ kind: Kustomization
 namespace: sigaint-monitoring
 resources:
   - ../../base
-  - external-secret.yaml
-patches:
-    # Patch certificate names and issuerR`
-  - target:
-      kind: Certificate
-      name: grafana-tls
-    patch: |-
-      - op: replace
-        path: /spec/commonName
-        value: "grafana.sigaint.au"
-      - op: replace
-        path: /spec/dnsNames
-        value:
-          - grafana.sigaint.au
-          - grafana.ts.sigaint.au
-      - op: replace
-        path: /spec/issuerRef/name
-        value: le-production
