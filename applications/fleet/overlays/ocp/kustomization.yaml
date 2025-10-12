@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: sigaint-monitoring
 resources:
   - ../../base
-  - external-secret.yaml
 patches:
     # Remove hardcoded helm chart stuff.
   - target:
