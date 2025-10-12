@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []
+helmCharts:
+- name: fleet
+  includeCRDs: false
+  valuesFile: values.yaml
+  releaseName: fleet
+  repo: https://fleetdm.github.io/fleet/charts

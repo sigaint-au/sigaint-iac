@@ -13,6 +13,7 @@ spec:
       - name: victoria-metrics
       - name: homepage
       - name: grafana
+      - name: fleet
   template:
     metadata:
       name: '{{.name}}'
