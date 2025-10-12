@@ -3,3 +3,12 @@ kind: Kustomization
 namespace: sigaint-monitoring
 resources:
   - ../../base
+  - external-secret.yaml
+patches:
+    # Remove hardcoded helm chart stuff.
+  - target:
+      kind: Deployment
+      name: fleet
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/securityContext
