@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: sigaint-quay
 resources:
   - ../../base
+  - pipelines
   - external-secret-db.yaml
   - external-secret-config.yaml
   - quay-registry.yaml
