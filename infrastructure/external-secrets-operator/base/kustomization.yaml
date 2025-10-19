@@ -3,7 +3,7 @@ kind: Kustomization
 components:
     - ../../../components/operator-sync-wave
 resources:
-    - - github.com/redhat-cop/gitops-catalog/external-secrets-operator/operator/overlays/alpha?ref=main
+    - github.com/redhat-cop/gitops-catalog/external-secrets-operator/operator/overlays/alpha?ref=main
 #    - operator
 #patches:
 #  - patch: |-
