@@ -3,12 +3,13 @@ kind: Kustomization
 components:
     - ../../../components/operator-sync-wave
 resources:
-    - operator
-patches:
-  - patch: |-
-      - op: replace
-        path: /spec/channel
-        value: 'tech-preview-v0.1'
-    target:
-      kind: Subscription
-      name: external-secrets-operator
+    - - github.com/redhat-cop/gitops-catalog/external-secrets-operator/operator/overlays/alpha?ref=main
+#    - operator
+#patches:
+#  - patch: |-
+#      - op: replace
+#        path: /spec/channel
+#        value: 'tech-preview-v0.1'
+#    target:
+#      kind: Subscription
+#      name: external-secrets-operator
