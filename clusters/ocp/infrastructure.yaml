@@ -21,10 +21,11 @@ spec:
       - name: openshift-console-operator
       - name: openshift-pipelines-operator
       - name: metallb-operator
-      - name: crunchy-postgres-operator
+      #- name: crunchy-postgres-operator
       - name: cloudnative-pg-operator
       - name: quay-operator
       - name: grafana-operator
+      - name: loki-operator
       - name: tailscale
   template:
     metadata:
