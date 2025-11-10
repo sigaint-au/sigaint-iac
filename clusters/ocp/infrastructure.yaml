@@ -20,6 +20,7 @@ spec:
       - name: openshift-apiserver-operator
       - name: openshift-console-operator
       - name: openshift-pipelines-operator
+      - name: openshift-logging-operator
       - name: metallb-operator
       #- name: crunchy-postgres-operator
       - name: cloudnative-pg-operator
