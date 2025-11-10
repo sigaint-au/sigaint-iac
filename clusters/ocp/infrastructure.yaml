@@ -24,6 +24,7 @@ spec:
       - name: crunchy-postgres-operator
       - name: cloudnative-pg-operator
       - name: quay-operator
+      - name: grafana-operator
       - name: tailscale
   template:
     metadata:
