@@ -11,5 +11,5 @@ patches:
     patch: |-
       - op: replace
         path: /spec/tenants/mode
-        value: "sigaint-monitoring"
+        value: "static"
 
