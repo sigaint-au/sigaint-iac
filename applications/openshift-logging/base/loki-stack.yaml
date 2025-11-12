@@ -11,7 +11,7 @@ spec:
       - effectiveDate: '2025-10-05'
         version: v13
     secret:
-      name: loki-s3 # sigaint-monitoring-loki-s3
+      name: logging-loki-s3 # sigaint-monitoring-loki-s3
       type: s3
     tls:
       caKey: service-ca.crt
