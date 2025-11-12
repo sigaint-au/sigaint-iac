@@ -2,7 +2,7 @@
 apiVersion: loki.grafana.com/v1
 kind: LokiStack
 metadata:
-  name: loki-stack
+  name: logging-loki
 spec:
   managementState: Managed
   size: 1x.small
@@ -18,4 +18,4 @@ spec:
       caName: openshift-service-ca.crt
   storageClassName: ocs-storagecluster-ceph-rbd
   tenants:
-    mode: __PATCH__
+    mode: openshift-logging

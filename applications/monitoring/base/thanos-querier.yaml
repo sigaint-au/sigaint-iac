@@ -1,8 +1,0 @@
-kind: ThanosQuerier
-apiVersion: monitoring.rhobs/v1alpha1
-metadata:
-  name: sigaint-thanos
-spec:
-  selector:
-    matchLabels:
-      sigaint: monitoring-stack
