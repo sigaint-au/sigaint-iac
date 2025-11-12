@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - build-keycloak-image.yaml
   - build-xonotic-image.yaml
+  - build-caddy-image.yaml
+  - build-headscale-image.yaml
