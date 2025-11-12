@@ -1,0 +1,16 @@
+---
+apiVersion: monitoring.rhobs/v1alpha1
+kind: MonitoringStack
+metadata:
+  labels:
+    sigaint: monitoring-stack
+  name: monitoring-stack
+spec:
+  alertmanagerConfig:
+    disabled: false
+  prometheusConfig:
+    replicas: 2
+  retention: 7d
+  resourceSelector:
+    matchLabels:
+      sigaint: monitoring-stack

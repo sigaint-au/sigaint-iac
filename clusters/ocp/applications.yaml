@@ -11,9 +11,9 @@ spec:
       elements:
       - name: victoria-logs
       - name: victoria-metrics
-      - name: homepage
       - name: grafana
       - name: quay
+      - name: monitoring
   template:
     metadata:
       name: '{{.name}}'
