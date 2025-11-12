@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
-  name: build-xonotic-image
+  name: build-headscale-image
 spec:
   tasks:
     - name: git-clone
