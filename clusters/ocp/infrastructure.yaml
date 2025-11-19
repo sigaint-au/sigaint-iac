@@ -11,7 +11,7 @@ spec:
       elements:
       - name: openshift-machine-config-operator
       - name: openshift-cert-manager-operator
-      - name: external-secrets-operator
+      - name: openshift-external-secrets-operator
       - name: local-storage
       - name: openshift-data-foundation-operator
       - name: nmstate
@@ -22,7 +22,6 @@ spec:
       - name: openshift-pipelines-operator
       - name: openshift-logging-operator
       - name: metallb-operator
-      #- name: crunchy-postgres-operator
       - name: cloudnative-pg-operator
       - name: quay-operator
       - name: grafana-operator
