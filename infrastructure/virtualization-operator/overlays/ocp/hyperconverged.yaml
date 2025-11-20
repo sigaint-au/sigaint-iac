@@ -6,17 +6,18 @@ metadata:
     deployOVS: 'false'
   namespace: openshift-cnv
 spec:
+  enableCommonBootImageImport: true
   virtualMachineOptions:
     disableFreePageReporting: false
-    disableSerialConsoleLog: true
+    disableSerialConsoleLog: false
   higherWorkloadDensity:
-    memoryOvercommitPercentage: 100
+    memoryOvercommitPercentage: 150
   liveMigrationConfig:
     allowAutoConverge: false
     allowPostCopy: false
     completionTimeoutPerGiB: 800
-    parallelMigrationsPerCluster: 5
-    parallelOutboundMigrationsPerNode: 2
+    parallelMigrationsPerCluster: 1
+    parallelOutboundMigrationsPerNode: 1
     progressTimeout: 150
   certConfig:
     ca:
@@ -25,28 +26,36 @@ spec:
     server:
       duration: 24h0m0s
       renewBefore: 12h0m0s
+  enableApplicationAwareQuota: false
+  infra: {}
   applicationAwareConfig:
     allowApplicationAwareClusterResourceQuota: false
     vmiCalcConfigName: DedicatedVirtualResources
+  ksmConfiguration:
+    nodeLabelSelector: {}
+  evictionStrategy: LiveMigrateIfPossible
   featureGates:
     deployTektonTaskResources: false
-    enableCommonBootImageImport: true
+    enableMultiArchBootImageImport: false
     withHostPassthroughCPU: false
     downwardMetrics: false
     disableMDevConfiguration: false
-    enableApplicationAwareQuota: false
+    declarativeHotplugVolumes: false
     deployKubeSecondaryDNS: false
     nonRoot: true
     alignCPUs: false
     enableManagedTenantQuota: false
-    deployVmConsoleProxy: false
     persistentReservation: false
-    autoResourceLimits: false
+    autoResourceLimits: true
+    decentralizedLiveMigration: false
   workloadUpdateStrategy:
     batchEvictionInterval: 1m0s
     batchEvictionSize: 10
     workloadUpdateMethods:
       - LiveMigrate
+      - Evict
+  deployVmConsoleProxy: false
   uninstallStrategy: BlockUninstallIfWorkloadsExist
+  workloads: {}
   resourceRequirements:
     vmiCPUAllocationRatio: 10
