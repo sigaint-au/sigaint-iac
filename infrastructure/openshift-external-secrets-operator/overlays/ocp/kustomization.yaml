@@ -3,9 +3,7 @@ kind: Kustomization
 resources:
     - ../../base
     ## DO NOT INCLUDE SECRET HERE.
-    ##
     #- doppler-secret.yaml
-
-    # Secret store
     - doppler-secretstore.yaml
+    - networkpolicy.yaml
 
