@@ -5,4 +5,3 @@ metadata:
   namespace: external-secrets-operator
 spec:
   upgradeStrategy: Default
-  targetNamespaces: [ ]
