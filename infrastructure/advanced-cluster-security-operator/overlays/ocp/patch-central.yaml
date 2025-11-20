@@ -1,3 +1,4 @@
+# Patch Resources
 - op: add
   path: /spec/central/resources
   value:
@@ -20,3 +21,8 @@
 - op: replace
   path: /spec/scanner/analyzer/scaling/replicas
   value: 2
+
+# Patch URL
+- op: add
+  path: /spec/central/exposure/route/host
+  value: "rhacs-central.apps.ocp.sigiant.au"

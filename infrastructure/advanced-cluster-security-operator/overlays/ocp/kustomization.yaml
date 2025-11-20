@@ -15,7 +15,7 @@ patches:
       kind: Subscription
       name: rhacs-operator
 
-  - path: patch-resources.yaml
+  - path: patch-central.yaml
     target:
       group: platform.stackrox.io
       kind: Central
