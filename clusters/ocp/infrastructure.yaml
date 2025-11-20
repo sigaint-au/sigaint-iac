@@ -23,6 +23,7 @@ spec:
       - name: openshift-logging-operator
       - name: metallb-operator
       - name: cloudnative-pg-operator
+      - name: advanced-cluster-security-operator
       - name: quay-operator
       - name: grafana-operator
       - name: loki-operator
