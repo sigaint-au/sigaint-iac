@@ -11,4 +11,5 @@ spec:
   name: openshift-external-secrets-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: external-secrets-operator.v1.0.0
+
+  #5525664de862d37436ef575dc86348aebc58d8c746bd366104cdfccbb88d7d1
