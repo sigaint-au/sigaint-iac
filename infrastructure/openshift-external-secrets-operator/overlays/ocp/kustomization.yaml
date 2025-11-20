@@ -9,6 +9,3 @@ resources:
     # Secret store
     - doppler-secretstore.yaml
 
-    # The new Red Hat operator deploys Network Policy
-    # Which restricts internet access for some reason.
-    - networkpolicy.yaml
