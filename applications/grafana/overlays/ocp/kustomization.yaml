@@ -4,6 +4,7 @@ namespace: sigaint-monitoring
 resources:
   - ../../base
   - external-secret.yaml
+  - networkpolicy.yaml
 patches:
     # Patch certificate names and issuerR`
   - target:

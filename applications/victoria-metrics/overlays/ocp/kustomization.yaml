@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: sigaint-monitoring
 resources:
   - ../../base
+  - networkpolicy.yaml
 patches:
     # Patch certificate names and issuerR`
   - target:
