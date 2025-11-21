@@ -25,4 +25,4 @@
 # Patch URL
 - op: add
   path: /spec/central/exposure/route/host
-  value: "rhacs-central.apps.ocp.sigiant.au"
+  value: "rhacs-central.apps.ocp.sigaint.au"
