@@ -315,7 +315,7 @@ grafana:
   ##    maxUnavailable: 25%
   ##
   updateStrategy:
-    type: RollingUpdate
+    type: Recreate
   ## @param grafana.automountServiceAccountToken Mount Service Account token in pod
   ##
   automountServiceAccountToken: false
