@@ -10,6 +10,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "15"
   name: cluster
 spec:
+  encryption:
+    type: aesgcm
   audit:
     profile: Default
   servingCerts:
