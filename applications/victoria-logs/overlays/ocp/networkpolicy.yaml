@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   namespace: sigaint-monitoring
-  name: allow-victoria-metrics-from-openshift-ingress
+  name: allow-victoria-logs-from-openshift-ingress
 spec:
   ingress:
     - from:
@@ -12,8 +12,9 @@ spec:
               network.openshift.io/policy-group: ingress
   podSelector:
     matchLabels:
-      app.kubernetes.io/instance: victoria-metrics
-      app.kubernetes.io/name: victoria-metrics-single
+      app.kubernetes.io/instance: victoria-logs
+      app.kubernetes.io/name: victoria-logs-single
+
   policyTypes:
     - Ingress
 
@@ -21,17 +22,22 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-victoria-metrics-ingress
+  name: allow-victoria-logs-ingress
   namespace: sigaint-monitoring
 spec:
   ingress:
     - ports:
-        - port: 8428
+        - port: 2514
           protocol: TCP
+    - ports:
+        - port: 9428
+          protocol: TCP
+    - ports:
+        - port: 2514
+          protocol: UDP
   podSelector:
     matchLabels:
-      app.kubernetes.io/instance: victoria-metrics
-      app.kubernetes.io/name: victoria-metrics-single
+      app.kubernetes.io/instance: victoria-logs
+      app.kubernetes.io/name: victoria-logs-single
   policyTypes:
     - Ingress
-

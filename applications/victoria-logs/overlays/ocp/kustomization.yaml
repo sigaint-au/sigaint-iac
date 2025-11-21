@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: sigaint-monitoring
 resources:
   - ../../base
+  - networkpolicy.yaml
 patches:
 
   # So we can inject logs though tailscale
