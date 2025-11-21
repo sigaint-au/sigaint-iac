@@ -3,6 +3,7 @@ apiVersion: compliance.openshift.io/v1alpha1
 kind: TailoredProfile
 metadata:
   name: e8-additional-scc
+  namespace: openshift-compliance
 spec:
   description: Allows an additional scc
   setValues:
