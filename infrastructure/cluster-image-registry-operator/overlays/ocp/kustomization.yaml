@@ -1,0 +1,14 @@
+---
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+resources:
+  - ../../base
+
+patches:
+  - path: patch-allowed-registries.yaml
+    target:
+      group: config.openshift.io
+      kind: Image
+      name: cluster
+      version: v1

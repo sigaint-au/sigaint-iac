@@ -1,0 +1,23 @@
+# Patch Resources
+- op: add
+  path: /spec/registrySources/allowedRegistries
+  value:
+    - quay.sigaint.au
+    - quay.io
+    - image-registry.openshift-image-registry.svc
+    - ghcr.io
+    - registry.redhat.io
+    - docker.io
+    - registry.k8s.io
+
+# Patch Resources
+- op: add
+  path: /spec/allowedRegistriesForImport
+  value:
+    - domainName: quay.sigaint.au
+    - domainName: quay.io
+    - domainName: image-registry.openshift-image-registry.svc
+    - domainName: ghcr.io
+    - domainName: registry.redhat.io
+    - domainName: docker.io
+    - domainName: registry.k8s.io

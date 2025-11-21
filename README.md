@@ -18,24 +18,23 @@ roleRef:
 
 ```
 
-## Add Node Labels
+## metllb-operator
 
-### Network
-```
-# Dell
-oc label nodes node-{1..4}.osp.sigaint.au sigaint.au/physnet="eno4"
-
-# Lenovo
-oc label nodes node-{5..6}.osp.sigaint.au sigaint.au/physnet="eno2"
-```
-
-Make Metallb work
+Required for IP Forwarding.
 ```
 oc patch network.operator cluster -p '{"spec":{"defaultNetwork":{"ovnKubernetesConfig":{"gatewayConfig":{"ipForwarding": "Global"}}}}}' --type=merge
 ```
 
+## cluster-image-registry-operator
 
-# Disk
+Set the allow-listed registries for the cluster.
+
+* https://github.com/sigaint-au/sigaint-iac/tree/main/infrastructure/cluster-image-registry-operator
+
+Ensure you have modified the `overlay/<cluster>/patch-allowed-registries.yaml` file.
+
+
+## Disk
 ``` 
 oc label nodes lan-node-01 cluster.ocs.openshift.io/openshift-storage=''
 
