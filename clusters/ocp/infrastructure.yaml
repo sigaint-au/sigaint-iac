@@ -24,6 +24,7 @@ spec:
       - name: metallb-operator
       - name: cloudnative-pg-operator
       - name: advanced-cluster-security-operator
+      - name: compliance-operator
       - name: quay-operator
       - name: grafana-operator
       - name: loki-operator
