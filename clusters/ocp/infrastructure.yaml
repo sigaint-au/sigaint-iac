@@ -26,6 +26,7 @@ spec:
       - name: advanced-cluster-security-operator
       - name: cluster-image-registry-operator
       - name: compliance-operator
+      - name: container-security-operator
       - name: quay-operator
       - name: grafana-operator
       - name: loki-operator
