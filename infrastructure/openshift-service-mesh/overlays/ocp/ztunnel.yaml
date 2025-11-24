@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/display-name: Istio ZTunnel
+  name: ztunnel
+---
+apiVersion: sailoperator.io/v1alpha1
+kind: ZTunnel
+metadata:
+  name: default
+spec:
+  namespace: ztunnel
+  profile: ambient
