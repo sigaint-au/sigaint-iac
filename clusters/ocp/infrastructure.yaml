@@ -21,6 +21,7 @@ spec:
       - name: openshift-console-operator
       - name: openshift-pipelines-operator
       - name: openshift-logging-operator
+      - name: openshift-service-mesh
       - name: metallb-operator
       - name: cloudnative-pg-operator
       - name: advanced-cluster-security-operator
