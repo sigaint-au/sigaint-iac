@@ -1,24 +1,8 @@
+
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: sigaint-monitoring
+
 resources:
-  - ../../base
-  - external-secret.yaml
-  - networkpolicy.yaml
-patches:
-    # Patch certificate names and issuerR`
-  - target:
-      kind: Certificate
-      name: grafana-tls
-    patch: |-
-      - op: replace
-        path: /spec/commonName
-        value: "grafana.sigaint.au"
-      - op: replace
-        path: /spec/dnsNames
-        value:
-          - grafana.sigaint.au
-          - grafana.ts.sigaint.au
-      - op: replace
-        path: /spec/issuerRef/name
-        value: le-production
+  - session-secret.yaml
+  - grafana.yaml
