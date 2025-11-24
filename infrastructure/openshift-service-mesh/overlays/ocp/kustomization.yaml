@@ -6,7 +6,6 @@ namespace: openshift-operators
 
 resources:
   - ../../base
-  - namespace.yaml
   - istio-system.yaml
   - istio-cni.yaml
   - ztunnel.yaml
