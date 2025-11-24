@@ -6,6 +6,7 @@ resources:
   - ../../base
   - kiali-monitoring-rbac.yaml
   - kiali-user-workload-monitoring.yaml
+  - kiali-console-plugin.yaml
 
 patches:
   - patch: |-
