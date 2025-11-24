@@ -12,4 +12,4 @@ patches:
         value: 'stable'
     target:
       kind: Subscription
-      name: openshift-service-mesh
+      name:  kiali-operator

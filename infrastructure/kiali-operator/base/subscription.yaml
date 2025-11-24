@@ -7,4 +7,4 @@ spec:
   installPlanApproval: Automatic
   name: kiali-ossm
   source: redhat-operators
-  sourceNamespace: kiali-operator
+  sourceNamespace: openshift-marketplace
