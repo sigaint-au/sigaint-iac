@@ -26,6 +26,7 @@ spec:
       - name: cloudnative-pg-operator
       - name: advanced-cluster-security-operator
       - name: cluster-image-registry-operator
+      - name: kiali-operator
       - name: compliance-operator
       - name: container-security-operator
       - name: quay-operator
