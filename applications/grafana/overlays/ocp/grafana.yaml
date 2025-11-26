@@ -12,11 +12,11 @@ spec:
   serviceAccount:
     metadata:
       annotations:
-        serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"grafana-route"}}'
+        serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"grafana"}}'
   route:
     spec:
       port:
-        targetPort: grafana
+        targetPort: https
       tls:
         termination: edge
         insecureEdgeTerminationPolicy: Redirect
