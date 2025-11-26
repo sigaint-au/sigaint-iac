@@ -16,9 +16,10 @@ spec:
   route:
     spec:
       port:
-        targetPort: http
+        targetPort: grafana
       tls:
         termination: edge
+        insecureEdgeTerminationPolicy: Redirect
       to:
         kind: Service
         name: grafana-service
