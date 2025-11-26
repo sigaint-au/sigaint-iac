@@ -16,9 +16,9 @@ spec:
   route:
     spec:
       port:
-        targetPort: https
+        targetPort: http
       tls:
-        termination: reencrypt
+        termination: edge
       to:
         kind: Service
         name: grafana-service
