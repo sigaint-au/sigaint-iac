@@ -1,0 +1,7 @@
+# Patch Routing Via Host
+# Required for Isto Ambiant mode
+# https://docs.redhat.com/en/documentation/red_hat_openshift_service_mesh/3.2/html/installing/ossm-istio-ambient-mode#ossm-installing-istio-ambient-mode_ossm-istio-ambient-mode
+# https://docs.redhat.com/en/documentation/openshift_container_platform/4.10/html/networking/cluster-network-operator
+- op: replace
+  path: /spec/defaultNetwork/routingViaHost
+  value: true

@@ -12,6 +12,7 @@ spec:
       - name: openshift-machine-config-operator
       - name: openshift-cert-manager-operator
       - name: openshift-external-secrets-operator
+      - name: openshift-network-operator
       - name: local-storage
       - name: openshift-data-foundation-operator
       - name: nmstate
