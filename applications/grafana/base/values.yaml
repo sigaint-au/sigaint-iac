@@ -459,17 +459,7 @@ initChownData:
   #  requests:
   #    cpu: 100m
   #    memory: 128Mi
-  securityContext:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: false
-    runAsUser: 0
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      add:
-        - CHOWN
-      drop:
-        - ALL
+  securityContext: {}
 
 # Administrator credentials when not using an existing secret (see below)
 adminUser: admin
@@ -953,13 +943,7 @@ sidecar:
   #   requests:
   #     cpu: 50m
   #     memory: 50Mi
-  securityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: RuntimeDefault
+  securityContext: {}
   # skipTlsVerify Set to true to skip tls verification for kube api calls
   # skipTlsVerify: true
   enableUniqueFilenames: false
@@ -1481,13 +1465,7 @@ imageRenderer:
   # image-renderer deployment securityContext
   securityContext: {}
   # image-renderer deployment container securityContext
-  containerSecurityContext:
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop: ['ALL']
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+  containerSecurityContext: {}
   ## image-renderer pod annotation
   podAnnotations: {}
   # image-renderer deployment Host Aliases
