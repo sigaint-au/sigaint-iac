@@ -12,10 +12,10 @@ spec:
     privateKeySecretRef:
       name: le-staging-issuer-account-key
     solvers:
-      # idm-46c2.syd.sigaint.au
+      # idm-459f.de.sigaint.au
       - dns01:
           rfc2136:
-            nameserver: 139.180.163.149:53
+            nameserver: 51.75.64.48:53
             tsigKeyName: cert-manager
             tsigAlgorithm: HMACSHA256
             tsigSecretSecretRef:
@@ -36,10 +36,10 @@ spec:
     privateKeySecretRef:
       name: le-production-issuer-account-key
     solvers:
-      # idm-46c2.syd.sigaint.au
+      # idm-459f.de.sigaint.au
       - dns01:
           rfc2136:
-            nameserver: 139.180.163.149:53
+            nameserver: 51.75.64.48:53
             tsigKeyName: cert-manager
             tsigAlgorithm: HMACSHA256
             tsigSecretSecretRef:
