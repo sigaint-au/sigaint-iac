@@ -13,12 +13,7 @@ spec:
             operator: Exists
   storageClassName: local-block
   volumeMode: Block
-
   deviceInclusionSpec:
     minSize: 400Gi
     deviceTypes:
       - disk
-
-    models:
-      - 'RAID 930-8i-2GB'
-      - 'PERC H730 Mini'
