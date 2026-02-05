@@ -1,0 +1,53 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: ocs-storagecluster
+  namespace: openshift-storage
+  annotations:
+    cluster.ocs.openshift.io/local-devices: "true"
+    uninstall.ocs.openshift.io/cleanup-policy: delete
+    uninstall.ocs.openshift.io/mode: graceful
+spec:
+  resourcesProfile: lean
+  flexibleScaling: true
+  mon:
+    count: 1
+  storageDeviceSets:
+    - name: ocs-deviceset
+      count: 4
+      replica: 1
+      portable: false
+      dataPVCTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1
+          storageClassName: local-block
+          volumeMode: Block
+      resources:
+        requests:
+          cpu: 2
+          memory: 5Gi
+        limits:
+          cpu: 4
+          memory: 10Gi
+  placement:
+    all:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                  operator: Exists
+      tolerations:
+        - key: node.ocs.openshift.io/storage
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+  manageNodes: false
+  arbiter: {}
+  encryption:
+    enable: false
+  mirroring: {}
