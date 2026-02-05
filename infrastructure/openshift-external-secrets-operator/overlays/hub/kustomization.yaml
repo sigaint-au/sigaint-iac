@@ -5,5 +5,4 @@ resources:
     ## DO NOT INCLUDE SECRET HERE.
     #- doppler-secret.yaml
     - doppler-secretstore.yaml
-    - networkpolicy.yaml
 

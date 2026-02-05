@@ -13,7 +13,6 @@ spec:
       - name: openshift-cert-manager-operator       # X
       - name: openshift-external-secrets-operator   # X
       - name: lvm-storage                           # NEW
-      - name: openshift-data-foundation-operator    # Done
       - name: openshift-ingress-operator            # Done
       - name: openshift-apiserver-operator          # Done
       - name: openshift-console-operator            # Done
