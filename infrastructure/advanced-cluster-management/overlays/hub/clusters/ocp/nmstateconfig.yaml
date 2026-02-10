@@ -1,0 +1,114 @@
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: hosting-dell
+  namespace: infra-hosting
+  labels:
+    infraenv: infra-hosting                 # ← same label → same InfraEnv
+spec:
+  config:
+    interfaces:
+      - name: eno3
+        type: ethernet
+        state: up
+        macAddress: 44:a8:42:0a:5e:e7       # node .11
+        ipv4:
+          enabled: true
+          dhcp: true
+        ipv6:
+          enabled: false
+
+      - name: eno3
+        type: ethernet
+        state: up
+        macAddress: 80:18:44:ec:23:e6       # node .12
+        ipv4:
+          enabled: true
+          dhcp: true
+        ipv6:
+          enabled: false
+
+      - name: eno3
+        type: ethernet
+        state: up
+        macAddress: 18:66:da:ef:6d:8a       # node .13
+        ipv4:
+          enabled: true
+          dhcp: true
+        ipv6:
+          enabled: false
+
+      - name: eno3
+        type: ethernet
+        state: up
+        macAddress: 18:66:da:ef:7d:aa       # node .14
+        ipv4:
+          enabled: true
+          dhcp: true
+        ipv6:
+          enabled: false
+
+      - name: eno4
+        type: ethernet
+        state: down
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+
+    dns-resolver:
+      config:
+        server:
+          - 9.9.9.9
+          - 149.112.112.112
+
+    routes:
+      config: []
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: hosting-lenovo
+  namespace: infra-hosting
+  labels:
+    infraenv: infra-hosting
+spec:
+  config:
+    interfaces:
+      - name: eno2
+        type: ethernet
+        state: up
+        macAddress: 7c:d3:0a:59:3f:90       # node .15
+        ipv4:
+          enabled: true
+          dhcp: true
+        ipv6:
+          enabled: false
+
+      - name: eno2
+        type: ethernet
+        state: up
+        macAddress: 38:68:dd:05:7e:d8       # node .16
+        ipv4:
+          enabled: true
+          dhcp: true
+        ipv6:
+          enabled: false
+
+      - name: eno1
+        type: ethernet
+        state: down
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+
+    dns-resolver:
+      config:
+        server:
+          - 9.9.9.9
+          - 149.112.112.112
+
+    routes:
+      config: []

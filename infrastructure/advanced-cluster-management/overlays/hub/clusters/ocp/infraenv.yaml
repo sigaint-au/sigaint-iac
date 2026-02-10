@@ -1,0 +1,29 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  annotations:
+    infraenv.agent-install.openshift.io/enable-ironic-agent: 'true'
+  name: infra-hosting
+  namespace: infra-hosting
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: Lanham
+    networkType: dhcp
+spec:
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: Lanham
+  cpuArchitecture: x86_64
+  imageType: minimal-iso
+  ipxeScriptType: DiscoveryImageAlways
+
+  nmStateConfigLabelSelector:
+    matchLabels:
+      infraenv: infra-hosting
+
+  proxy:
+    httpProxy: 'http://proxy.ocp.sigaint.au:3128'
+    httpsProxy: 'http://proxy.ocp.sigaint.au:3128'
+    noProxy: 'corp.sigaint.au,ocp.sigaint.au,hub.sigaint.au,10.120.0.0/16'
+
+  pullSecretRef:
+    name: pullsecret-infra-hosting
+  sshAuthorizedKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6GE0KiU4Q7OPeiQeJ0OdsN/WIdb3flrWbAakoPN1Sp Sigaint Administrator

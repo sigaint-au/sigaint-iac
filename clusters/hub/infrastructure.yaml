@@ -17,6 +17,7 @@ spec:
       - name: openshift-apiserver-operator          # Done
       - name: openshift-console-operator            # Done
       - name: openshift-logging-operator            # Done
+      - name: advanced-cluster-management
   template:
     metadata:
       name: '{{.name}}'

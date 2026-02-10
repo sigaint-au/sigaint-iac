@@ -1,0 +1,20 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: ocp
+  namespace: infra-hosting
+spec:
+  baseDomain: sigaint.au
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    name: ocp
+    version: v1beta1
+  clusterName: ocp
+  controlPlane:
+    replicas: 3
+  platform:
+    agentBareMetal: {}
+  pullSecretRef:
+    name: pullsecret-infra-hosting
+  installed: false

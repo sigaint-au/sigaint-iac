@@ -1,0 +1,35 @@
+apiVersion: extensions.hive.openshift.io/v1beta1
+kind: AgentClusterInstall
+metadata:
+  name: ocp
+  namespace: infra-hosting
+spec:
+  clusterDeploymentRef:
+    name: ocp
+
+  controlPlane:
+    hyperthreading: Enabled
+    replicas: 3
+
+  compute:
+    - hyperthreading: Enabled
+      name: worker
+      replicas: 3
+
+  networking:
+    clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+    machineNetwork:
+      - cidr: 10.120.14.0/24
+    serviceNetwork:
+      - 172.30.0.0/16
+    networkType: OVNKubernetes
+
+  infraEnvRef:
+    name: infra-hosting
+
+  sshPublicKey: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6GE0KiU4Q7OPeiQeJ0OdsN/WIdb3flrWbAakoPN1Sp'
+
+  imageSetRef:
+    name: img4.21.0-multi-appsub
