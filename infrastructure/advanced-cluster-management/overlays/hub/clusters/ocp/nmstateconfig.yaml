@@ -11,6 +11,8 @@ spec:
   interfaces:
     - name: eno3
       macAddress: 44:a8:42:0a:5e:e7
+    - name: eno4
+      macAddress: 44:a8:42:0a:5e:e9
   config:
     interfaces:
       - name: eno3
@@ -48,6 +50,8 @@ spec:
   interfaces:
     - name: eno3
       macAddress: 80:18:44:ec:23:e6
+    - name: eno4
+      macAddress: 80:18:44:ec:23:e7
   config:
     interfaces:
       - name: eno3
@@ -85,6 +89,8 @@ spec:
   interfaces:
     - name: eno3
       macAddress: 18:66:da:ef:6d:8a
+    - name: eno4
+      macAddress: 18:66:da:ef:6d:8b
   config:
     interfaces:
       - name: eno3
@@ -122,6 +128,8 @@ spec:
   interfaces:
     - name: eno3
       macAddress: 18:66:da:ef:7d:aa
+    - name: eno4
+      macAddress: 18:66:da:ef:7d:ab
   config:
     interfaces:
       - name: eno3
@@ -159,8 +167,10 @@ metadata:
     infraenv: infra-hosting
 spec:
   interfaces:
-    - name: eno2
+    - name: eno1
       macAddress: 7c:d3:0a:59:3f:90
+    - name: eno2
+      macAddress: 7c:d3:0a:59:3f:91
   config:
     interfaces:
       - name: eno2
@@ -196,8 +206,10 @@ metadata:
     infraenv: infra-hosting
 spec:
   interfaces:
-    - name: eno2
+    - name: eno1
       macAddress: 38:68:dd:05:7e:d8
+    - name: eno2
+      macAddress: 38:68:dd:05:7e:d9
   config:
     interfaces:
       - name: eno2
