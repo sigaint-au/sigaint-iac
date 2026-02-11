@@ -167,13 +167,13 @@ metadata:
     infraenv: infra-hosting
 spec:
   interfaces:
-    - name: eno1
+    - name: eno1np0
       macAddress: 7c:d3:0a:59:3f:90
-    - name: eno2
+    - name: eno2np1
       macAddress: 7c:d3:0a:59:3f:91
   config:
     interfaces:
-      - name: eno2
+      - name: eno1np0
         type: ethernet
         state: up
         ipv4:
@@ -181,7 +181,7 @@ spec:
           dhcp: true
         ipv6:
           enabled: false
-      - name: eno1
+      - name: eno2np1
         type: ethernet
         state: down
         ipv4:
@@ -206,13 +206,13 @@ metadata:
     infraenv: infra-hosting
 spec:
   interfaces:
-    - name: eno1
+    - name: eno1np0
       macAddress: 38:68:dd:05:7e:d8
-    - name: eno2
+    - name: eno2np1
       macAddress: 38:68:dd:05:7e:d9
   config:
     interfaces:
-      - name: eno2
+      - name: eno1np0
         type: ethernet
         state: up
         ipv4:
@@ -220,7 +220,7 @@ spec:
           dhcp: true
         ipv6:
           enabled: false
-      - name: eno1
+      - name: eno2np1
         type: ethernet
         state: down
         ipv4:
