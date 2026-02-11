@@ -8,14 +8,25 @@ spec:
     name: ocp
 
   controlPlane:
+    name: master
     hyperthreading: Enabled
     replicas: 3
 
   compute:
-    - hyperthreading: Enabled
-      name: worker
+    - name: worker
+      hyperthreading: Enabled
       replicas: 3
 
+  # Required fields – use integers here (number of agents needed per role)
+  provisionRequirements:
+    controlPlaneAgents: 3
+    workerAgents: 6
+    controlPlaneAgentSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ""
+      workerAgentSelector:
+        matchLabels:
+          node-role.kubernetes.io/worker: ""
   networking:
     clusterNetwork:
       - cidr: 10.128.0.0/14
@@ -32,4 +43,7 @@ spec:
   sshPublicKey: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6GE0KiU4Q7OPeiQeJ0OdsN/WIdb3flrWbAakoPN1Sp'
 
   imageSetRef:
-    name: img4.21.0-multi-appsub
+    name: img4.21.0-x86-64-appsub
+  proxy: {}
+
+  fips: false

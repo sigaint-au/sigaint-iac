@@ -11,10 +11,16 @@ spec:
     name: ocp
     version: v1beta1
   clusterName: ocp
+
   controlPlane:
     replicas: 3
+
+  # This is the required addition
   platform:
-    agentBareMetal: {}
+    agentBareMetal:
+      agentSelector: {}               # ← empty = any agent is allowed
+
   pullSecretRef:
     name: pullsecret-infra-hosting
+
   installed: false

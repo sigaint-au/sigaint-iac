@@ -1,5 +1,4 @@
-# Dell / eno3 group
-
+---
 apiVersion: agent-install.openshift.io/v1beta1
 kind: NMStateConfig
 metadata:
