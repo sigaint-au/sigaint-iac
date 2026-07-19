@@ -13,16 +13,14 @@ spec:
   flexibleScaling: true
   monDataDirHostPath: /var/lib/rook
   resourceProfile: lean
-  encryption:
-    keyRotation:
-      schedule: '@weekly'
   managedResources:
     cephBlockPools:
       defaultStorageClass: true
   storageDeviceSets:
     - name: ocs-deviceset-local-block
-      count: 6
+      count: 15
       replica: 1
+      portable: false
       dataPVCTemplate:
         spec:
           accessModes:
