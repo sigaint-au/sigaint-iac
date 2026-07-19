@@ -61,8 +61,6 @@ spec:
             wave: "0"
           - name: advanced-cluster-security-operator
             wave: "10"
-          - name: tailscale
-            wave: "10"
   template:
     metadata:
       name: 'infra-{{.name}}'

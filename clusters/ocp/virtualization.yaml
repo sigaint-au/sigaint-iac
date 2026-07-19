@@ -15,8 +15,6 @@ spec:
             wave: "35"
           - name: network-attachment-definitions
             wave: "35"
-          - name: tailscale-router
-            wave: "40"
           - name: load-balancer
             wave: "40"
           - name: thinlinc

@@ -17,7 +17,6 @@ patches:
         path: /spec/dnsNames
         value:
           - metrics.sigaint.au
-          - metrics.ts.sigaint.au
       - op: replace
         path: /spec/issuerRef/name
         value: le-production
