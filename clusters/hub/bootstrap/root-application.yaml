@@ -1,0 +1,26 @@
+---
+# Root Application for the hub cluster Argo CD.
+# Apply AppProjects first: oc apply -f clusters/hub/bootstrap/appprojects.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hub-root
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: infrastructure
+  source:
+    repoURL: https://github.com/sigaint-au/sigaint-iac
+    targetRevision: main
+    path: clusters/hub
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

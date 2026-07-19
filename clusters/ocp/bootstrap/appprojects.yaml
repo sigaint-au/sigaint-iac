@@ -1,5 +1,6 @@
 ---
-# AppProjects for OpenShift GitOps. Apply once per cluster (or via root Application).
+# AppProjects for the ocp (workload) cluster Argo CD (OpenShift GitOps).
+# Each cluster has its own Argo CD; apply only this directory on ocp.
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:

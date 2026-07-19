@@ -1,0 +1,24 @@
+---
+# AppProjects for the hub cluster Argo CD (OpenShift GitOps).
+# Each cluster has its own Argo CD; apply only this directory on hub.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infrastructure
+  namespace: openshift-gitops
+spec:
+  description: Hub cluster operators and platform configuration
+  sourceRepos:
+    - https://github.com/sigaint-au/sigaint-iac
+    - https://github.com/redhat-cop/gitops-catalog
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true

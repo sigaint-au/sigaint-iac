@@ -24,15 +24,19 @@ Source: `https://github.com/sigaint-au/sigaint-iac`
 
 ```text
 clusters/
-  bootstrap/              # AppProjects + root Applications
-  hub/                    # Hub ApplicationSets
-  ocp/                    # OCP ApplicationSets
+  hub/                    # Hub ApplicationSets + Argo CD bootstrap
+    bootstrap/            # Hub AppProjects + hub-root Application
+  ocp/                    # OCP ApplicationSets + Argo CD bootstrap
+    bootstrap/            # OCP AppProjects + ocp-root Application
 infrastructure/           # Operators and platform config
 applications/             # Workloads (Quay, Grafana, Victoria*, logging)
 virtualization/           # OpenShift Virtualization VMs and multi-network
 components/               # Shared Kustomize components (sync waves, SSA)
 scripts/                  # Validation helpers
 ```
+
+Each cluster runs its **own** OpenShift GitOps (Argo CD). Bootstrap manifests under
+`clusters/<cluster>/bootstrap/` are applied only on that cluster — never both.
 
 Packages use overlays per cluster:
 
@@ -128,80 +132,36 @@ Remove when finished:
 oc delete clusterrolebinding argocd-cluster-admin
 ```
 
-### 3. Create AppProjects
+### 3–4. Bootstrap Argo CD for **this** cluster only
 
-```bash
-oc apply -f clusters/bootstrap/appprojects.yaml
-oc get appprojects -n openshift-gitops
-```
+Each cluster has its own Argo CD. Apply **only** the bootstrap directory that
+matches the cluster you are logged into:
 
-Expected projects: `infrastructure`, `applications`, `virtualization`.
-
-### 4. Create the root Application
-
-Apply **only the root for the cluster you are on**. Full copies are in `clusters/bootstrap/root-applications.yaml`.
+| Cluster | AppProjects | Root Application | Expected projects |
+|---------|-------------|------------------|-------------------|
+| `hub` | `clusters/hub/bootstrap/appprojects.yaml` | `clusters/hub/bootstrap/root-application.yaml` | `infrastructure` |
+| `ocp` | `clusters/ocp/bootstrap/appprojects.yaml` | `clusters/ocp/bootstrap/root-application.yaml` | `infrastructure`, `applications`, `virtualization` |
 
 **Workload cluster (`ocp`):**
 
 ```bash
-oc apply -f - <<'EOF'
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: ocp-root
-  namespace: openshift-gitops
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: infrastructure
-  source:
-    repoURL: https://github.com/sigaint-au/sigaint-iac
-    targetRevision: main
-    path: clusters/ocp
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: openshift-gitops
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-EOF
+oc apply -f clusters/ocp/bootstrap/appprojects.yaml
+oc apply -f clusters/ocp/bootstrap/root-application.yaml
+oc get appprojects,application -n openshift-gitops
 ```
 
 **Hub cluster (`hub`):**
 
 ```bash
-oc apply -f - <<'EOF'
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: hub-root
-  namespace: openshift-gitops
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: infrastructure
-  source:
-    repoURL: https://github.com/sigaint-au/sigaint-iac
-    targetRevision: main
-    path: clusters/hub
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: openshift-gitops
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-EOF
+oc apply -f clusters/hub/bootstrap/appprojects.yaml
+oc apply -f clusters/hub/bootstrap/root-application.yaml
+oc get appprojects,application -n openshift-gitops
 ```
 
-The root Application creates ApplicationSets, which create the prefixed apps (`infra-*`, `app-*`, `virt-*`, or `hub-*`).
+Do **not** apply hub bootstrap on ocp, or ocp bootstrap on hub.
+
+The root Application creates ApplicationSets, which create the prefixed apps
+(`hub-*` on hub; `infra-*`, `app-*`, `virt-*` on ocp).
 
 ### 5. Bootstrap External Secrets (Doppler)
 
