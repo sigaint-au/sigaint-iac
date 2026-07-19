@@ -1,55 +1,114 @@
 # sigaint-iac
 
-GitOps repository for **SiGaint** OpenShift clusters, managed with **OpenShift GitOps (Argo CD)** and **Kustomize**.
+GitOps repository for **Sigaint** OpenShift clusters, managed with **OpenShift GitOps (Argo CD)** and **Kustomize**.
 
-| Cluster | Role | ApplicationSets |
-|---------|------|-----------------|
-| `hub` | ACM / management | `clusters/hub/` (infrastructure only) |
+| Cluster | Role | Entry path |
+|---------|------|------------|
+| `hub` | ACM / management | `clusters/hub/` (infrastructure) |
 | `ocp` | Workload / virtualization | `clusters/ocp/` (infrastructure, applications, virtualization) |
+
+Generated Argo CD Applications use prefixes:
+
+| Prefix | Contents |
+|--------|----------|
+| `hub-*` | Hub infrastructure |
+| `infra-*` | OCP infrastructure |
+| `app-*` | Workload applications |
+| `virt-*` | Virtualization |
+
+Source: `https://github.com/sigaint-au/sigaint-iac`
 
 ---
 
 ## Repository layout
 
 ```text
-clusters/                 # Argo CD ApplicationSets + bootstrap
-  bootstrap/              # AppProjects + root Application manifests
+clusters/
+  bootstrap/              # AppProjects + root Applications
   hub/                    # Hub ApplicationSets
   ocp/                    # OCP ApplicationSets
-infrastructure/           # Cluster operators and platform config
-applications/             # Product workloads (Quay, Grafana, Victoria*, logging)
+infrastructure/           # Operators and platform config
+applications/             # Workloads (Quay, Grafana, Victoria*, logging)
 virtualization/           # OpenShift Virtualization VMs and multi-network
-components/               # Shared Kustomize components (sync-wave, SSA helpers)
+components/               # Shared Kustomize components (sync waves, SSA)
 scripts/                  # Validation helpers
 ```
 
-Each package follows:
+Packages use overlays per cluster:
 
 ```text
 <name>/
-  base/                   # Shared resources
+  base/
   overlays/
-    hub/                  # Hub-specific patches (when applicable)
-    ocp/                  # OCP-specific patches
+    hub/                  # when applicable
+    ocp/
 ```
 
-Argo CD ApplicationSets always point at **`…/overlays/<cluster>`**.
+ApplicationSets always target **`…/overlays/<cluster>`**.
 
 ---
 
-## Bootstrap (new cluster)
+## Prerequisites
+
+- OpenShift cluster with `oc` logged in as a cluster-admin (or equivalent)
+- Network access from the cluster to `https://github.com/sigaint-au/sigaint-iac`
+- A Doppler service token for External Secrets (created out-of-band; never committed)
+
+Optional on a workstation:
+
+```bash
+# Validate overlays before pushing
+command -v kubectl
+command -v helm   # required for grafana / victoria-* charts
+```
+
+---
+
+## Bootstrap
+
+Clone the repo (or work from a checkout on a machine that can reach the API):
+
+```bash
+git clone https://github.com/sigaint-au/sigaint-iac.git
+cd sigaint-iac
+```
 
 ### 1. Install OpenShift GitOps
 
-Install the OpenShift GitOps operator and ensure the `openshift-gitops` namespace is ready.
+Install **Red Hat OpenShift GitOps** from the console (*Operators → OperatorHub*), or with a Subscription:
 
-### 2. Scope Argo CD permissions
+```bash
+oc apply -f - <<'EOF'
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-gitops-operator
+  namespace: openshift-operators
+spec:
+  channel: latest
+  name: openshift-gitops-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  installPlanApproval: Automatic
+EOF
 
-Prefer **AppProject** allow-lists over cluster-admin. If you must bootstrap with elevated rights:
+# Wait for Argo CD (operator creates openshift-gitops)
+oc wait --for=condition=Available deployment/openshift-gitops-server \
+  -n openshift-gitops --timeout=300s
 
-```yaml
-kind: ClusterRoleBinding
+# Argo CD UI
+oc get route openshift-gitops-server -n openshift-gitops \
+  -o jsonpath='https://{.spec.host}{"\n"}'
+```
+
+### 2. Day-0 Argo CD permissions (optional)
+
+AppProjects in this repo define allowed sources and destinations. For first-time bootstrap you may temporarily grant the application controller cluster-admin, then remove it after projects and apps are healthy:
+
+```bash
+oc apply -f - <<'EOF'
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
 metadata:
   name: argocd-cluster-admin
 subjects:
@@ -60,156 +119,238 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
+EOF
 ```
 
-Tighten this after day-0. AppProjects live in `clusters/bootstrap/appprojects.yaml`.
+Remove when finished:
 
-### 3. Apply AppProjects and root Application
+```bash
+oc delete clusterrolebinding argocd-cluster-admin
+```
 
-**OCP:**
+### 3. Create AppProjects
 
 ```bash
 oc apply -f clusters/bootstrap/appprojects.yaml
-oc apply -f clusters/bootstrap/root-applications.yaml
-# Or point a root Application at clusters/ocp after projects exist.
+oc get appprojects -n openshift-gitops
 ```
 
-**Hub:**
+Expected projects: `infrastructure`, `applications`, `virtualization`.
+
+### 4. Create the root Application
+
+Apply **only the root for the cluster you are on**. Full copies are in `clusters/bootstrap/root-applications.yaml`.
+
+**Workload cluster (`ocp`):**
 
 ```bash
-oc apply -f clusters/bootstrap/appprojects.yaml
-oc apply -k clusters/hub
+oc apply -f - <<'EOF'
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ocp-root
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: infrastructure
+  source:
+    repoURL: https://github.com/sigaint-au/sigaint-iac
+    targetRevision: main
+    path: clusters/ocp
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+EOF
 ```
 
-Root Application for OCP tracks `clusters/ocp` (ApplicationSets). Generated apps use prefixes:
+**Hub cluster (`hub`):**
 
-- `infra-*` — infrastructure
-- `app-*` — applications  
-- `virt-*` — virtualization  
-- `hub-*` — hub infrastructure
+```bash
+oc apply -f - <<'EOF'
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hub-root
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: infrastructure
+  source:
+    repoURL: https://github.com/sigaint-au/sigaint-iac
+    targetRevision: main
+    path: clusters/hub
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+EOF
+```
 
-### Migrating from pre-refactor app names
+The root Application creates ApplicationSets, which create the prefixed apps (`infra-*`, `app-*`, `virt-*`, or `hub-*`).
 
-Application names are now prefixed (`infra-local-storage`, `app-quay`, …). After deploying this revision, **delete legacy unprefixed Applications** (or let prune remove them if they were owned by an old ApplicationSet) so you do not run two controllers against the same resources.
+### 5. Bootstrap External Secrets (Doppler)
 
-### 4. Bootstrap External Secrets (Doppler)
-
-**Do not commit the Doppler token.** Create the secret once per cluster:
+Do **not** commit a real Doppler token. Create the secret once per cluster **before** or immediately after the External Secrets operator Application syncs:
 
 ```bash
 oc create namespace external-secrets --dry-run=client -o yaml | oc apply -f -
+
 oc create secret generic doppler-token-auth-api \
   --namespace external-secrets \
-  --from-literal=dopplerToken='dp.st....'
+  --from-literal=dopplerToken='dp.st.REPLACE_ME' \
+  --dry-run=client -o yaml | oc apply -f -
 ```
 
-Example manifest: `infrastructure/openshift-external-secrets-operator/overlays/*/doppler-secret.yaml.example`.
+Reference example (no live secrets):
 
-GitOps then owns `ClusterSecretStore` and all `ExternalSecret` objects.
+`infrastructure/openshift-external-secrets-operator/overlays/<cluster>/doppler-secret.yaml.example`
+
+GitOps owns `ClusterSecretStore` and all `ExternalSecret` objects after this bootstrap secret exists.
+
+### 6. Verify sync
+
+```bash
+# Root app
+oc get application -n openshift-gitops
+
+# Generated ApplicationSets and apps (prefix depends on cluster)
+oc get applicationset -n openshift-gitops
+oc get application -n openshift-gitops | grep -E '^(hub|infra|app|virt)-'
+
+# Watch until Healthy/Synced
+oc get application -n openshift-gitops -w
+```
+
+Argo CD CLI (if installed):
+
+```bash
+argocd login "$(oc get route openshift-gitops-server -n openshift-gitops -o jsonpath='{.spec.host}')" \
+  --grpc-web --sso
+argocd app list
+```
 
 ---
 
-## ApplicationSets and sync policy
+## How sync works
 
 ApplicationSets use:
 
-- **Automated sync** with `prune` + `selfHeal`
-- **Server-Side Apply** + `RespectIgnoreDifferences`
-- **Retries** with exponential backoff
-- **Sync waves** on Applications (operator/storage first, then workloads)
-- **`targetRevision: main`** (pin to a tag/SHA for production freezes)
+- Automated sync with `prune` and `selfHeal`
+- Server-Side Apply and `RespectIgnoreDifferences`
+- Retries with exponential backoff
+- Application-level sync waves (operators and storage first, then workloads)
+- `targetRevision: main` (pin to a tag or SHA for production freezes)
 
-Within packages, shared Kustomize components enforce OLM-aware ordering:
+Shared Kustomize components order OLM installs and instances:
 
 | Component | Purpose |
 |-----------|---------|
 | `components/operator-sync-wave` | Namespace → OperatorGroup → Subscription |
-| `components/operator-instance-sync-wave` | Secrets/CRs after the operator (CRDs) exists |
-
-**OLM install waves**
+| `components/operator-instance-sync-wave` | Secrets/CRs after CRDs exist |
 
 | Kind | Wave |
 |------|------|
 | Namespace | `-10` |
 | OperatorGroup / CatalogSource | `-5` |
 | Subscription | `-1` |
-
-**Instance waves (selected kinds)**
-
-| Wave | Examples |
-|------|----------|
-| `0` | Helper RBAC, NetworkPolicy |
-| `5` | Secrets, ExternalSecrets, Certificates |
-| `10` | Primary CRs (MetalLB, Central, StorageCluster, …) |
-| `15+` | Dependent CRs (IP pools, SecuredCluster, NNCPs, …) |
+| Secrets / ExternalSecrets / Certificates | `5` |
+| Primary CRs (MetalLB, StorageCluster, Central, …) | `10` |
+| Dependent CRs (pools, SecuredCluster, NNCPs, …) | `15+` |
 
 See `components/README.md`.
 
 ---
 
-## Day-2 operations notes
+## Post-install checks
 
-### MetalLB / IP forwarding
+### Operators and CSV readiness
 
-OVN gateway settings (`routingViaHost`, `ipForwarding: Global`) are managed under:
+```bash
+oc get csv -A | grep -v Succeeded || true
+oc get subscription -A
+```
 
-`infrastructure/openshift-network-operator/`
+### Storage nodes (ODF / LSO)
 
-(No separate imperative `oc patch` required when this Application is healthy.)
+Label nodes as required by your storage design, for example:
+
+```bash
+oc label node <node-name> cluster.ocs.openshift.io/openshift-storage=''
+```
+
+Local volumes: `infrastructure/local-storage/`  
+ODF StorageCluster: `infrastructure/openshift-data-foundation-operator/`
 
 ### Image registry allow-list
 
-Edit:
+Edit for each cluster overlay if pulls fail:
 
-`infrastructure/cluster-image-registry-operator/overlays/<cluster>/patch-allowed-registries.yaml`
-
-Include OpenShift release and internal registry hosts or upgrades/pulls will fail.
-
-### Local storage / ODF
-
-Label storage nodes as required by ODF/LSO, for example:
-
-```bash
-oc label nodes lan-node-01 cluster.ocs.openshift.io/openshift-storage=''
+```text
+infrastructure/cluster-image-registry-operator/overlays/<cluster>/patch-allowed-registries.yaml
 ```
 
-Local volume sets live under `infrastructure/local-storage/`. ODF `StorageCluster` is under `infrastructure/openshift-data-foundation-operator/`.
+Include OpenShift release and internal registry hosts.
 
-### ACS (Advanced Cluster Security)
+### MetalLB / networking
 
-- Central + SecuredCluster are GitOps-managed.
-- Init-bundle and OAuth Jobs are Argo CD hooks with `Replace` / `BeforeHookCreation`.
-- Default OAuth role is **Analyst** (not Admin). Elevate groups in ACS as needed.
-- Collector uses **CORE_BPF**.
+OVN and MetalLB settings are GitOps-managed under:
 
-### Virtualization
+```text
+infrastructure/openshift-network-operator/
+infrastructure/metallb-operator/
+```
 
-- Prefer `runStrategy: Always` (not deprecated `running: true`).
-- SSH keys via ExternalSecrets in `virtualization/access-credentials/`.
-- NADs under `virtualization/network-attachment-definitions/` (includes `dhcp-shim`).
+### External Secrets
+
+```bash
+oc get clustersecretstore
+oc get externalsecret -A
+oc get secret -n external-secrets doppler-token-auth-api
+```
 
 ---
 
-## Validation
+## Validate overlays locally
 
 ```bash
-chmod +x scripts/validate-kustomize.sh
 ./scripts/validate-kustomize.sh
 ```
 
-Requires `kubectl` (Kustomize). Helm-backed apps (`grafana`, `victoria-*`) need `helm` on `PATH` and chart repo access when building with `--enable-helm`.
+Requires `kubectl`. Helm-backed apps (`applications/grafana`, `victoria-metrics`, `victoria-logs`) also need `helm` on `PATH` and chart repo access.
 
-CI workflow: `.github/workflows/validate.yaml`.
+CI: `.github/workflows/validate.yaml`.
 
 ---
 
-## Adding a new package
+## Add a new package
 
 1. Create `infrastructure|applications|virtualization/<name>/{base,overlays/<cluster>}`.
-2. Ensure `overlays/<cluster>/kustomization.yaml` builds with `kubectl kustomize`.
-3. Add an element to the matching ApplicationSet list in `clusters/<cluster>/`.
-4. Set an appropriate `wave` relative to dependencies (secrets/cert-manager early, apps late).
-5. Run `./scripts/validate-kustomize.sh`.
+2. Confirm the overlay builds:
+
+   ```bash
+   kubectl kustomize infrastructure/<name>/overlays/ocp
+   # Helm packages:
+   kubectl kustomize --enable-helm applications/<name>/overlays/ocp
+   ```
+
+3. Add an element to the matching ApplicationSet list under `clusters/<cluster>/`.
+4. Choose a `wave` relative to dependencies (secrets and cert-manager early; apps later).
+5. Run `./scripts/validate-kustomize.sh` and open a PR.
 
 ---
 
@@ -217,23 +358,23 @@ CI workflow: `.github/workflows/validate.yaml`.
 
 | Topic | Practice |
 |-------|----------|
-| Secrets | External Secrets + Doppler; no live tokens in git |
-| Argo CD | AppProjects; avoid long-lived cluster-admin |
-| Images | Pin Helm chart versions; pin container tags/digests where practical |
-| NetworkPolicy | Prefer default-deny in sensitive namespaces (e.g. Tailscale) |
-| TLS | Prefer service CA / cert-manager; avoid `insecureSkipVerify` |
+| Secrets | External Secrets + Doppler; never commit live tokens |
+| Argo CD | Prefer AppProjects; avoid long-lived cluster-admin |
+| Images | Pin Helm chart versions; pin tags/digests where practical |
+| NetworkPolicy | Prefer default-deny in sensitive namespaces |
+| TLS | Prefer service CA / cert-manager |
 
 ---
 
-## Orphan / optional trees
+## Optional packages
 
-These exist in the tree but are **not** wired into ApplicationSets unless you add them:
+Present in the tree but **not** wired into ApplicationSets unless you add them:
 
 - `infrastructure/cluster-observability-operator`
-- `infrastructure/crunchy-postgres-operator` (Quay uses CloudNativePG instead)
+- `infrastructure/crunchy-postgres-operator` (Quay uses CloudNativePG)
 
 ---
 
-## License / ownership
+## License
 
-Internal SiGaint platform configuration. Source: `https://github.com/sigaint-au/sigaint-iac`.
+Internal Sigaint platform configuration.

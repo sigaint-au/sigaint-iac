@@ -1,4 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+# Pin Logging to the same minor as Loki (stable-6.4). Catalog "stable" overlay is too vague.
 resources:
-  - github.com/redhat-cop/gitops-catalog/openshift-logging/operator/overlays/stable?ref=main
+  - github.com/redhat-cop/gitops-catalog/openshift-logging/operator/base?ref=main
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/channel
+        value: stable-6.4
+    target:
+      group: operators.coreos.com
+      kind: Subscription
+      name: cluster-logging
+      namespace: openshift-logging
+      version: v1alpha1

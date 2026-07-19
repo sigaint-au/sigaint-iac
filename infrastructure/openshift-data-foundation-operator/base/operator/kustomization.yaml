@@ -1,5 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: openshift-storage
+
+# Use catalog base + local channel pin: mhahl gitops-catalog ODF overlays stop at stable-4.20.
 resources:
-  - github.com/mhahl/gitops-catalog/openshift-data-foundation-operator/operator/overlays/stable-4.20?ref=main
+  - github.com/mhahl/gitops-catalog/openshift-data-foundation-operator/operator/base?ref=main
+
+patches:
+  - path: patch-channel.yaml
+    target:
+      group: operators.coreos.com
+      kind: Subscription
+      name: odf-operator
+      namespace: openshift-storage
+      version: v1alpha1

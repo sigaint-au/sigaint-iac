@@ -1,7 +1,7 @@
 - op: replace
   path: /spec/channel
-  value: stable-4.20
+  value: stable-4.22
 
 - op: replace
   path: /spec/source
-  value: redhat-operators-4.20
+  value: redhat-operators-4.22

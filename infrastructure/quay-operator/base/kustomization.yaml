@@ -1,4 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+# redhat-cop quay overlays stop at stable-3.11; pin latest channel locally.
 resources:
-  - https://github.com/redhat-cop/gitops-catalog/quay-operator/operator/overlays/stable-3.11?ref=main
+  - https://github.com/redhat-cop/gitops-catalog/quay-operator/operator/base?ref=main

@@ -16,7 +16,7 @@ patches:
       path: /spec/targetNamespaces
 
 # Install into openshift-operators instead of
-# quay-operator.
+# quay-operator. Pin Quay Operator to latest GA channel.
 - target:
     kind: Subscription
     name: quay-operator
@@ -24,3 +24,6 @@ patches:
     - op: replace
       path: /metadata/namespace
       value: openshift-operators
+    - op: replace
+      path: /spec/channel
+      value: stable-3.16

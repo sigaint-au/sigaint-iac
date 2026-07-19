@@ -43,7 +43,7 @@ spec:
   sshPublicKey: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA6GE0KiU4Q7OPeiQeJ0OdsN/WIdb3flrWbAakoPN1Sp'
 
   imageSetRef:
-    name: img4.21.0-x86-64-appsub
+    name: img4.22.0-x86-64-appsub
   proxy: {}
 
   fips: false
