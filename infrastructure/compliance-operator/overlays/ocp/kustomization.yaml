@@ -1,5 +1,8 @@
 ---
 kind: Kustomization
+components:
+  - ../../../../components/operator-sync-wave
+  - ../../../../components/operator-instance-sync-wave
 apiVersion: kustomize.config.k8s.io/v1beta1
 
 namespace: openshift-compliance

@@ -1,9 +1,46 @@
+# OLM / operator install order for Argo CD sync waves.
+#
+#   -10  Namespace
+#    -5  OperatorGroup, CatalogSource
+#    -1  Subscription  (OLM installs CSV + CRDs after this)
+#   0+   Operator CRs / instances (see operator-instance-sync-wave)
+#
+# Apply on any kustomization that includes OLM install resources.
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
+
 patches:
-- target:
-    kind: Subscription
-  patch: |-
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
-      value: '-1'
+  - target:
+      kind: Namespace
+      version: v1
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "-10"
+
+  - target:
+      kind: OperatorGroup
+      group: operators.coreos.com
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "-5"
+
+  - target:
+      kind: CatalogSource
+      group: operators.coreos.com
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "-5"
+
+  - target:
+      kind: Subscription
+      group: operators.coreos.com
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "-1"
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-options
+        value: SkipDryRunOnMissingResource=true

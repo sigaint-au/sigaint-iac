@@ -3,7 +3,8 @@ kind: Job
 metadata:
   name: create-cluster-init-bundle
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    # After Central (10); before SecuredCluster (15)
+    argocd.argoproj.io/sync-wave: "12"
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-options: Replace=true

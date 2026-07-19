@@ -4,7 +4,8 @@ metadata:
   name: create-oauth-auth-provider
   namespace: stackrox
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    # After SecuredCluster / OAuth dependencies
+    argocd.argoproj.io/sync-wave: "20"
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-options: Replace=true

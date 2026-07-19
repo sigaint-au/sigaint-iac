@@ -119,7 +119,31 @@ ApplicationSets use:
 - **Sync waves** on Applications (operator/storage first, then workloads)
 - **`targetRevision: main`** (pin to a tag/SHA for production freezes)
 
-Within packages, `components/operator-sync-wave` sets Subscription resources to wave `-1` so OLM installs before instances.
+Within packages, shared Kustomize components enforce OLM-aware ordering:
+
+| Component | Purpose |
+|-----------|---------|
+| `components/operator-sync-wave` | Namespace → OperatorGroup → Subscription |
+| `components/operator-instance-sync-wave` | Secrets/CRs after the operator (CRDs) exists |
+
+**OLM install waves**
+
+| Kind | Wave |
+|------|------|
+| Namespace | `-10` |
+| OperatorGroup / CatalogSource | `-5` |
+| Subscription | `-1` |
+
+**Instance waves (selected kinds)**
+
+| Wave | Examples |
+|------|----------|
+| `0` | Helper RBAC, NetworkPolicy |
+| `5` | Secrets, ExternalSecrets, Certificates |
+| `10` | Primary CRs (MetalLB, Central, StorageCluster, …) |
+| `15+` | Dependent CRs (IP pools, SecuredCluster, NNCPs, …) |
+
+See `components/README.md`.
 
 ---
 
