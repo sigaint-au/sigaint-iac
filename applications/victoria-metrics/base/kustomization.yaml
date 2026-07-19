@@ -3,8 +3,10 @@ kind: Kustomization
 resources:
   - ingress-tls.yaml
 helmCharts:
-- name: victoria-metrics-single
-  includeCRDs: true
-  valuesFile: values.yaml
-  releaseName: victoria-metrics
-  repo: https://victoriametrics.github.io/helm-charts/
+  - name: victoria-metrics-single
+    # Pin must exist on https://victoriametrics.github.io/helm-charts/
+    version: 0.42.0
+    includeCRDs: true
+    valuesFile: values.yaml
+    releaseName: victoria-metrics
+    repo: https://victoriametrics.github.io/helm-charts/

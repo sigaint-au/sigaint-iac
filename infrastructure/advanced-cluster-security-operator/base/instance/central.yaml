@@ -1,4 +1,4 @@
-# Note this is resource reduced, this should not be taken as a production ready installation
+# Sized for a small lab/single-cluster RHACS Central. Review resources for production.
 apiVersion: platform.stackrox.io/v1alpha1
 kind: Central
 metadata:

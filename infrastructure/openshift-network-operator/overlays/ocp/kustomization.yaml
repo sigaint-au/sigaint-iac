@@ -1,11 +1,4 @@
----
-kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
-
-patches:
-  - path: patches/patch-routingViaHost.yaml
-    target:
-      group: operator.openshift.io/
-      kind: Network
-      name: cluster
-      version: v1
+kind: Kustomization
+resources:
+  - ../../base

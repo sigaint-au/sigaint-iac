@@ -1,10 +1,15 @@
-# External Secrets Operator
+# OpenShift External Secrets Operator
 
-## Installation
-Dependiing on which cluster youre deploying to. E.g `dmz` or `vmnet` you will
-use a different secret store provider.
+Installs the External Secrets Operator, instance config, and a Doppler `ClusterSecretStore`.
 
-### Dmz Cluster
+## Bootstrap secret
 
-* Apply the `overlays/dmz/doppler-secret.yaml` file with the correct token.
-* Apply the `SecretStore`
+Create the Doppler API token **once** per cluster (never commit it):
+
+```bash
+oc create secret generic doppler-token-auth-api \
+  -n external-secrets \
+  --from-literal=dopplerToken='dp.st....'
+```
+
+See `overlays/*/doppler-secret.yaml.example`.

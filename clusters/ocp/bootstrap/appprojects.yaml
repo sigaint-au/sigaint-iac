@@ -1,0 +1,89 @@
+---
+# AppProjects for the ocp (workload) cluster Argo CD (OpenShift GitOps).
+# Each cluster has its own Argo CD; apply only this directory on ocp.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infrastructure
+  namespace: openshift-gitops
+spec:
+  description: Cluster operators and platform configuration
+  sourceRepos:
+    - https://github.com/sigaint-au/sigaint-iac
+    - https://github.com/redhat-cop/gitops-catalog
+    - https://github.com/mhahl/gitops-catalog
+  destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: applications
+  namespace: openshift-gitops
+spec:
+  description: Workload applications (monitoring, registry, logging)
+  sourceRepos:
+    - https://github.com/sigaint-au/sigaint-iac
+    - https://grafana.github.io/helm-charts
+    - https://victoriametrics.github.io/helm-charts
+  destinations:
+    - namespace: 'sigaint-*'
+      server: https://kubernetes.default.svc
+    - namespace: openshift-logging
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+    - group: route.openshift.io
+      kind: Route
+    - group: networking.k8s.io
+      kind: IngressClass
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: virtualization
+  namespace: openshift-gitops
+spec:
+  description: OpenShift Virtualization workloads and multi-network config
+  sourceRepos:
+    - https://github.com/sigaint-au/sigaint-iac
+  destinations:
+    - namespace: 'sigaint-*'
+      server: https://kubernetes.default.svc
+    - namespace: default
+      server: https://kubernetes.default.svc
+    - namespace: openshift-cnv
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+    - group: k8s.cni.cncf.io
+      kind: NetworkAttachmentDefinition
+    - group: nmstate.io
+      kind: NodeNetworkConfigurationPolicy
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true

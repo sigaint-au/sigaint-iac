@@ -7,28 +7,52 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - list:
-      elements:
-      - name: openshift-machine-config-operator     # Done
-      - name: openshift-cert-manager-operator       # X
-      - name: openshift-external-secrets-operator   # X
-      - name: lvm-storage                           # NEW
-      - name: openshift-ingress-operator            # Done
-      - name: openshift-apiserver-operator          # Done
-      - name: openshift-console-operator            # Done
-      - name: openshift-logging-operator            # Done
-      - name: advanced-cluster-management
+    - list:
+        elements:
+          - name: openshift-machine-config-operator
+            wave: "-20"
+          - name: openshift-cert-manager-operator
+            wave: "-10"
+          - name: openshift-external-secrets-operator
+            wave: "-10"
+          - name: lvm-storage
+            wave: "-5"
+          - name: openshift-ingress-operator
+            wave: "0"
+          - name: openshift-apiserver-operator
+            wave: "0"
+          - name: openshift-console-operator
+            wave: "0"
+          - name: openshift-logging-operator
+            wave: "0"
+          - name: advanced-cluster-management
+            wave: "10"
   template:
     metadata:
-      name: '{{.name}}'
+      name: 'hub-{{.name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{.wave}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
     spec:
-      project: "default"
+      project: infrastructure
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
-        targetRevision: HEAD
-        path: 'infrastructure/{{.name}}/overlays/hub/'
+        targetRevision: main
+        path: 'infrastructure/{{.name}}/overlays/hub'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m

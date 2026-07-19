@@ -7,44 +7,86 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - list:
-      elements:
-      - name: openshift-machine-config-operator
-      - name: openshift-cert-manager-operator
-      - name: openshift-external-secrets-operator
-      - name: openshift-network-operator
-      - name: local-storage
-      - name: openshift-data-foundation-operator
-      - name: nmstate
-      - name: virtualization-operator
-      - name: openshift-ingress-operator
-      - name: openshift-apiserver-operator
-      - name: openshift-console-operator
-      - name: openshift-pipelines-operator
-      - name: openshift-logging-operator
-      - name: openshift-service-mesh
-      - name: metallb-operator
-      - name: cloudnative-pg-operator
-      - name: advanced-cluster-security-operator
-      - name: cluster-image-registry-operator
-      - name: kiali-operator
-      - name: compliance-operator
-      - name: container-security-operator
-      - name: quay-operator
-      - name: grafana-operator
-      - name: loki-operator
-      - name: tailscale
+    - list:
+        elements:
+          # Wave -20: node / cluster base config
+          - name: openshift-machine-config-operator
+            wave: "-20"
+          - name: openshift-network-operator
+            wave: "-20"
+          - name: cluster-image-registry-operator
+            wave: "-15"
+          # Wave -10: secrets and certificates
+          - name: openshift-cert-manager-operator
+            wave: "-10"
+          - name: openshift-external-secrets-operator
+            wave: "-10"
+          # Wave -5: storage
+          - name: local-storage
+            wave: "-5"
+          - name: openshift-data-foundation-operator
+            wave: "-5"
+          # Wave 0: cluster operators
+          - name: nmstate
+            wave: "0"
+          - name: metallb-operator
+            wave: "0"
+          - name: openshift-ingress-operator
+            wave: "0"
+          - name: openshift-apiserver-operator
+            wave: "0"
+          - name: openshift-console-operator
+            wave: "0"
+          - name: openshift-pipelines-operator
+            wave: "0"
+          - name: openshift-logging-operator
+            wave: "0"
+          - name: loki-operator
+            wave: "0"
+          - name: cloudnative-pg-operator
+            wave: "0"
+          - name: quay-operator
+            wave: "0"
+          - name: grafana-operator
+            wave: "0"
+          - name: virtualization-operator
+            wave: "0"
+          - name: openshift-service-mesh
+            wave: "0"
+          - name: kiali-operator
+            wave: "5"
+          - name: compliance-operator
+            wave: "0"
+          - name: container-security-operator
+            wave: "0"
+          - name: advanced-cluster-security-operator
+            wave: "10"
   template:
     metadata:
-      name: '{{.name}}'
+      name: 'infra-{{.name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{.wave}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
     spec:
-      project: "default"
+      project: infrastructure
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
-        targetRevision: HEAD
-        path: 'infrastructure/{{.name}}/overlays/ocp/'
+        targetRevision: main
+        path: 'infrastructure/{{.name}}/overlays/ocp'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m

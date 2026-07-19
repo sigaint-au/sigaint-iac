@@ -1,14 +1,24 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
   name: create-cluster-init-bundle
+  annotations:
+    # After Central (10); before SecuredCluster (15)
+    argocd.argoproj.io/sync-wave: "12"
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-options: Replace=true
 spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 86400
   template:
     spec:
+      serviceAccountName: create-cluster-init
+      restartPolicy: Never
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+        - name: create-cluster-init-bundle
+          image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+          imagePullPolicy: IfNotPresent
           env:
             - name: PASSWORD
               valueFrom:
@@ -19,47 +29,36 @@ spec:
             - /bin/bash
             - -c
             - |
-              #!/usr/bin/env bash
-              if kubectl get secret/sensor-tls &> /dev/null; then
-                echo "cluster-init bundle has already been configured, doing nothing"
+              set -euo pipefail
+              if kubectl get secret/sensor-tls &>/dev/null; then
+                echo "cluster-init bundle already configured"
                 exit 0
-              else
-
-                # Wait for central to be ready
-                attempt_counter=0
-                max_attempts=20
-                echo "Waiting for central to be available..."
-                until $(curl -k --output /dev/null --silent --head --fail https://central); do
-                    if [ ${attempt_counter} -eq ${max_attempts} ];then
-                      echo "Max attempts reached"
-                      exit 1
-                    fi
-
-                    printf '.'
-                    attempt_counter=$(($attempt_counter+1))
-                    echo "Made attempt $attempt_counter, waiting..."
-                    sleep 5
-                done
-
-                echo "Configuring cluster-init bundle"
-                export DATA={\"name\":\"local-cluster\"}
-                curl -k -o /tmp/bundle.json -X POST -u "admin:$PASSWORD" -H "Content-Type: application/json" --data $DATA https://central/v1/cluster-init/init-bundles
-
-                echo "Bundle received"
-                cat /tmp/bundle.json
-
-                echo "Applying bundle"
-                # No jq in container, python to the rescue
-                cat /tmp/bundle.json | python3 -c "import sys, json; print(json.load(sys.stdin)['kubectlBundle'])" | base64 -d | oc apply -f -
-                # Touch SecuredCluster to force operator to reconcile
-                oc label SecuredCluster local-cluster cluster-init-job-status=created
-
-                echo "ACS Cluster init bundle generated and applied"
               fi
-          imagePullPolicy: Always
-          name: create-cluster-init-bundle
-      dnsPolicy: ClusterFirst
-      restartPolicy: Never
-      serviceAccount: create-cluster-init
-      serviceAccountName: create-cluster-init
-      terminationGracePeriodSeconds: 30
+
+              attempt_counter=0
+              max_attempts=30
+              echo "Waiting for central..."
+              until curl --output /dev/null --silent --head --fail --cacert /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt \
+                  https://central.stackrox.svc || \
+                  curl -k --output /dev/null --silent --head --fail https://central; do
+                attempt_counter=$((attempt_counter + 1))
+                if [ "${attempt_counter}" -ge "${max_attempts}" ]; then
+                  echo "Max attempts reached waiting for central"
+                  exit 1
+                fi
+                sleep 5
+              done
+
+              echo "Creating cluster-init bundle"
+              DATA='{"name":"local-cluster"}'
+              curl -k -o /tmp/bundle.json -X POST \
+                -u "admin:${PASSWORD}" \
+                -H "Content-Type: application/json" \
+                --data "${DATA}" \
+                https://central/v1/cluster-init/init-bundles
+
+              python3 -c "import sys, json; print(json.load(sys.stdin)['kubectlBundle'])" \
+                </tmp/bundle.json | base64 -d | oc apply -f -
+
+              oc label SecuredCluster local-cluster cluster-init-job-status=created --overwrite
+              echo "ACS cluster init bundle applied"

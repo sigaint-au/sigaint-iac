@@ -1,5 +1,8 @@
 ---
 kind: Kustomization
+components:
+  - ../../../../components/operator-sync-wave
+  - ../../../../components/operator-instance-sync-wave
 apiVersion: kustomize.config.k8s.io/v1beta1
 
 resources:
@@ -7,6 +10,7 @@ resources:
   - ../../base/instance
   - create-cluster-auth-job.yaml
   - profiles/e8-tailored-profile-scc.yaml
+  - scans/scan-setting.yaml
   - scans/weekly-scan.yaml
 
 patches:

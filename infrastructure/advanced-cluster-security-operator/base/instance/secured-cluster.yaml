@@ -7,11 +7,12 @@ metadata:
 spec:
   clusterName: local-cluster
   admissionControl:
-    listenOnCreates: false
+    listenOnCreates: true
     listenOnEvents: true
-    listenOnUpdates: false
+    listenOnUpdates: true
   perNode:
     collector:
-      collection: EBPF
+      # CORE_BPF is the supported collector method on current RHACS releases.
+      collection: CORE_BPF
       imageFlavor: Regular
     taintToleration: TolerateTaints
