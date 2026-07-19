@@ -3,7 +3,8 @@ kind: Kustomization
 resources: []
 helmCharts:
   - name: grafana
+    version: 8.8.2
     includeCRDs: true
     valuesFile: values.yaml
     releaseName: grafana
-    repo:  https://grafana.github.io/helm-charts
+    repo: https://grafana.github.io/helm-charts

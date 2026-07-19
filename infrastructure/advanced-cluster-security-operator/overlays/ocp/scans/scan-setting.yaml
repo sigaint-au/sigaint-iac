@@ -1,0 +1,20 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: weekly-scan
+  namespace: openshift-compliance
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+autoApplyRemediations: false
+autoUpdateRemediations: false
+schedule: "0 1 * * 0"
+roles:
+  - master
+  - worker
+showFailedScansLimit: 3
+rawResultStorage:
+  size: 1Gi
+  rotation: 3
+scanTolerations:
+  - operator: Exists

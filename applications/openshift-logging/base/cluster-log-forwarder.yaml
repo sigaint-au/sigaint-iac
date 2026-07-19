@@ -6,21 +6,21 @@ metadata:
 spec:
   managementState: Managed
   outputs:
-    - lokiStack:
+    - name: lokistack-output
+      type: lokiStack
+      lokiStack:
         authentication:
           token:
             from: serviceAccount
         target:
           name: logging-loki
           namespace: openshift-logging
-      name: lokistack-output
-      tls:
-        insecureSkipVerify: true
-      type: lokiStack
   pipelines:
-    - inputRefs:
+    - name: all-logs
+      inputRefs:
         - application
-      name: infra-app-logs
+        - infrastructure
+        - audit
       outputRefs:
         - lokistack-output
   serviceAccount:

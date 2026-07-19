@@ -7,6 +7,7 @@ resources:
   - ../../base/instance
   - create-cluster-auth-job.yaml
   - profiles/e8-tailored-profile-scc.yaml
+  - scans/scan-setting.yaml
   - scans/weekly-scan.yaml
 
 patches:

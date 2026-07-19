@@ -1,8 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-    - ../../base
-    ## DO NOT INCLUDE SECRET HERE.
-    #- doppler-secret.yaml
-    - doppler-secretstore.yaml
-
+  - ../../base
+  # Bootstrap secret is created out-of-band; never commit real tokens.
+  # - doppler-secret.yaml.example
+  - doppler-secretstore.yaml

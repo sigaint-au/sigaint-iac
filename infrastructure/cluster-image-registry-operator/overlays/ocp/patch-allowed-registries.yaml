@@ -1,23 +1,26 @@
-# Patch Resources
-- op: add
+# Replace lists so re-syncs stay idempotent (op: add fails when keys exist).
+- op: replace
   path: /spec/registrySources/allowedRegistries
   value:
     - quay.sigaint.au
     - quay.io
+    - quay.io/openshift-release-dev
     - image-registry.openshift-image-registry.svc
+    - image-registry.openshift-image-registry.svc:5000
     - ghcr.io
     - registry.redhat.io
+    - registry.access.redhat.com
     - docker.io
     - registry.k8s.io
-
-# Patch Resources
-- op: add
+- op: replace
   path: /spec/allowedRegistriesForImport
   value:
     - domainName: quay.sigaint.au
     - domainName: quay.io
     - domainName: image-registry.openshift-image-registry.svc
+    - domainName: image-registry.openshift-image-registry.svc:5000
     - domainName: ghcr.io
     - domainName: registry.redhat.io
+    - domainName: registry.access.redhat.com
     - domainName: docker.io
     - domainName: registry.k8s.io

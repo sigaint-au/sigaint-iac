@@ -7,25 +7,46 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - list:
-      elements:
-      - name: namespaces
-      - name: access-credentials
-      - name: tailscale-router
-      - name: load-balancer
-      - name: network-attachment-definitions
-      - name: thinlinc
+    - list:
+        elements:
+          - name: namespaces
+            wave: "30"
+          - name: access-credentials
+            wave: "35"
+          - name: network-attachment-definitions
+            wave: "35"
+          - name: tailscale-router
+            wave: "40"
+          - name: load-balancer
+            wave: "40"
+          - name: thinlinc
+            wave: "40"
   template:
     metadata:
-      name: '{{.name}}'
+      name: 'virt-{{.name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{.wave}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
     spec:
-      project: "virtualization"
+      project: virtualization
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
-        targetRevision: HEAD
-        path: 'virtualization/{{.name}}/overlays/ocp/'
+        targetRevision: main
+        path: 'virtualization/{{.name}}/overlays/ocp'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m

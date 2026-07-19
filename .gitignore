@@ -1,2 +1,9 @@
 .idea/
 *charts*
+**/charts/
+.DS_Store
+*.swp
+*.swo
+# Never commit live secret material
+**/doppler-secret.yaml
+!**/*.example

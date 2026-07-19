@@ -66,7 +66,6 @@ spec:
               #cloud-config
               user: rhel
               runcmd:
-                - >-
                 - hostnamectl set-hostname ts-rou-1.corp.sigaint.au
                 - subscription-manager register --org=7271256 --activationkey=mhahl-rhel
                 - systemctl enable --now dnf-automatic-install.timer

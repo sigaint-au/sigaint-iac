@@ -1,0 +1,14 @@
+# Managed via Server-Side Apply. Unmanaged fields stay owned by the CNO.
+apiVersion: operator.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true,RespectIgnoreDifferences=true
+spec:
+  defaultNetwork:
+    ovnKubernetesConfig:
+      gatewayConfig:
+        # Required for Istio ambient mode and multi-homed / MetalLB forwarding.
+        routingViaHost: true
+        ipForwarding: Global

@@ -6,6 +6,7 @@ metadata:
     app: tailscale
 spec:
   replicas: 2
+  serviceName: tailscale
   selector:
     matchLabels:
       app: tailscale
@@ -19,8 +20,9 @@ spec:
         - name: tailscale
           securityContext:
             privileged: true
-          imagePullPolicy: Always
-          image: "ghcr.io/tailscale/tailscale:latest"
+          imagePullPolicy: IfNotPresent
+          # Pin releases in overlays when digests are known; avoid floating :latest in production.
+          image: "ghcr.io/tailscale/tailscale:v1.80.3"
           env:
             - name: TS_ROUTES
               value: "172.30.0.0/16"
@@ -33,8 +35,6 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.name
-            - name: TS_USERSPACE
-              value: "false"
             - name: TS_DEBUG_FIREWALL_MODE
               value: auto
             - name: TS_AUTH_ONCE

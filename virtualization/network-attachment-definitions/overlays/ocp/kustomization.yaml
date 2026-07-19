@@ -4,3 +4,4 @@ resources:
   - net-sigaint-dmz.yaml
   - net-sigaint-vmnet.yaml
   - net-sigaint-corp.yaml
+  - dhcp-shim.yaml

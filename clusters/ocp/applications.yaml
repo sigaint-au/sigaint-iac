@@ -7,24 +7,44 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - list:
-      elements:
-      - name: victoria-logs
-      - name: victoria-metrics
-      - name: grafana
-      - name: quay
-      - name: openshift-logging
+    - list:
+        elements:
+          - name: victoria-metrics
+            wave: "20"
+          - name: victoria-logs
+            wave: "20"
+          - name: grafana
+            wave: "25"
+          - name: quay
+            wave: "20"
+          - name: openshift-logging
+            wave: "20"
   template:
     metadata:
-      name: '{{.name}}'
+      name: 'app-{{.name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{.wave}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
     spec:
-      project: "applications"
+      project: applications
       source:
         repoURL: https://github.com/sigaint-au/sigaint-iac
-        targetRevision: HEAD
-        path: 'applications/{{.name}}/overlays/ocp/'
+        targetRevision: main
+        path: 'applications/{{.name}}/overlays/ocp'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m
