@@ -12,6 +12,18 @@ kubectl kustomize infrastructure/virtualization-operator/overlays/ocp
 oc get hyperconverged -n openshift-cnv
 ```
 
+## Workload updates
+
+```yaml
+spec:
+  workloadUpdateStrategy:
+    workloadUpdateMethods:
+      - KubeVirtRelieveAndMigrate
+```
+
+Uses descheduler-assisted live migration for operator/node updates (not hard `Evict`).
+Pair with `infrastructure/kube-descheduler-operator`.
+
 ## GPU PCIe passthrough (NVIDIA P620)
 
 HyperConverged permits host device **`10DE:1BB4`** as `nvidia.com/GP107GL_QUADRO_P620`

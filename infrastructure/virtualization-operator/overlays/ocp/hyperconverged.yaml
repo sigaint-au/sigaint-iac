@@ -56,12 +56,13 @@ spec:
       - pciDeviceSelector: "10DE:1BB4"
         resourceName: nvidia.com/GP107GL_QUADRO_P620
         externalResourceProvider: true
+  # Prefer live migration via descheduler integration over hard Evict.
+  # Requires Kube Descheduler Operator for node pressure / maintenance flows.
   workloadUpdateStrategy:
     batchEvictionInterval: 1m0s
     batchEvictionSize: 10
     workloadUpdateMethods:
-      - LiveMigrate
-      - Evict
+      - KubeVirtRelieveAndMigrate
   deployVmConsoleProxy: false
   uninstallStrategy: BlockUninstallIfWorkloadsExist
   workloads: {}
