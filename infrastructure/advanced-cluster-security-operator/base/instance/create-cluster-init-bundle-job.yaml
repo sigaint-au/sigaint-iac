@@ -17,7 +17,9 @@ spec:
       restartPolicy: Never
       containers:
         - name: create-cluster-init-bundle
-          image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+          # External registry: node DNS (e.g. 10.120.14.13) cannot resolve
+          # image-registry.openshift-image-registry.svc for kubelet pulls.
+          image: registry.redhat.io/openshift4/ose-cli-rhel9:v4.22
           imagePullPolicy: IfNotPresent
           env:
             - name: PASSWORD
@@ -57,8 +59,14 @@ spec:
                 --data "${DATA}" \
                 https://central/v1/cluster-init/init-bundles
 
-              python3 -c "import sys, json; print(json.load(sys.stdin)['kubectlBundle'])" \
-                </tmp/bundle.json | base64 -d | oc apply -f -
+              # kubectlBundle is standard base64 (no python required in ose-cli)
+              kubectl_bundle="$(sed -n 's/.*"kubectlBundle"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' /tmp/bundle.json | head -1)"
+              if [[ -z "${kubectl_bundle}" ]]; then
+                echo "failed to parse kubectlBundle from init-bundle response"
+                cat /tmp/bundle.json
+                exit 1
+              fi
+              printf '%s' "${kubectl_bundle}" | base64 -d | oc apply -f -
 
               oc label SecuredCluster local-cluster cluster-init-job-status=created --overwrite
               echo "ACS cluster init bundle applied"

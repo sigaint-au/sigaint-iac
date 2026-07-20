@@ -18,7 +18,8 @@ spec:
       restartPolicy: Never
       containers:
         - name: create-oauth-auth-provider
-          image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+          # External registry: node DNS cannot resolve the in-cluster registry hostname.
+          image: registry.redhat.io/openshift4/ose-cli-rhel9:v4.22
           imagePullPolicy: IfNotPresent
           env:
             - name: PASSWORD
@@ -48,20 +49,24 @@ spec:
                 sleep 5
               done
 
-              response=$(curl -k -u "admin:${PASSWORD}" \
-                "https://central/v1/authProviders?name=OpenShift" \
-                | python3 -c "import sys, json; print(json.load(sys.stdin).get('authProviders', []), end='')")
-              if [[ "${response}" != "[]" ]]; then
+              response="$(curl -k -u "admin:${PASSWORD}" \
+                "https://central/v1/authProviders?name=OpenShift")"
+              if echo "${response}" | grep -q '"name"[[:space:]]*:[[:space:]]*"OpenShift"'; then
                 echo "OpenShift auth provider already exists"
                 exit 0
               fi
 
               DATA="{\"name\":\"OpenShift\",\"type\":\"openshift\",\"active\":true,\"uiEndpoint\":\"${UI_ENDPOINT}\",\"enabled\":true}"
-              authid=$(curl -k -X POST -u "admin:${PASSWORD}" \
+              auth_resp="$(curl -k -X POST -u "admin:${PASSWORD}" \
                 -H "Content-Type: application/json" \
                 --data "${DATA}" \
-                https://central/v1/authProviders \
-                | python3 -c "import sys, json; print(json.load(sys.stdin)['id'], end='')")
+                https://central/v1/authProviders)"
+              authid="$(echo "${auth_resp}" | sed -n 's/.*"id"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)"
+              if [[ -z "${authid}" ]]; then
+                echo "failed to create auth provider"
+                echo "${auth_resp}"
+                exit 1
+              fi
 
               echo "Auth provider id=${authid}; setting minimum role to ${DEFAULT_ROLE}"
               DATA="{\"previous_groups\":[],\"required_groups\":[{\"props\":{\"authProviderId\":\"${authid}\"},\"roleName\":\"${DEFAULT_ROLE}\"}]}"
