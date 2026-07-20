@@ -65,18 +65,49 @@ spec:
           deviceName: nvidia.com/GP107GL_QUADRO_P620
 ```
 
+## Host prep (MachineConfigs)
+
+Workers get (reboot via MCO):
+
+| MachineConfig | Purpose |
+|---------------|---------|
+| `100-worker-iommu-karg` | `intel_iommu=on` `amd_iommu=on` `iommu=pt` |
+| `100-worker-vfio-modules` | Load `vfio` / `vfio_pci`; blacklist `nouveau` |
+
+Without IOMMU, `nvidia-vfio-manager` logs:
+
+```text
+unable to detect IOMMU FD .../vfio-dev: no such file or directory
+failed to bind ... to vfio-pci: invalid argument
+```
+
+```bash
+oc get mcp worker
+# After reboot:
+oc debug node/<node> -- chroot /host cat /proc/cmdline | tr ' ' '\n' | grep iommu
+oc debug node/<node> -- chroot /host ls /sys/kernel/iommu_groups | head
+oc debug node/<node> -- chroot /host find /sys/bus/pci/devices -name vfio-dev 2>/dev/null | head
+```
+
 ## Prerequisites
 
-- IOMMU enabled on the host (virt / bare-metal install)
+- Bare-metal (or nested virt with IOMMU/VT-d exposed); IOMMU MachineConfig above
 - NFD labels present (`feature.node.kubernetes.io/*`)
-- Allowed registries include **`registry.connect.redhat.com`** (operator bundle)
-  and **`nvcr.io`** (drivers) — see `cluster-image-registry-operator`
+- Allowed registries: `registry.connect.redhat.com`, `nvcr.io`
+- Node label: `nvidia.com/gpu.workload.config=vm-passthrough`
 
 ## Verify
 
 ```bash
 oc get pods -n nvidia-gpu-operator
+oc logs -n nvidia-gpu-operator -l app=nvidia-vfio-manager --tail=50
 oc describe node <node> | grep -A5 'Allocatable\|nvidia.com'
 oc get hyperconverged kubevirt-hyperconverged -n openshift-cnv \
   -o jsonpath='{.spec.permittedHostDevices}{"\n"}'
 ```
+
+### If bind still fails after IOMMU
+
+1. Confirm P620 is not held by `nvidia`/`nouveau` host driver on passthrough nodes.
+2. Check IOMMU group: GPU + audio (`03:00.0` / `03:00.1`) often share a group — both must be unbound.
+3. BIOS: enable VT-d / AMD-Vi and disable ACS quirks only if RH/vendor docs require it.

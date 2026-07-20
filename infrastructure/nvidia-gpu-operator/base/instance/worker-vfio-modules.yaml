@@ -1,0 +1,30 @@
+# Load VFIO modules early; blacklist nouveau so it does not claim the GPU.
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 100-worker-vfio-modules
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/modules-load.d/vfio.conf
+          mode: 420
+          overwrite: true
+          contents:
+            # vfio
+            # vfio_iommu_type1
+            # vfio_pci
+            source: data:text/plain;charset=utf-8;base64,dmZpbwp2ZmlvX2lvbW11X3R5cGUxCnZmaW9fcGNpCg==
+        - path: /etc/modprobe.d/blacklist-nouveau.conf
+          mode: 420
+          overwrite: true
+          contents:
+            # blacklist nouveau
+            # options nouveau modeset=0
+            source: data:text/plain;charset=utf-8;base64,YmxhY2tsaXN0IG5vdXZlYXUKb3B0aW9ucyBub3V2ZWF1IG1vZGVzZXQ9MAo=
