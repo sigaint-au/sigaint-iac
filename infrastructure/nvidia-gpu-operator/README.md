@@ -1,7 +1,7 @@
 # nvidia-gpu-operator
 
 NVIDIA GPU Operator (certified) with **OpenShift Virtualization PCIe passthrough**
-support for **Quadro P620** (`10DE:1BB4`).
+for **NVIDIA `10DE:1CB3`** (GP107GL / Quadro P400-class; confirm with `lspci -nn`).
 
 | | |
 |--|--|
@@ -41,16 +41,14 @@ Confirm PCI ID on the node:
 
 ```bash
 oc debug node/<node> -- chroot /host lspci -nnk -d 10de:
-# Expect: Quadro P620 [10de:1bb4]
+# This cluster: 03:00.0 [10de:1cb3], audio 03:00.1 [10de:0fb9]
 ```
 
-## HyperConverged (P620)
-
-`infrastructure/virtualization-operator/overlays/ocp/hyperconverged.yaml` permits:
+## HyperConverged
 
 ```yaml
-pciDeviceSelector: "10DE:1BB4"
-resourceName: nvidia.com/GP107GL_QUADRO_P620
+pciDeviceSelector: "10DE:1CB3"
+resourceName: nvidia.com/GP107GL_QUADRO_P400
 externalResourceProvider: true
 ```
 
@@ -62,7 +60,7 @@ spec:
     devices:
       gpus:
         - name: gpu1
-          deviceName: nvidia.com/GP107GL_QUADRO_P620
+          deviceName: nvidia.com/GP107GL_QUADRO_P400
 ```
 
 ## Host prep (MachineConfigs)

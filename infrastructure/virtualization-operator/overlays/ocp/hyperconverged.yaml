@@ -49,12 +49,12 @@ spec:
     persistentReservation: false
     autoResourceLimits: true
     decentralizedLiveMigration: false
-  # NVIDIA Quadro P620 (GP107GL) — vendor:device 10DE:1BB4
+  # NVIDIA GP107GL — live PCI ID 10DE:1CB3 (Quadro P400 family; not 1BB4/P620).
   # externalResourceProvider: sandbox-device-plugin from nvidia-gpu-operator
   permittedHostDevices:
     pciHostDevices:
-      - pciDeviceSelector: "10DE:1BB4"
-        resourceName: nvidia.com/GP107GL_QUADRO_P620
+      - pciDeviceSelector: "10DE:1CB3"
+        resourceName: nvidia.com/GP107GL_QUADRO_P400
         externalResourceProvider: true
   # CNV operator/workload updates via live migration.
   # Node pressure / relieve-and-migrate is handled by KubeDescheduler
