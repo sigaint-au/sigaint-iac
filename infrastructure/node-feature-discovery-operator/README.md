@@ -30,3 +30,4 @@ oc get nodes -o json | jq -r '.items[].metadata.labels | keys[]' | grep feature.
 
 - Labels appear as `feature.node.kubernetes.io/*` on nodes after workers reconcile.
 - Install early relative to GPU / device-plugin Operators that select on NFD labels.
+- NVIDIA GPU Operator (P400 passthrough): `infrastructure/nvidia-gpu-operator`.
