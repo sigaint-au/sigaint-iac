@@ -3,8 +3,8 @@ apiVersion: v1
 metadata:
   name: victoria-logs-ingest
   annotations:
-    metallb.io/ip-allocated-from-pool: net-sigaint-dmz
-    metallb.universe.tf/address-pool: net-sigaint-dmz
+    metallb.io/ip-allocated-from-pool: dmz-lhm-prod
+    metallb.universe.tf/address-pool: dmz-lhm-prod
 spec:
   ipFamilies:
     - IPv4

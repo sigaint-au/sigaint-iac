@@ -1,37 +1,87 @@
 ---
+# VIP ranges for LHM production VLANs (IPv4 .200–.250; IPv6 ::c8–::fa within each /64).
+# Pool names match NetworkAttachmentDefinitions (localnet / NAD name).
+# Services must set metallb.io/ip-allocated-from-pool (autoAssign is false).
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: net-sigaint-dmz
+  name: mgmt-lhm-prod
   namespace: metallb-system
 spec:
   addresses:
-    - '10.120.20.200-10.120.20.250'
-    - '2404:e80:4b6f:1:1337::1-2404:e80:4b6f:1:1337::100'
-  autoAssign: true
+    - 10.120.10.200-10.120.10.250
+    - 2404:e80:4b6f:10::c8-2404:e80:4b6f:10::fa
+  autoAssign: false
   avoidBuggyIPs: false
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: net-sigaint-vmnet
+  name: secure-lhm-prod
   namespace: metallb-system
 spec:
   addresses:
-    - '10.120.21.200-10.120.21.250'
-    - '2404:e80:4b6f:6:1337::1-2404:e80:4b6f:6:1337::100'
-
-  autoAssign: true
+    - 10.120.11.200-10.120.11.250
+    - 2404:e80:4b6f:11::c8-2404:e80:4b6f:11::fa
+  autoAssign: false
   avoidBuggyIPs: false
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: net-sigaint-corp
+  name: security-lhm-prod
   namespace: metallb-system
 spec:
   addresses:
-    - '10.120.13.200-10.120.13.250'
-    - '2404:e80:4b6f:0:1337::1-2404:e80:4b6f:0:1337::100'
-  autoAssign: true
+    - 10.120.12.200-10.120.12.250
+    - 2404:e80:4b6f:12::c8-2404:e80:4b6f:12::fa
+  autoAssign: false
+  avoidBuggyIPs: false
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: user-lhm-prod
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.120.13.200-10.120.13.250
+    - 2404:e80:4b6f:13::c8-2404:e80:4b6f:13::fa
+  autoAssign: false
+  avoidBuggyIPs: false
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: server-lhm-prod
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.120.14.200-10.120.14.250
+    - 2404:e80:4b6f:14::c8-2404:e80:4b6f:14::fa
+  autoAssign: false
+  avoidBuggyIPs: false
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: dmz-lhm-prod
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.120.20.200-10.120.20.250
+    - 2404:e80:4b6f:20::c8-2404:e80:4b6f:20::fa
+  autoAssign: false
+  avoidBuggyIPs: false
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: vmnet-lhm-prod
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.120.21.200-10.120.21.250
+    - 2404:e80:4b6f:21::c8-2404:e80:4b6f:21::fa
+  autoAssign: false
   avoidBuggyIPs: false
