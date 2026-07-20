@@ -1,0 +1,18 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: mgmt-lhm-prod
+  namespace: default
+  annotations:
+    description: "VLAN 10 MGMT — management & monitoring (10.120.10.0/24, 2404:e80:4b6f:10::/64)"
+spec:
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "name": "mgmt-lhm-prod",
+      "type": "ovn-k8s-cni-overlay",
+      "topology": "localnet",
+      "vlanID": 10,
+      "mtu": 9000,
+      "netAttachDefName": "default/mgmt-lhm-prod"
+    }

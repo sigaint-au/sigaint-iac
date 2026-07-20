@@ -22,15 +22,28 @@ spec:
         state: up
         type: ovs-bridge
     ovn:
+      # localnet names must match NAD CNI "name" / NetworkAttachmentDefinition metadata.name
       bridge-mappings:
         - bridge: ovs-br1
-          localnet: net-sigaint-corp
+          localnet: mgmt-lhm-prod
           state: present
         - bridge: ovs-br1
-          localnet: net-sigaint-dmz
+          localnet: secure-lhm-prod
           state: present
         - bridge: ovs-br1
-          localnet: net-sigaint-vmnet
+          localnet: security-lhm-prod
+          state: present
+        - bridge: ovs-br1
+          localnet: user-lhm-prod
+          state: present
+        - bridge: ovs-br1
+          localnet: server-lhm-prod
+          state: present
+        - bridge: ovs-br1
+          localnet: dmz-lhm-prod
+          state: present
+        - bridge: ovs-br1
+          localnet: vmnet-lhm-prod
           state: present
   nodeSelector:
     sigaint.au/physnet: eno2

@@ -57,7 +57,9 @@ oc label node <node-name> sigaint.au/physnet-
 |---------|--------|
 | Ethernet | `eno2`, **MTU 9000** (9k jumbo) |
 | OVS bridge | `ovs-br1` with port `eno2` |
-| OVN localnets | `net-sigaint-corp`, `net-sigaint-dmz`, `net-sigaint-vmnet` |
+| OVN localnets | `mgmt-lhm-prod`, `secure-lhm-prod`, `security-lhm-prod`, `user-lhm-prod`, `server-lhm-prod`, `dmz-lhm-prod`, `vmnet-lhm-prod` |
+
+NADs live under `virtualization/network-attachment-definitions/` (same localnet names).
 
 Underlay switches and the NIC must support jumbo frames. Cluster/OVN overlay MTU
 is managed separately under `infrastructure/openshift-network-operator/`
