@@ -1,19 +1,14 @@
-# Enable IOMMU on workers — required for VFIO / PCIe GPU passthrough.
-# Without this, nvidia-vfio-manager fails with:
-#   unable to detect IOMMU FD .../vfio-dev: no such file or directory
-#   failed to bind ... to vfio-pci: invalid argument
-# Applying this MachineConfig reboots workers via MCO.
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfig
 metadata:
   name: 100-worker-iommu-karg
   labels:
     machineconfiguration.openshift.io/role: worker
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   kernelArguments:
-    # Intel and AMD; unused platform ignores the other.
     - intel_iommu=on
     - amd_iommu=on
     - iommu=pt
+    - vfio-pci.ids=10de:1cb3,10de:0fb9
+    - rd.driver.blacklist=nouveau,snd_hda_intel
+    - modprobe.blacklist=nouveau,snd_hda_intel
