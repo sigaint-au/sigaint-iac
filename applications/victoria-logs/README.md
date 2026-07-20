@@ -1,7 +1,20 @@
-# helm
+# victoria-logs
 
-Applications deployed by argocd helm.
+VictoriaLogs single-node (Helm). Namespace: `sigaint-monitoring`.
 
+| | |
+|--|--|
+| Cluster | `ocp` |
+| App | `app-victoria-logs` |
+| LB pool | `dmz-lhm-prod` |
 
-# Todo
-* patch ingress without hardocding hosts
+```bash
+kubectl kustomize --enable-helm applications/victoria-logs/overlays/ocp
+```
+
+```yaml
+# Service annotations (syslog / ingest LB)
+metallb.io/ip-allocated-from-pool: dmz-lhm-prod
+```
+
+Cert DNS: `observe.sigaint.au`. Chart vendored under `base/charts/`.

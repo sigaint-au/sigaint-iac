@@ -1,15 +1,24 @@
-# OpenShift External Secrets Operator
+# openshift-external-secrets-operator
 
-Installs the External Secrets Operator, instance config, and a Doppler `ClusterSecretStore`.
+External Secrets Operator + Doppler `ClusterSecretStore`.
 
-## Bootstrap secret
+| | |
+|--|--|
+| Clusters | `hub`, `ocp` |
 
-Create the Doppler API token **once** per cluster (never commit it):
+## Bootstrap secret (once per cluster)
 
 ```bash
-oc create secret generic doppler-token-auth-api \
-  -n external-secrets \
-  --from-literal=dopplerToken='dp.st....'
+oc create namespace external-secrets --dry-run=client -o yaml | oc apply -f -
+oc create secret generic doppler-token-auth-api   -n external-secrets   --from-literal=dopplerToken='dp.st.REPLACE_ME'   --dry-run=client -o yaml | oc apply -f -
 ```
 
-See `overlays/*/doppler-secret.yaml.example`.
+```text
+overlays/*/doppler-secret.yaml.example
+```
+
+```bash
+kubectl kustomize infrastructure/openshift-external-secrets-operator/overlays/ocp
+oc get clustersecretstore
+oc get externalsecret -A
+```
