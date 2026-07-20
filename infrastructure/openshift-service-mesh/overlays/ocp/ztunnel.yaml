@@ -12,5 +12,8 @@ apiVersion: sailoperator.io/v1alpha1
 kind: ZTunnel
 metadata:
   name: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "15"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   namespace: ztunnel

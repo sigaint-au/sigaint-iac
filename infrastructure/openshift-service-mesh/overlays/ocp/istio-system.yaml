@@ -8,16 +8,20 @@ metadata:
     openshift.io/display-name: Istio System
   name: istio-system
 ---
+# sailoperator.io/v1 Istio — do not set spec.profile (not in CRD); use values.profile
 apiVersion: sailoperator.io/v1
 kind: Istio
 metadata:
   name: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   namespace: istio-system
   values:
+    profile: ambient
     pilot:
       trustedZtunnelNamespace: ztunnel
-    profile: ambient
     meshConfig:
       discoverySelectors:
         - matchLabels:

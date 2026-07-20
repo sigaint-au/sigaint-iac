@@ -8,10 +8,15 @@ metadata:
     openshift.io/display-name: Istio CNI
   name: istio-cni
 ---
+# sailoperator.io/v1 IstioCNI — profile is under values, not spec.profile
 apiVersion: sailoperator.io/v1
 kind: IstioCNI
 metadata:
   name: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   namespace: istio-cni
-  profile: ambient
+  values:
+    profile: ambient
