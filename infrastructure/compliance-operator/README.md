@@ -2,8 +2,8 @@
 
 Compliance Operator for OpenShift.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-compliance-operator` |
 

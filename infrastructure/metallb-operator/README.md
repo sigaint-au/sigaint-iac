@@ -2,8 +2,8 @@
 
 MetalLB (BGP) LoadBalancer VIPs for LHM production VLANs.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-metallb-operator` |
 | Peer | `10.120.14.1` (SERVER), ASN 65000 |

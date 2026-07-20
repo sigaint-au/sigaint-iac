@@ -2,8 +2,8 @@
 
 SSH public-key secrets for KubeVirt VMs (External Secrets → Doppler).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `virt-access-credentials` |
 

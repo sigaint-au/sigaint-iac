@@ -2,8 +2,8 @@
 
 Red Hat Advanced Cluster Management (MultiClusterHub) on the hub cluster.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `hub` |
 | App | `hub-advanced-cluster-management` |
 

@@ -3,8 +3,8 @@
 Image config (`config.openshift.io/v1` `Image` `cluster`) — allowed registries
 policy used by kubelet / CRI-O pulls.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-cluster-image-registry-operator` |
 

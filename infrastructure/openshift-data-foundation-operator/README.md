@@ -2,8 +2,8 @@
 
 OpenShift Data Foundation (ODF) operator + StorageCluster.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Clusters | `ocp` (primary), `hub` overlay present |
 | App | `infra-openshift-data-foundation-operator` |
 | Backing | LSO `local-block`, flexible scaling |

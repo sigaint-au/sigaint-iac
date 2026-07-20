@@ -2,8 +2,8 @@
 
 Kiali Operator (`kiali-ossm`) + Kiali CR + OpenShift console plugin (`OSSMConsole`).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-kiali-operator` |
 | Depends on | `openshift-service-mesh` (ApplicationSet wave `0` → kiali `5`) |

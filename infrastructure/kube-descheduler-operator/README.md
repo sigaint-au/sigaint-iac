@@ -3,8 +3,8 @@
 Kube Descheduler Operator — rebalances pods and **OpenShift Virtualization**
 workloads (relieve-and-migrate).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-kube-descheduler-operator` |
 | Channel | `stable` |

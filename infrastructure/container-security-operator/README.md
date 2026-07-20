@@ -2,8 +2,8 @@
 
 Container Security Operator (image vulnerability views).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-container-security-operator` |
 

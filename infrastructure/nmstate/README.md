@@ -2,8 +2,8 @@
 
 NMState operator + secondary physnet NNCPs (OVN localnet bridges).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-nmstate` |
 | Active policy | `physnet1-external-eno2` |

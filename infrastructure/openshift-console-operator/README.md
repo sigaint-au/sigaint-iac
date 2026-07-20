@@ -2,8 +2,8 @@
 
 Console customization (branding / config).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Clusters | `hub`, `ocp` |
 
 ```bash

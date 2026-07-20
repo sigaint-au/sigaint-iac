@@ -2,8 +2,8 @@
 
 Quay Operator (OLM). Registry workload: `applications/quay`.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-quay-operator` |
 | Install NS | `openshift-operators` |

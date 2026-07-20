@@ -3,8 +3,8 @@
 Certified **NVIDIA GPU Operator** for OpenShift Virtualization **PCIe passthrough**
 of **Quadro P400 (GP107GL)**.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-nvidia-gpu-operator` |
 | Channel | `stable` · catalog `certified-operators` |
@@ -106,10 +106,16 @@ externalResourceProvider: true   # sandbox-device-plugin
 spec:
   domain:
     devices:
+      # Keep true if you still need OpenShift console / VNC graphical console.
+      # Setting false can drop the auto-attached virtio GPU used by the console when
+      # a host GPU is attached for passthrough.
+      autoattachGraphicsDevice: true
       gpus:
         - name: p400
           deviceName: nvidia.com/GP107GL_QUADRO_P400
 ```
+
+**Note:** With host GPU passthrough, set **`autoattachGraphicsDevice: true`** if you still need **OpenShift console** graphical access (VNC). Turning it off can leave the VM without a console display device when only the passthrough GPU is present (guest drivers may not provide console until installed).
 
 ## Verify
 

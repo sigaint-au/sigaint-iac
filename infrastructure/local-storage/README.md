@@ -2,8 +2,8 @@
 
 Local Storage Operator + LocalVolumeSet (`local-block`) for ODF OSDs.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` (hub has LSO overlays historically) |
 | App | `infra-local-storage` |
 

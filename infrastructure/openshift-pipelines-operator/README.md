@@ -2,8 +2,8 @@
 
 OpenShift Pipelines (Tekton).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-openshift-pipelines-operator` |
 

@@ -2,8 +2,8 @@
 
 Red Hat Advanced Cluster Security (Central + SecuredCluster).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-advanced-cluster-security-operator` |
 | Depends on | `compliance-operator` (recommended) |

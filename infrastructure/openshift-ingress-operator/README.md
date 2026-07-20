@@ -2,8 +2,8 @@
 
 IngressController / default ingress TLS configuration.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Clusters | `hub`, `ocp` |
 
 ```bash

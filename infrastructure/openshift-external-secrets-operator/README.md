@@ -2,8 +2,8 @@
 
 External Secrets Operator + Doppler `ClusterSecretStore`.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Clusters | `hub`, `ocp` |
 
 ## Bootstrap secret (once per cluster)

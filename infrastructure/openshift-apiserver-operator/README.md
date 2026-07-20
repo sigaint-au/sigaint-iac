@@ -2,8 +2,8 @@
 
 API server TLS / configuration overlays.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Clusters | `hub`, `ocp` |
 
 ```bash

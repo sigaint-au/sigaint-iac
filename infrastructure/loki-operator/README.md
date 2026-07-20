@@ -2,8 +2,8 @@
 
 Loki Operator in global namespace `openshift-operators-redhat`.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-loki-operator` |
 | Channel | `stable-6.6` |

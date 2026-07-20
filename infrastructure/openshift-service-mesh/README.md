@@ -2,8 +2,8 @@
 
 OpenShift Service Mesh 3 (Sail Operator) — **Istio ambient** control plane.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-openshift-service-mesh` |
 | Operator | `servicemeshoperator3` · channel `stable` |

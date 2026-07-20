@@ -3,8 +3,8 @@
 Node Feature Discovery (NFD) — labels nodes with CPU, PCI, kernel, and hardware
 features for scheduling (OpenShift Virtualization, GPU, device plugins).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-node-feature-discovery-operator` |
 | Channel | `stable` |

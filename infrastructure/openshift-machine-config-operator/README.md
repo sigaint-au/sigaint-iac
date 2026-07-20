@@ -2,8 +2,8 @@
 
 MachineConfig / node config (e.g. auto-sizing reserved).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Clusters | `hub`, `ocp` |
 
 ```bash

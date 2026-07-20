@@ -2,8 +2,8 @@
 
 CloudNativePG operator (Quay database).
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `infra-cloudnative-pg-operator` |
 
