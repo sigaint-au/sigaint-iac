@@ -9,6 +9,5 @@ spec:
     - intel_iommu=on
     - amd_iommu=on
     - iommu=pt
-    - vfio-pci.ids=10de:1cb3,10de:0fb9
     - rd.driver.blacklist=nouveau,snd_hda_intel
     - modprobe.blacklist=nouveau,snd_hda_intel
