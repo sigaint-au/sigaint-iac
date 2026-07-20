@@ -69,7 +69,8 @@ spec:
 
 - IOMMU enabled on the host (virt / bare-metal install)
 - NFD labels present (`feature.node.kubernetes.io/*`)
-- `registry.redhat.io` / NVIDIA catalogs reachable for driver images
+- Allowed registries include **`registry.connect.redhat.com`** (operator bundle)
+  and **`nvcr.io`** (drivers) — see `cluster-image-registry-operator`
 
 ## Verify
 

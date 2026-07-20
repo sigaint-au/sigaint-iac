@@ -1,4 +1,6 @@
 # Replace lists so re-syncs stay idempotent (op: add fails when keys exist).
+# registry.connect.redhat.com is required for certified-operators bundles
+# (e.g. NVIDIA gpu-operator-bundle). nvcr.io hosts NVIDIA driver/runtime images.
 - op: replace
   path: /spec/registrySources/allowedRegistries
   value:
@@ -10,6 +12,8 @@
     - ghcr.io
     - registry.redhat.io
     - registry.access.redhat.com
+    - registry.connect.redhat.com
+    - nvcr.io
     - docker.io
     - registry.k8s.io
 - op: replace
@@ -22,5 +26,7 @@
     - domainName: ghcr.io
     - domainName: registry.redhat.io
     - domainName: registry.access.redhat.com
+    - domainName: registry.connect.redhat.com
+    - domainName: nvcr.io
     - domainName: docker.io
     - domainName: registry.k8s.io
