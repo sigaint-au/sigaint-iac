@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   # Host prep before ClusterPolicy / vfio-manager DaemonSet.
   - worker-iommu-karg.yaml
-  - worker-vfio-modules.yaml
+  - master-iommu-karg.yaml
   - cluster-policy.yaml

@@ -1,0 +1,13 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 100-master-iommu-karg
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  kernelArguments:
+    - intel_iommu=on
+    - amd_iommu=on
+    - iommu=pt
+    - rd.driver.blacklist=nouveau,snd_hda_intel
+    - modprobe.blacklist=nouveau,snd_hda_intel
