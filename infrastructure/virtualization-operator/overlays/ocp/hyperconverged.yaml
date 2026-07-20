@@ -39,7 +39,8 @@ spec:
     enableMultiArchBootImageImport: false
     withHostPassthroughCPU: false
     downwardMetrics: false
-    disableMDevConfiguration: false
+    # Full GPU PCIe passthrough (not mediated vGPU/MDEV).
+    disableMDevConfiguration: true
     declarativeHotplugVolumes: false
     deployKubeSecondaryDNS: false
     nonRoot: true
@@ -48,6 +49,13 @@ spec:
     persistentReservation: false
     autoResourceLimits: true
     decentralizedLiveMigration: false
+  # NVIDIA Quadro P620 (GP107GL) — vendor:device 10DE:1BB4
+  # externalResourceProvider: sandbox-device-plugin from nvidia-gpu-operator
+  permittedHostDevices:
+    pciHostDevices:
+      - pciDeviceSelector: "10DE:1BB4"
+        resourceName: nvidia.com/GP107GL_QUADRO_P620
+        externalResourceProvider: true
   workloadUpdateStrategy:
     batchEvictionInterval: 1m0s
     batchEvictionSize: 10

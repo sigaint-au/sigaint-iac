@@ -1,0 +1,89 @@
+# ClusterPolicy for OpenShift Virtualization GPU PCIe passthrough (sandbox).
+# Nodes used for VM GPU passthrough must be labeled:
+#   nvidia.com/gpu.workload.config=vm-passthrough
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  name: gpu-cluster-policy
+  namespace: nvidia-gpu-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  operator:
+    defaultRuntime: crio
+    use_ocp_driver_toolkit: true
+    initContainer: {}
+
+  # Sandbox path: VFIO + sandbox device plugin for KubeVirt passthrough.
+  sandboxWorkloads:
+    enabled: true
+    defaultWorkload: vm-passthrough
+
+  driver:
+    enabled: true
+    upgradePolicy:
+      autoUpgrade: true
+      maxParallelUpgrades: 1
+      maxUnavailable: 25%
+      drain:
+        enable: false
+        force: false
+        timeoutSeconds: 300
+        deleteEmptyDir: false
+
+  toolkit:
+    enabled: true
+
+  devicePlugin:
+    enabled: true
+    config:
+      name: ""
+      default: ""
+
+  gfd:
+    enabled: true
+
+  # Passthrough / sandbox components (required for VM PCIe GPU).
+  vfioManager:
+    enabled: true
+  sandboxDevicePlugin:
+    enabled: true
+
+  # P620 is full-device passthrough only (no MIG / vGPU manager).
+  migManager:
+    enabled: false
+  mig:
+    strategy: single
+  vgpuManager:
+    enabled: false
+  vgpuDeviceManager:
+    enabled: false
+
+  dcgm:
+    enabled: true
+  dcgmExporter:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+  nodeStatusExporter:
+    enabled: true
+
+  daemonsets:
+    updateStrategy: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: "1"
+    tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+
+  validator:
+    plugin:
+      env:
+        - name: WITH_WORKLOAD
+          value: "false"
+
+  gds:
+    enabled: false
