@@ -6,7 +6,6 @@ components:
 resources:
     - ../../base
     - physnet1-external-eno2.yaml
-    - physnet1-external-eno4.yaml
 
 ## These can be used for configuration of each node
 #

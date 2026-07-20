@@ -1,8 +1,7 @@
 # Managed via Server-Side Apply. Unmanaged fields stay owned by the CNO.
 #
-# Cluster network MTU is 8900 for 9k jumbo frames (machine MTU 9000 minus
-# 100-byte OVN-Kubernetes overlay overhead). Do not put spec.migration in
-# GitOps — migration is a one-time day-2 operation (see README.md).
+# Cluster network MTU 8900 for 9k jumbo (machine MTU 9000 minus 100-byte
+# OVN-Kubernetes overlay overhead). See README.md.
 apiVersion: operator.openshift.io/v1
 kind: Network
 metadata:

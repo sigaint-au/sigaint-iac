@@ -6,6 +6,11 @@ metadata:
 spec:
   desiredState:
     interfaces:
+      # Host/machine MTU for 9k jumbo (cluster network uses 8900 OVN overhead).
+      - name: eno2
+        type: ethernet
+        state: up
+        mtu: 9000
       - bridge:
           allow-extra-patch-ports: true
           options:

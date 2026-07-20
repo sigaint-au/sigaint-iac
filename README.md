@@ -272,10 +272,11 @@ OVN and MetalLB settings are GitOps-managed under:
 
 ```text
 infrastructure/openshift-network-operator/   # OVN gateway + 9k MTU (8900 overlay)
+infrastructure/nmstate/                      # physnet NNCPs (label nodes sigaint.au/physnet=eno2)
 infrastructure/metallb-operator/
 ```
 
-Cluster network jumbo frames: permanent OVN MTU **8900** (machine **9000** − OVN overhead) is set in the Network CR. Day-2 MTU migration is a one-time CNO procedure and is **not** left in GitOps — see `infrastructure/openshift-network-operator/README.md`.
+Cluster network jumbo frames: OVN MTU **8900** (machine **9000** − OVN overhead) is set in the Network CR. Secondary NIC jumbo (e.g. `eno2`) is NMState-managed — label nodes `sigaint.au/physnet=eno2` (see `infrastructure/nmstate/README.md`).
 
 ### External Secrets
 
