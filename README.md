@@ -158,6 +158,39 @@ oc get application -n openshift-gitops | grep -E '^(hub|infra|app|virt)-'
 15+ Dependents (ExternalSecret, pools, NNCPs, …)
 ```
 
+## Operator channels
+
+OLM Subscription channels pinned in this repo (package path under `infrastructure/`):
+
+| Operator package | Channel | Clusters |
+|------------------|---------|----------|
+| `advanced-cluster-management` | `release-2.15` | hub |
+| `advanced-cluster-security-operator` | `stable` | ocp |
+| `cloudnative-pg-operator` | `stable-v1` | ocp |
+| `cluster-observability-operator` | `stable` | optional |
+| `compliance-operator` | `stable` | ocp |
+| `container-security-operator` | `stable-3.16` | ocp |
+| `crunchy-postgres-operator` | `v5` | optional |
+| `grafana-operator` | `v5` | ocp |
+| `kiali-operator` | `stable` | ocp |
+| `local-storage` | `stable` | hub, ocp |
+| `loki-operator` | `stable-6.6` | ocp |
+| `lvm-storage` | `stable-4.22` | hub |
+| `metallb-operator` | `stable` | ocp |
+| `nmstate` | `stable` | ocp |
+| `openshift-cert-manager-operator` | `stable-v1` | hub, ocp |
+| `openshift-data-foundation-operator` | `stable-4.22` | hub, ocp |
+| `openshift-external-secrets-operator` | `stable-v1` | hub, ocp |
+| `openshift-logging-operator` | `stable-6.6` | hub, ocp |
+| `openshift-pipelines-operator` | `latest` | ocp |
+| `openshift-service-mesh` | `stable` | ocp |
+| `quay-operator` | `stable-3.16` | ocp |
+| `virtualization-operator` | `stable` | ocp |
+
+Platform config packages (no OLM channel): `openshift-apiserver-operator`, `openshift-console-operator`, `openshift-ingress-operator`, `openshift-machine-config-operator`, `openshift-network-operator`, `cluster-image-registry-operator`.
+
+Logging and Loki stay on the **same minor** (`stable-6.6`).
+
 ## Ops checks
 
 ```bash
