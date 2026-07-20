@@ -24,13 +24,6 @@ while IFS= read -r -d '' kust; do
     || grep -R --include='kustomization.yaml' -lE '^\s*helmCharts:' "$(dirname "$dir")/.." >/dev/null 2>&1; then
     uses_helm=1
   fi
-  # Explicit known helm apps (overlay only contains resources: ../../base)
-  case "$dir" in
-    applications/grafana/*|applications/victoria-metrics/*|applications/victoria-logs/*)
-      uses_helm=1
-      ;;
-  esac
-
   echo "==> kustomize build ${dir}"
   if [[ "${uses_helm}" -eq 1 ]]; then
     if ! command -v helm >/dev/null 2>&1; then

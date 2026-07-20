@@ -24,7 +24,7 @@ Repo: `https://github.com/sigaint-au/sigaint-iac`
 clusters/<cluster>/          # ApplicationSets + bootstrap (per-cluster Argo CD)
   bootstrap/                 # AppProjects + root Application (apply only on that cluster)
 infrastructure/              # Operators & platform config
-applications/                # Workloads
+applications/                # Workloads (Quay, OpenShift Logging)
 virtualization/              # KubeVirt / Multus / credentials
 components/                  # Shared Kustomize components
 scripts/validate-kustomize.sh
@@ -42,7 +42,7 @@ Each cluster runs **its own** Argo CD. Never apply hub bootstrap on ocp (or vice
 
 ```bash
 ./scripts/validate-kustomize.sh
-# requires: kubectl; helm for grafana / victoria-*
+# requires: kubectl (helm if a package uses helmCharts)
 ```
 
 ## Bootstrap

@@ -1,6 +1,6 @@
 # grafana-operator
 
-Grafana Operator (OLM). Workload chart: `applications/grafana`.
+Grafana Operator (OLM). No workload application is deployed from this repo.
 
 | | |
 |--|--|

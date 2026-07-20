@@ -31,11 +31,9 @@ metadata:
   name: applications
   namespace: openshift-gitops
 spec:
-  description: Workload applications (monitoring, registry, logging)
+  description: Workload applications (registry, logging)
   sourceRepos:
     - https://github.com/sigaint-au/sigaint-iac
-    - https://grafana.github.io/helm-charts
-    - https://victoriametrics.github.io/helm-charts
   destinations:
     - namespace: 'sigaint-*'
       server: https://kubernetes.default.svc
