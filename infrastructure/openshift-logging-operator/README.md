@@ -5,7 +5,7 @@ Red Hat OpenShift Logging operator. Stack instance: `applications/openshift-logg
 | | |
 |--|--|
 | Clusters | `hub`, `ocp` |
-| Channel | `stable-6.4` (pinned with Loki) |
+| Channel | `stable-6.6` (pinned with Loki) |
 
 ```bash
 kubectl kustomize infrastructure/openshift-logging-operator/overlays/ocp

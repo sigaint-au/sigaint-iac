@@ -6,6 +6,7 @@ Loki Operator in global namespace `openshift-operators-redhat`.
 |--|--|
 | Cluster | `ocp` |
 | App | `infra-loki-operator` |
+| Channel | `stable-6.6` |
 
 ```bash
 kubectl kustomize infrastructure/loki-operator/overlays/ocp
