@@ -1,0 +1,7 @@
+# Global OperatorGroup (no targetNamespaces) required for Loki Operator.
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-operators-redhat
+  namespace: openshift-operators-redhat
+spec: {}
