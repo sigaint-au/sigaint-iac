@@ -22,5 +22,6 @@ components:
  -1  Subscription
   5  Secrets, ExternalSecrets, Certificates, LocalVolumeDiscovery
  10  Primary CRs (MetalLB, StorageCluster, Central, HyperConverged, …)
-15+  Dependents (IPAddressPool, BGPPeer, SecuredCluster, NNCP, …)
+15+  Dependents (IPAddressPool, BGPPeer, SecuredCluster, NNCP, Kiali, …)
+ 20  Late dependents (OSSMConsole, QuayRegistry, …)
 ```

@@ -1,7 +1,11 @@
 apiVersion: kiali.io/v1alpha1
 kind: OSSMConsole
 metadata:
-  namespace: openshift-operators
   name: ossmconsole
+  namespace: openshift-operators
+  annotations:
+    # CRD comes from the kiali-ossm CSV; allow sync before the API exists.
+    argocd.argoproj.io/sync-wave: "20"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   version: default

@@ -328,6 +328,18 @@ patches:
         path: /metadata/annotations/argocd.argoproj.io~1sync-options
         value: SkipDryRunOnMissingResource=true
 
+  # OSSMConsole CRD ships with kiali-ossm CSV; skip dry-run until operator is ready.
+  - target:
+      kind: OSSMConsole
+      group: kiali.io
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "20"
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-options
+        value: SkipDryRunOnMissingResource=true
+
   - target:
       kind: LokiStack
       group: loki.grafana.com
