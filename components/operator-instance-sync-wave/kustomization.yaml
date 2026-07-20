@@ -2,9 +2,9 @@
 # Pair with operator-sync-wave so OLM install (Namespace/OG/Subscription) runs first.
 #
 #    0   Helper RBAC / NetworkPolicy
-#    5   Secrets, ExternalSecrets, Certificates, discovery
-#   10   Primary operator CRs
-#   15+  Dependent instance resources
+#    5   Secrets, Certificates, ExternalSecretsConfig, discovery
+#   10   Primary operator CRs (ClusterSecretStore, …)
+#   15+  Dependent instance resources (ExternalSecret, …)
 #   20   Jobs / QuayRegistry (after deps)
 #
 apiVersion: kustomize.config.k8s.io/v1alpha1
@@ -20,9 +20,10 @@ patches:
         path: /metadata/annotations/argocd.argoproj.io~1sync-wave
         value: "5"
 
+  # OpenShift External Secrets Operator config before stores / ExternalSecrets.
   - target:
-      kind: ExternalSecret
-      group: external-secrets.io
+      kind: ExternalSecretsConfig
+      group: operator.openshift.io
     patch: |-
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-wave
@@ -37,7 +38,7 @@ patches:
     patch: |-
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-wave
-        value: "5"
+        value: "10"
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-options
         value: SkipDryRunOnMissingResource=true
@@ -48,18 +49,18 @@ patches:
     patch: |-
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-wave
-        value: "5"
+        value: "10"
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-options
         value: SkipDryRunOnMissingResource=true
 
   - target:
-      kind: ExternalSecretsConfig
-      group: operator.openshift.io
+      kind: ExternalSecret
+      group: external-secrets.io
     patch: |-
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-wave
-        value: "10"
+        value: "15"
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1sync-options
         value: SkipDryRunOnMissingResource=true

@@ -20,8 +20,8 @@ components:
 -10  Namespace
  -5  OperatorGroup, CatalogSource
  -1  Subscription
-  5  Secrets, ExternalSecrets, Certificates, LocalVolumeDiscovery
- 10  Primary CRs (MetalLB, StorageCluster, Central, HyperConverged, …)
-15+  Dependents (IPAddressPool, BGPPeer, SecuredCluster, NNCP, Kiali, …)
+  5  Secrets, Certificates, ExternalSecretsConfig, LocalVolumeDiscovery
+ 10  Primary CRs (ClusterSecretStore, MetalLB, StorageCluster, Central, …)
+15+  Dependents (ExternalSecret, IPAddressPool, BGPPeer, NNCP, Kiali, …)
  20  Late dependents (OSSMConsole, QuayRegistry, …)
 ```

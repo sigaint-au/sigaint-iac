@@ -4,9 +4,9 @@ Argo CD sync-wave + `SkipDryRunOnMissingResource` for **operator instances** and
 
 | Wave | Examples |
 |------|----------|
-| `5` | Secret, ExternalSecret, Certificate, LocalVolumeDiscovery |
-| `10` | MetalLB, StorageCluster, Central, HyperConverged, … |
-| `15+` | IPAddressPool, BGPPeer, SecuredCluster, NNCP, … |
+| `5` | Secret, Certificate, ExternalSecretsConfig, LocalVolumeDiscovery |
+| `10` | ClusterSecretStore, MetalLB, StorageCluster, Central, … |
+| `15+` | ExternalSecret, IPAddressPool, BGPPeer, SecuredCluster, NNCP, … |
 
 ```yaml
 components:

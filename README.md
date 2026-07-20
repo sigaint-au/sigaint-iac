@@ -153,9 +153,9 @@ oc get application -n openshift-gitops | grep -E '^(hub|infra|app|virt)-'
 -10 Namespace
  -5 OperatorGroup / CatalogSource
  -1 Subscription
-  5 Secrets / ExternalSecrets / Certificates
- 10 Primary CRs (StorageCluster, MetalLB, …)
-15+ Dependents (pools, NNCPs, …)
+  5 Secrets / Certificates / ExternalSecretsConfig
+ 10 Primary CRs (ClusterSecretStore, StorageCluster, MetalLB, …)
+15+ Dependents (ExternalSecret, pools, NNCPs, …)
 ```
 
 ## Ops checks
