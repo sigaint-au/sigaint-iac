@@ -14,11 +14,11 @@ spec: {}
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: sigaint-monitoring
+  name: lhm-prod-monitoring
 spec: {}
 ---
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: sigaint-quay
+  name: lhm-prod-quay
 spec: {}

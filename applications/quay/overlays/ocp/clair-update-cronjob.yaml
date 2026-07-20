@@ -12,7 +12,7 @@ kind: CronJob
 apiVersion: batch/v1
 metadata:
   name: clair-updater
-  namespace: sigaint-quay
+  namespace: lhm-prod-quay
 spec:
   schedule: '@daily'
   concurrencyPolicy: Forbid

@@ -2,7 +2,7 @@ apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
   name: build-caddy-image
-  namespace: sigaint-quay
+  namespace: lhm-prod-quay
 spec:
   tasks:
     - name: git-clone

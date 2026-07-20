@@ -2,32 +2,35 @@
 
 Cluster logging stack: LokiStack, log forwarder, console UI plugin.
 
-| | |
-|--|--|
+| Field | Value |
+|-------|-------|
 | Cluster | `ocp` |
 | App | `app-openshift-logging` |
+| Namespace | `openshift-logging` |
 | Depends on | `openshift-logging-operator`, `loki-operator`, ODF/NooBaa S3 |
 
 ```bash
 kubectl kustomize applications/openshift-logging/overlays/ocp
+oc get lokistack,clusterlogforwarder -n openshift-logging
 ```
 
-## S3 (NooBaa OBC)
+## S3 (NooBaa OBC example)
+
+OBC can live in `lhm-prod-monitoring`; credentials go to Doppler for External Secrets.
 
 ```bash
-# Create OBC (example) then map secret fields into Doppler / ExternalSecret
 oc apply -f - <<'EOF'
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
-  name: sigaint-monitoring-loki
-  namespace: sigaint-monitoring
+  name: lhm-prod-monitoring-loki
+  namespace: lhm-prod-monitoring
 spec:
-  generateBucketName: sigaint-monitoring-loki
+  generateBucketName: lhm-prod-monitoring-loki
   storageClassName: openshift-storage.noobaa.io
 EOF
 
-oc get secret -n sigaint-monitoring sigaint-monitoring-loki -o yaml
+oc get secret -n lhm-prod-monitoring lhm-prod-monitoring-loki -o yaml
 ```
 
 Wire into External Secrets:
