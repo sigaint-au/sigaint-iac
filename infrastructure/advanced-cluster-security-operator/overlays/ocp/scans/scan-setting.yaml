@@ -12,7 +12,6 @@ schedule: "0 1 * * 0"
 roles:
   - master
   - worker
-showFailedScansLimit: 3
 rawResultStorage:
   size: 1Gi
   rotation: 3
