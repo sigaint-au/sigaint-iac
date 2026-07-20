@@ -173,7 +173,12 @@ OLM Subscription channels pinned in this repo (package path under `infrastructur
 | `crunchy-postgres-operator` | `v5` | optional |
 | `grafana-operator` | `v5` | ocp |
 | `kiali-operator` | `stable` | ocp |
+| `kube-descheduler-operator` | `stable` | ocp |
 | `local-storage` | `stable` | hub, ocp |
+| `node-feature-discovery-operator` | `stable` | ocp |
+| `nvidia-gpu-operator` | `stable` (certified) | ocp |
+
+
 | `loki-operator` | `stable-6.6` | ocp |
 | `lvm-storage` | `stable-4.22` | hub |
 | `metallb-operator` | `stable` | ocp |

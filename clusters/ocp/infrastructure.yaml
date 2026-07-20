@@ -49,8 +49,14 @@ spec:
             wave: "0"
           - name: grafana-operator
             wave: "0"
+          - name: node-feature-discovery-operator
+            wave: "-5"
           - name: virtualization-operator
             wave: "0"
+          - name: nvidia-gpu-operator
+            wave: "5"
+          - name: kube-descheduler-operator
+            wave: "5"
           - name: openshift-service-mesh
             wave: "0"
           - name: kiali-operator
