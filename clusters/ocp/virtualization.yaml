@@ -15,10 +15,6 @@ spec:
             wave: "35"
           - name: network-attachment-definitions
             wave: "35"
-          - name: load-balancer
-            wave: "40"
-          - name: thinlinc
-            wave: "40"
   template:
     metadata:
       name: 'virt-{{.name}}'
