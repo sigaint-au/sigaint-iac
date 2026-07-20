@@ -7,17 +7,18 @@ metadata:
   namespace: openshift-cnv
 spec:
   enableCommonBootImageImport: true
+  deployVmConsoleProxy: true
   virtualMachineOptions:
     disableFreePageReporting: false
     disableSerialConsoleLog: false
   higherWorkloadDensity:
     memoryOvercommitPercentage: 150
   liveMigrationConfig:
-    allowAutoConverge: false
+    allowAutoConverge: true
     allowPostCopy: false
     completionTimeoutPerGiB: 800
-    parallelMigrationsPerCluster: 1
-    parallelOutboundMigrationsPerNode: 1
+    parallelMigrationsPerCluster: 5
+    parallelOutboundMigrationsPerNode: 2
     progressTimeout: 150
   certConfig:
     ca:
@@ -35,20 +36,22 @@ spec:
     nodeLabelSelector: {}
   evictionStrategy: LiveMigrateIfPossible
   featureGates:
-    deployTektonTaskResources: false
-    enableMultiArchBootImageImport: false
-    withHostPassthroughCPU: false
-    downwardMetrics: false
-    # Full GPU PCIe passthrough (not mediated vGPU/MDEV).
+    # GPU full PCIe passthrough (not mdev/vGPU)
     disableMDevConfiguration: true
-    declarativeHotplugVolumes: false
-    deployKubeSecondaryDNS: false
     nonRoot: true
-    alignCPUs: false
+    autoResourceLimits: true
+    # Observability / multi-network / modern virt (OCP 4.22-oriented)
+    downwardMetrics: true
+    deployKubeSecondaryDNS: true
+    declarativeHotplugVolumes: true
+    decentralizedLiveMigration: true
+    alignCPUs: true
+    # Explicitly off
+    withHostPassthroughCPU: false
+    enableMultiArchBootImageImport: false
+    deployTektonTaskResources: false
     enableManagedTenantQuota: false
     persistentReservation: false
-    autoResourceLimits: true
-    decentralizedLiveMigration: false
   # NVIDIA Quadro P400 (GP107GL) — PCI 10DE:1CB3 (+ audio 10DE:0FB9 in same IOMMU group).
   # externalResourceProvider: sandbox-device-plugin from nvidia-gpu-operator
   permittedHostDevices:
@@ -64,7 +67,6 @@ spec:
     batchEvictionSize: 10
     workloadUpdateMethods:
       - LiveMigrate
-  deployVmConsoleProxy: false
   uninstallStrategy: BlockUninstallIfWorkloadsExist
   workloads: {}
   resourceRequirements:
