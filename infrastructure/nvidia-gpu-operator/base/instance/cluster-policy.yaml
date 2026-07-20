@@ -1,4 +1,5 @@
-# ClusterPolicy for OpenShift Virtualization GPU PCIe passthrough (sandbox).
+# ClusterPolicy for OpenShift Virtualization PCIe passthrough (sandbox).
+# Hardware: NVIDIA Quadro P400 (GP107GL), PCI 10DE:1CB3.
 # Nodes used for VM GPU passthrough must be labeled:
 #   nvidia.com/gpu.workload.config=vm-passthrough
 apiVersion: nvidia.com/v1
@@ -50,7 +51,7 @@ spec:
   sandboxDevicePlugin:
     enabled: true
 
-  # P620 is full-device passthrough only (no MIG / vGPU manager).
+  # Quadro P400: full-device passthrough only (no MIG / vGPU manager).
   migManager:
     enabled: false
   mig:

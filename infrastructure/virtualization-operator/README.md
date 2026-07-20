@@ -24,10 +24,23 @@ spec:
 Node relieve-and-migrate for virt is configured on **KubeDescheduler**
 (`DevKubeVirtRelieveAndMigrate`) — see `infrastructure/kube-descheduler-operator`.
 
-## GPU PCIe passthrough (NVIDIA)
+## GPU PCIe passthrough — Quadro P400 (GP107GL)
 
-HyperConverged permits host device **`10DE:1CB3`** (GP107GL / Quadro P400-class) as
-`nvidia.com/GP107GL_QUADRO_P400` (`externalResourceProvider: true` via GPU Operator).
+| | |
+|--|--|
+| PCI | **`10DE:1CB3`** @ `03:00.0` |
+| Audio | `10DE:0FB9` @ `03:00.1` (same IOMMU group) |
+| Resource | `nvidia.com/GP107GL_QUADRO_P400` |
+| Provider | NVIDIA GPU Operator sandbox device plugin |
+
+```yaml
+# HyperConverged (configured in overlays/ocp/hyperconverged.yaml)
+permittedHostDevices:
+  pciHostDevices:
+    - pciDeviceSelector: "10DE:1CB3"
+      resourceName: nvidia.com/GP107GL_QUADRO_P400
+      externalResourceProvider: true
+```
 
 ```yaml
 # VM attach
@@ -35,8 +48,8 @@ spec:
   domain:
     devices:
       gpus:
-        - name: gpu1
+        - name: p400
           deviceName: nvidia.com/GP107GL_QUADRO_P400
 ```
 
-See `infrastructure/nvidia-gpu-operator/README.md`.
+See `infrastructure/nvidia-gpu-operator/README.md` for ClusterPolicy, IOMMU, and node labels.
