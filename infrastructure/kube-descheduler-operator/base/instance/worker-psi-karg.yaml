@@ -1,0 +1,13 @@
+# PSI metrics required by DevKubeVirtRelieveAndMigrate (kernel arg psi=1).
+# Applying this MachineConfig reboots workers via MCO.
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-openshift-machineconfig-worker-psi-karg
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  kernelArguments:
+    - psi=1

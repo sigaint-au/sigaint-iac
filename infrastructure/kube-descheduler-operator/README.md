@@ -1,7 +1,7 @@
 # kube-descheduler-operator
 
-Kube Descheduler Operator — rebalances pods (including OpenShift Virtualization
-workloads) when soft topology or utilization policies are violated.
+Kube Descheduler Operator — rebalances pods and **OpenShift Virtualization**
+workloads (relieve-and-migrate).
 
 | | |
 |--|--|
@@ -21,17 +21,35 @@ oc get kubedescheduler cluster -n openshift-kube-descheduler-operator -o yaml
 
 | Field | Value |
 |-------|--------|
-| `mode` | `Automatic` (evicts; use `Predictive` to dry-run) |
-| `deschedulingIntervalSeconds` | `3600` |
-| Profiles | `SoftTopologyAndDuplicates`, `LifecycleAndUtilization` |
+| `mode` | `Automatic` |
+| Interval | `3600s` |
+| Profiles | `SoftTopologyAndDuplicates`, **`DevKubeVirtRelieveAndMigrate`** |
 
 ```yaml
-# Dry-run only (no evictions)
-spec:
-  mode: Predictive
+profiles:
+  - SoftTopologyAndDuplicates
+  - DevKubeVirtRelieveAndMigrate
+profileCustomizations:
+  devEnableSoftTainter: true
+  devDeviationThresholds: AsymmetricLow
+  devActualUtilizationProfile: PrometheusCPUCombined
+```
+
+`DevKubeVirtRelieveAndMigrate` is Technology Preview. Do **not** combine with
+`LifecycleAndUtilization` / `LongLifecycle` / `CompactAndScale`.
+
+## PSI (required)
+
+Worker kernel argument `psi=1` via MachineConfig
+`99-openshift-machineconfig-worker-psi-karg` (reboots workers).
+
+```bash
+oc get mcp worker
+oc get mc 99-openshift-machineconfig-worker-psi-karg
 ```
 
 ## Notes
 
-- Descheduler never reschedules system-critical pods owned by static manifests on control plane by default policies; review profile docs before adding `EvictPodsWithPVC` / `EvictPodsWithLocalStorage`.
-- VMs with `evictionStrategy: LiveMigrate` cooperate better with deschedule events than hard kill.
+- HyperConverged uses `workloadUpdateMethods: [LiveMigrate]` for CNV updates;
+  node pressure rebalancing is owned here.
+- VMs: prefer `evictionStrategy: LiveMigrate` / `LiveMigrateIfPossible`.

@@ -1,5 +1,6 @@
-# Cluster descheduler for OpenShift Virtualization density / soft topology.
-# CRD ships with cluster-kube-descheduler-operator CSV.
+# Cluster descheduler for OpenShift Virtualization.
+# Profile DevKubeVirtRelieveAndMigrate requires worker kernel arg psi=1
+# (see worker-psi-karg.yaml). Do not combine with LifecycleAndUtilization.
 apiVersion: operator.openshift.io/v1
 kind: KubeDescheduler
 metadata:
@@ -10,13 +11,16 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   managementState: Managed
-  # Automatic = evict; Predictive = log-only dry-run.
   mode: Automatic
   deschedulingIntervalSeconds: 3600
   logLevel: Normal
   operatorLogLevel: Normal
   profiles:
-    # Soft topology / preferred anti-affinity violations (VM spread).
+    # Soft topology / preferred anti-affinity (VM spread).
     - SoftTopologyAndDuplicates
-    # Rebalance under/over-utilized nodes.
-    - LifecycleAndUtilization
+    # Virt-aware rebalance / migrate from high-cost nodes (Tech Preview).
+    - DevKubeVirtRelieveAndMigrate
+  profileCustomizations:
+    devEnableSoftTainter: true
+    devDeviationThresholds: AsymmetricLow
+    devActualUtilizationProfile: PrometheusCPUCombined

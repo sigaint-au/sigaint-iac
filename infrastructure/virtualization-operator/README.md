@@ -18,11 +18,11 @@ oc get hyperconverged -n openshift-cnv
 spec:
   workloadUpdateStrategy:
     workloadUpdateMethods:
-      - KubeVirtRelieveAndMigrate
+      - LiveMigrate
 ```
 
-Uses descheduler-assisted live migration for operator/node updates (not hard `Evict`).
-Pair with `infrastructure/kube-descheduler-operator`.
+Node relieve-and-migrate for virt is configured on **KubeDescheduler**
+(`DevKubeVirtRelieveAndMigrate`) — see `infrastructure/kube-descheduler-operator`.
 
 ## GPU PCIe passthrough (NVIDIA P620)
 
