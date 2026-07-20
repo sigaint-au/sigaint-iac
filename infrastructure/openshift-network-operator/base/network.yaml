@@ -1,4 +1,8 @@
 # Managed via Server-Side Apply. Unmanaged fields stay owned by the CNO.
+#
+# Cluster network MTU is 8900 for 9k jumbo frames (machine MTU 9000 minus
+# 100-byte OVN-Kubernetes overlay overhead). Do not put spec.migration in
+# GitOps — migration is a one-time day-2 operation (see README.md).
 apiVersion: operator.openshift.io/v1
 kind: Network
 metadata:
@@ -8,6 +12,7 @@ metadata:
 spec:
   defaultNetwork:
     ovnKubernetesConfig:
+      mtu: 8900
       gatewayConfig:
         # Required for Istio ambient mode and multi-homed / MetalLB forwarding.
         routingViaHost: true

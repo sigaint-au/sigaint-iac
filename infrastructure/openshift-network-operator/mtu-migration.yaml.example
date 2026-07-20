@@ -1,0 +1,21 @@
+# Example only — do NOT add this to kustomization.yaml.
+#
+# One-time day-2 start of cluster network MTU migration to 9k jumbo frames.
+# Set network.from to the live clusterNetworkMTU before applying:
+#   oc get network.config.openshift.io cluster -o jsonpath='{.status.clusterNetworkMTU}{"\n"}'
+#
+# Prefer the documented oc patch (see README.md). After MCPs finish, remove
+# spec.migration and keep permanent mtu: 8900 from base/network.yaml.
+---
+apiVersion: operator.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+spec:
+  migration:
+    mtu:
+      network:
+        from: 1400
+        to: 8900
+      machine:
+        to: 9000

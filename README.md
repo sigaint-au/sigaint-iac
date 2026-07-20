@@ -271,9 +271,11 @@ Include OpenShift release and internal registry hosts.
 OVN and MetalLB settings are GitOps-managed under:
 
 ```text
-infrastructure/openshift-network-operator/
+infrastructure/openshift-network-operator/   # OVN gateway + 9k MTU (8900 overlay)
 infrastructure/metallb-operator/
 ```
+
+Cluster network jumbo frames: permanent OVN MTU **8900** (machine **9000** − OVN overhead) is set in the Network CR. Day-2 MTU migration is a one-time CNO procedure and is **not** left in GitOps — see `infrastructure/openshift-network-operator/README.md`.
 
 ### External Secrets
 
