@@ -67,6 +67,8 @@ spec:
   sourceRepos:
     - https://github.com/sigaint-au/sigaint-iac
   destinations:
+    - namespace: 'lhm-prod-*'
+      server: https://kubernetes.default.svc
     - namespace: 'sigaint-*'
       server: https://kubernetes.default.svc
     - namespace: default

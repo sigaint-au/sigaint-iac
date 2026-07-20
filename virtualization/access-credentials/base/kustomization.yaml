@@ -1,11 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-
-  # Sigaint DMZ
-  - sigiant-dmz/sk-lan-local.yaml
-  - sigiant-dmz/sk-yk-main.yaml
-
-  # Sigaint VMNET
-  - sigiant-vmnet/sk-lan-local.yaml
-  - sigiant-vmnet/sk-yk-main.yaml
+  # lhm-prod-dmz
+  - lhm-prod-dmz/ext-sk-lhm-prod-admin.yaml
+  - lhm-prod-dmz/ext-sk-lhm-prod-user.yaml
+  # lhm-prod-vmnet
+  - lhm-prod-vmnet/ext-sk-lhm-prod-admin.yaml
+  - lhm-prod-vmnet/ext-sk-lhm-prod-user.yaml

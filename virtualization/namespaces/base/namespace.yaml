@@ -2,13 +2,13 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: sigaint-vmnet
+  name: lhm-prod-vmnet
 spec: {}
 ---
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: sigaint-dmz
+  name: lhm-prod-dmz
 spec: {}
 ---
 kind: Namespace
