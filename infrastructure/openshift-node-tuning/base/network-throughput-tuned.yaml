@@ -45,16 +45,13 @@ spec:
         # Enable RPS on all NICs (TuneD expands wildcards)
         /sys/class/net/*/queues/rx-*/rps_cpus = ffffffff
 
+        # Ring/features live in the TuneD [net] plugin (not a separate
+        # [ethtool] section). eno1 stock RX was 453 / max 4078 — that small
+        # ring drives rx_discards / RX errors under load despite 9k MTU.
         [net]
-        # Prefer high-throughput NIC options when TuneD can apply them
-        type = ether
-        features = tso gso gro sg rx tx
-
-        # eno1 (and eno*) was at RX ring 453 / max 4078 — small RX rings
-        # cause rx_discards under load even with jumbo MTU and healthy links.
-        # TX was already at max; keep both at hardware max.
-        [ethtool]
+        type = net
         devices = eno*
+        features = tso on gso on gro on sg on
         ring = rx 4078 tx 4078
   recommend:
     - profile: openshift-network-throughput

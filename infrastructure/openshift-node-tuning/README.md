@@ -34,8 +34,8 @@ oc get profile -n openshift-cluster-node-tuning-operator
 | Congestion | `bbr` + `fq` (if kernel supports) |
 | Neighbor GC | Higher `gc_thresh*` for dense pods |
 | RPS | All RX queues `rps_cpus=ffffffff` |
-| NIC features | tso/gso/gro/sg where TuneD can set them |
-| NIC rings (`eno*`) | RX/TX **4078** (hw max; stock RX was ~453) |
+| NIC features (`eno*`) | tso/gso/gro/sg **on** via TuneD `[net]` |
+| NIC rings (`eno*`) | RX/TX **4078** (`[net] ring=`; stock RX was ~453) |
 
 Complements jumbo MTU 9000 on `eno1` / nmstate `eno2` and OVN **8900**.
 
