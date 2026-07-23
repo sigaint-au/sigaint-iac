@@ -32,7 +32,7 @@ oc get profile -n openshift-cluster-node-tuning-operator
 | TCP/socket buffers | `rmem`/`wmem` up to 16 MiB |
 | Backlog / somaxconn | Raised for high connection rates |
 | Congestion | `bbr` + `fq` (if kernel supports) |
-| Neighbor GC | Higher `gc_thresh*` for dense pods |
+| Neighbor GC | Inherited from `openshift-node` (8192 / 32768 / 65536) |
 | RPS | `eno*` RX queues only (`rps_cpus=ffffffff`; not CNI/veth) |
 | NIC features (`eno*`) | tso/gso/gro/sg **on** via TuneD `[net]` |
 | NIC rings (`eno*`) | RX/TX **4078** (`[net] ring=`; stock RX was ~453) |
@@ -61,3 +61,4 @@ Expect `ethtool -g eno1` current RX/TX **4078** after the profile applies.
 - Ring sizes match measured `eno1` max (`ethtool -g`). If `eno2` reports a lower max, TuneD may log a non-fatal ethtool error for that NIC — lower `ring` or split devices if needed.
 - After raising rings, re-check `ethtool -S eno1 \| grep discard` under load; discards should stop climbing.
 - Do **not** use `/sys/class/net/*/queues/...` for RPS — OpenShift creates short-lived netdevs; TuneD expands the glob then fails with `No such file or directory` on missing queues.
+- Do **not** lower sysctls already raised by `include=openshift-node` (e.g. `neigh.default.gc_thresh*`). Weaker values conflict on apply/verify and leave the Profile **Degraded**.

@@ -36,10 +36,9 @@ spec:
         # Faster connection turnover under load
         net.ipv4.tcp_tw_reuse = 1
         net.ipv4.tcp_fin_timeout = 15
-        # Neighbor table headroom (dense clusters / many pods)
-        net.ipv4.neigh.default.gc_thresh1 = 4096
-        net.ipv4.neigh.default.gc_thresh2 = 8192
-        net.ipv4.neigh.default.gc_thresh3 = 16384
+        # Do not set neigh.default.gc_thresh* here — openshift-node already
+        # uses higher values (8192 / 32768 / 65536). Lower overrides mark the
+        # Profile Degraded when TuneD verifies against the parent profile.
 
         [sysfs]
         # RPS only on physical eno* — net/* also matches ephemeral CNI/veth
