@@ -42,8 +42,9 @@ spec:
         net.ipv4.neigh.default.gc_thresh3 = 16384
 
         [sysfs]
-        # Enable RPS on all NICs (TuneD expands wildcards)
-        /sys/class/net/*/queues/rx-*/rps_cpus = ffffffff
+        # RPS only on physical eno* — net/* also matches ephemeral CNI/veth
+        # ifaces (e.g. a24d0ea54093746) and races on missing rx-N/rps_cpus.
+        /sys/class/net/eno*/queues/rx-*/rps_cpus = ffffffff
 
         # Ring/features live in the TuneD [net] plugin (not a separate
         # [ethtool] section). eno1 stock RX was 453 / max 4078 — that small

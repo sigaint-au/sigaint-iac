@@ -33,7 +33,7 @@ oc get profile -n openshift-cluster-node-tuning-operator
 | Backlog / somaxconn | Raised for high connection rates |
 | Congestion | `bbr` + `fq` (if kernel supports) |
 | Neighbor GC | Higher `gc_thresh*` for dense pods |
-| RPS | All RX queues `rps_cpus=ffffffff` |
+| RPS | `eno*` RX queues only (`rps_cpus=ffffffff`; not CNI/veth) |
 | NIC features (`eno*`) | tso/gso/gro/sg **on** via TuneD `[net]` |
 | NIC rings (`eno*`) | RX/TX **4078** (`[net] ring=`; stock RX was ~453) |
 
@@ -60,3 +60,4 @@ Expect `ethtool -g eno1` current RX/TX **4078** after the profile applies.
 - `bbr` requires the module; TuneD logs a warning and continues if unavailable.
 - Ring sizes match measured `eno1` max (`ethtool -g`). If `eno2` reports a lower max, TuneD may log a non-fatal ethtool error for that NIC — lower `ring` or split devices if needed.
 - After raising rings, re-check `ethtool -S eno1 \| grep discard` under load; discards should stop climbing.
+- Do **not** use `/sys/class/net/*/queues/...` for RPS — OpenShift creates short-lived netdevs; TuneD expands the glob then fails with `No such file or directory` on missing queues.
