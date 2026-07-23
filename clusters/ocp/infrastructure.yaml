@@ -14,6 +14,8 @@ spec:
             wave: "-20"
           - name: openshift-network-operator
             wave: "-20"
+          - name: openshift-node-tuning
+            wave: "-20"
           - name: cluster-image-registry-operator
             wave: "-15"
           # Wave -10: secrets and certificates

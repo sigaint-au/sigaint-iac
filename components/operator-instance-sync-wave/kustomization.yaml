@@ -319,6 +319,17 @@ patches:
         value: SkipDryRunOnMissingResource=true
 
   - target:
+      kind: Tuned
+      group: tuned.openshift.io
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "0"
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1sync-options
+        value: SkipDryRunOnMissingResource=true
+
+  - target:
       kind: Istio
       group: sailoperator.io
     patch: |-

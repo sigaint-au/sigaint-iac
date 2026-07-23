@@ -181,6 +181,7 @@ OLM Subscription channels pinned in this repo (package path under `infrastructur
 | `lvm-storage` | `stable-4.22` | hub |
 | `metallb-operator` | `stable` | ocp |
 | `nmstate` | `stable` | ocp |
+| `openshift-node-tuning` | platform NTO (Tuned CR only) | ocp |
 | `openshift-cert-manager-operator` | `stable-v1` | hub, ocp |
 | `openshift-data-foundation-operator` | `stable-4.22` | hub, ocp |
 | `openshift-external-secrets-operator` | `stable-v1` | hub, ocp |

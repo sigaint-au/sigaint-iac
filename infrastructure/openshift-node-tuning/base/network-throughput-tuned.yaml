@@ -1,0 +1,63 @@
+# Custom TuneD profile for network throughput (Node Tuning Operator is platform-provided).
+# Complements 9k MTU / jumbo physnet; applies to workers by default.
+apiVersion: tuned.openshift.io/v1
+kind: Tuned
+metadata:
+  name: openshift-network-throughput
+  namespace: openshift-cluster-node-tuning-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  profile:
+    - name: openshift-network-throughput
+      data: |
+        [main]
+        summary=OpenShift worker profile optimized for network throughput
+        include=openshift-node
+
+        [sysctl]
+        # Socket / TCP buffer ceilings (bytes)
+        net.core.rmem_max = 16777216
+        net.core.wmem_max = 16777216
+        net.core.rmem_default = 262144
+        net.core.wmem_default = 262144
+        net.ipv4.tcp_rmem = 4096 87380 16777216
+        net.ipv4.tcp_wmem = 4096 65536 16777216
+        # Queue depths
+        net.core.netdev_max_backlog = 300000
+        net.core.somaxconn = 32768
+        net.ipv4.tcp_max_syn_backlog = 8192
+        # Ephemeral ports
+        net.ipv4.ip_local_port_range = 10240 65535
+        # Prefer BBR when available; falls back if module missing
+        net.ipv4.tcp_congestion_control = bbr
+        net.core.default_qdisc = fq
+        # Faster connection turnover under load
+        net.ipv4.tcp_tw_reuse = 1
+        net.ipv4.tcp_fin_timeout = 15
+        # Neighbor table headroom (dense clusters / many pods)
+        net.ipv4.neigh.default.gc_thresh1 = 4096
+        net.ipv4.neigh.default.gc_thresh2 = 8192
+        net.ipv4.neigh.default.gc_thresh3 = 16384
+
+        [sysfs]
+        # Enable RPS on all NICs (TuneD expands wildcards)
+        /sys/class/net/*/queues/rx-*/rps_cpus = ffffffff
+
+        [net]
+        # Prefer high-throughput NIC options when TuneD can apply them
+        type = ether
+        features = tso gso gro sg rx tx
+
+        # eno1 (and eno*) was at RX ring 453 / max 4078 — small RX rings
+        # cause rx_discards under load even with jumbo MTU and healthy links.
+        # TX was already at max; keep both at hardware max.
+        [ethtool]
+        devices = eno*
+        ring = rx 4078 tx 4078
+  recommend:
+    - profile: openshift-network-throughput
+      priority: 20
+      match:
+        - label: node-role.kubernetes.io/worker
