@@ -12,6 +12,11 @@ spec:
   flexibleScaling: true
   mon:
     count: 1
+  managedResources:
+    # Propagated to CephCluster; wipe disks reused from a prior Ceph install.
+    cephCluster:
+      cleanupPolicy:
+        wipeDevicesFromOtherClusters: true
   storageDeviceSets:
     - name: ocs-deviceset
       count: 4

@@ -16,6 +16,13 @@ spec:
   managedResources:
     cephBlockPools:
       defaultStorageClass: true
+    # Propagated by ocs-operator to CephCluster ocs-storagecluster-cephcluster.
+    # Wipes OSD disks that still hold metadata from a previous Ceph install so
+    # new OSDs can prepare them (equivalent to:
+    #   oc patch cephcluster ... /spec/cleanupPolicy/wipeDevicesFromOtherClusters).
+    cephCluster:
+      cleanupPolicy:
+        wipeDevicesFromOtherClusters: true
   storageDeviceSets:
     - name: ocs-deviceset-local-block
       count: 15
