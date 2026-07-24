@@ -10,9 +10,8 @@ metadata:
     app.kubernetes.io/managed-by: sensor
     app.kubernetes.io/name: stackrox
 profiles:
-  - apiGroup: compliance.openshift.io/v1alpha1
-    kind: Profile
-    name: ocp4-e8
+  # ocp4-e8 is covered via TailoredProfile e8-additional-scc (extends ocp4-e8).
+  # Binding only the tailored profile avoids a duplicate base E8 scan.
   - apiGroup: compliance.openshift.io/v1alpha1
     kind: TailoredProfile
     name: e8-additional-scc
